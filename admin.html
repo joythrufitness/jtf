@@ -168,6 +168,23 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
 
 /* divider */
 .divider{border:none;border-top:1px solid var(--border);margin:20px 0}
+
+/* add / remove buttons */
+.add-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:8px;padding:9px 18px;
+  font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  background:transparent;color:var(--orange);border:2px solid var(--orange);
+  border-radius:4px;cursor:pointer;transition:all .2s;
+}
+.add-btn:hover{background:var(--orange);color:#fff;}
+.remove-btn{
+  float:right;margin-left:12px;
+  padding:6px 14px;
+  font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  background:#e93e3a;color:#fff;border:none;border-radius:4px;cursor:pointer;transition:background .2s;
+}
+.remove-btn:hover{background:#c0302d;}
 </style>
 </head>
 <body>
@@ -480,6 +497,7 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
         <input type="text" id="tr_heading"/>
       </div>
       <div id="trainers_wrap"></div>
+      <button class="add-btn" onclick="addTrainer()">+ Add Trainer</button>
     </div>
   </div>
 
@@ -492,6 +510,7 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
     </div>
     <div class="es-body">
       <div id="tes_wrap"></div>
+      <button class="add-btn" onclick="addTestimonial()">+ Add Testimonial</button>
     </div>
   </div>
 
@@ -778,16 +797,35 @@ function removeTrainer(i){
   if(block) block.remove();
 }
 
+let testimonialCount = 0;
+
 function buildTestimonials(items){
   const w=document.getElementById('tes_wrap'); w.innerHTML='';
-  items.forEach((t,i)=>{
-    w.innerHTML+=`
-    <div class="rep-block">
-      <h4>Testimonial ${i+1}</h4>
-      <div class="field"><label>Quote</label><textarea id="tes_q_${i}" class="short">${esc(t.q)}</textarea></div>
-      <div class="field"><label>Name</label><input type="text" id="tes_a_${i}" value="${esc(t.a)}"/></div>
-    </div>`;
-  });
+  testimonialCount = items.length;
+  items.forEach((t,i)=> renderTestimonial(i, t));
+}
+
+function renderTestimonial(i, t={}){
+  const w=document.getElementById('tes_wrap');
+  const block=document.createElement('div');
+  block.className='rep-block';
+  block.id=`tes_block_${i}`;
+  block.innerHTML=`
+    <button class="remove-btn" onclick="removeTestimonial(${i})">✕ Remove</button>
+    <h4>Testimonial ${i+1}</h4>
+    <div class="field"><label>Quote</label><textarea id="tes_q_${i}" class="short">${esc(t.q||'')}</textarea></div>
+    <div class="field"><label>Name</label><input type="text" id="tes_a_${i}" value="${esc(t.a||'')}"/></div>`;
+  w.appendChild(block);
+}
+
+function addTestimonial(){
+  renderTestimonial(testimonialCount, {});
+  testimonialCount++;
+}
+
+function removeTestimonial(i){
+  const block=document.getElementById(`tes_block_${i}`);
+  if(block) block.remove();
 }
 
 function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
@@ -892,15 +930,17 @@ function readS(){
   D.about.paragraphs = [g('ab_p0'),g('ab_p1'),g('ab_p2')];
   D.about.image = g('ab_image');
   D.trainers.heading = g('tr_heading');
-  D.trainers.people = D.trainers.people.map((_,i)=>({
-    name:g(`tr_name_${i}`), role:g(`tr_role_${i}`), photo:g(`tr_photo_${i}`),
-    bio:g(`tr_bio_${i}`), sport:g(`tr_sport_${i}`), interests:g(`tr_interests_${i}`),
-    philosophy:g(`tr_philosophy_${i}`), funfacts:g(`tr_funfacts_${i}`),
-    certs:lines(`tr_certs_${i}`)
-  }));
-  D.testimonials.items = D.testimonials.items.map((_,i)=>({
-    q:g(`tes_q_${i}`), a:g(`tes_a_${i}`)
-  }));
+  D.trainers.people = Array.from(document.querySelectorAll('#trainers_wrap .rep-block')).map(block=>{
+    const i=block.id.replace('tr_block_','');
+    return {name:g(`tr_name_${i}`), role:g(`tr_role_${i}`), photo:g(`tr_photo_${i}`),
+      bio:g(`tr_bio_${i}`), sport:g(`tr_sport_${i}`), interests:g(`tr_interests_${i}`),
+      philosophy:g(`tr_philosophy_${i}`), funfacts:g(`tr_funfacts_${i}`),
+      certs:lines(`tr_certs_${i}`)};
+  });
+  D.testimonials.items = Array.from(document.querySelectorAll('#tes_wrap .rep-block')).map(block=>{
+    const i=block.id.replace('tes_block_','');
+    return {q:g(`tes_q_${i}`), a:g(`tes_a_${i}`)};
+  });
   D.contact.phone = g('ct_phone');
   D.contact.email = g('ct_email');
   D.contact.formspreeId = g('ct_formspreeId');
