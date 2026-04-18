@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>JTF Website Editor — How-To Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --orange:#e93e3a;--black:#111;--text:#222;--mid:#555;--light:#888;
+  --border:#e0e0e0;--gray:#f7f7f7;--white:#fff;
+  --fh:'Montserrat',sans-serif;--fb:'Open Sans',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--fb);color:var(--text);background:var(--gray);line-height:1.7}
+a{color:var(--orange)}
+
+/* HEADER */
+.header{background:var(--black);padding:32px 0;text-align:center}
+.header-label{font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:10px}
+.header h1{font-family:var(--fh);font-size:28px;font-weight:800;color:#fff;letter-spacing:-.01em}
+.header p{font-size:14px;color:rgba(255,255,255,.5);margin-top:8px}
+
+/* LAYOUT */
+.page{max-width:740px;margin:0 auto;padding:48px 24px 80px}
+
+/* INTRO */
+.intro{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:28px 32px;margin-bottom:40px;border-left:4px solid var(--orange)}
+.intro p{font-size:15px;color:var(--mid);line-height:1.8}
+.intro strong{color:var(--text)}
+
+/* SECTION */
+.section{margin-bottom:48px}
+.section-title{font-family:var(--fh);font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:16px}
+.step{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:22px 24px;display:flex;gap:20px;align-items:flex-start}
+.step-num{width:32px;height:32px;border-radius:50%;background:var(--orange);color:#fff;font-family:var(--fh);font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-body h3{font-family:var(--fh);font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px}
+.step-body p{font-size:14px;color:var(--mid);line-height:1.7}
+.step-body ul{font-size:14px;color:var(--mid);padding-left:18px;margin-top:6px;line-height:1.9}
+.step-body .note{display:inline-flex;align-items:flex-start;gap:8px;background:#fdf0ef;border:1px solid #f5c4c3;border-radius:5px;padding:10px 14px;margin-top:10px;font-size:13px;color:var(--orange);line-height:1.5}
+
+/* TIP BOX */
+.tip{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:20px 24px;margin-top:16px;display:flex;gap:14px;align-items:flex-start}
+.tip-icon{font-size:20px;flex-shrink:0;line-height:1}
+.tip-body{font-size:14px;color:var(--mid);line-height:1.7}
+.tip-body strong{color:var(--text)}
+
+/* KEY */
+.key{display:inline-block;background:var(--gray);border:1px solid var(--border);border-radius:4px;padding:2px 8px;font-family:var(--fh);font-size:11px;font-weight:700;color:var(--text);vertical-align:middle}
+
+/* FOOTER */
+.footer{text-align:center;font-size:12px;color:var(--light);padding-top:32px;border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">Joy Thru Fitness</div>
+  <h1>Website Editor — How-To Guide</h1>
+  <p>A step-by-step guide for updating the JTF website</p>
+</div>
+
+<div class="page">
+
+  <div class="intro">
+    <p>This guide walks you through how to <strong>edit website content</strong>, <strong>download your changes</strong>, and <strong>publish them to the live site</strong>. No technical experience needed — just follow the steps below.</p>
+  </div>
+
+  <!-- PART 1 -->
+  <div class="section">
+    <div class="section-title">Part 1 — Open the Editor</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Go to the Editor</h3>
+          <p>Open your browser and go to the private editor link you were given. Bookmark it for easy access.</p>
+          <div class="note">⚠ Keep this link private. Do not share it publicly.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>The Editor Opens</h3>
+          <p>You'll see the Site Content Editor with a list of sections on the left sidebar — Hero, Mission, Personal Training, Trainers, and more. Each section controls a different part of the website.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 2 -->
+  <div class="section">
+    <div class="section-title">Part 2 — Make Your Changes</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Click a Section to Open It</h3>
+          <p>Click any section header (e.g. "Trainers" or "Testimonials") to expand it. Click again to collapse it. Use the <strong>Expand All / Collapse All</strong> button at the top right to open or close everything at once.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Edit Text Fields</h3>
+          <p>Click into any text box or text area and type your changes. All sections work the same way — just click and edit.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>Update an Image</h3>
+          <p>Next to any image field, click <strong>Browse…</strong> to pick a photo from your computer. A preview will appear so you can confirm it looks right.</p>
+          <ul>
+            <li>The file name will fill in automatically</li>
+            <li>You will also need to upload the actual image file to the <strong>images/</strong> folder on GitHub (covered in Part 3)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h3>Add or Remove a Trainer / Testimonial</h3>
+          <p>In the <strong>Trainers</strong> or <strong>Testimonials</strong> sections, use the buttons at the bottom to add a new entry. To remove one, click the red <strong>✕ Remove</strong> button on that block.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-icon">💾</div>
+      <div class="tip-body"><strong>Auto-save is on.</strong> Your work is automatically saved in your browser every few seconds. If you accidentally close the tab, a "Restore" banner will appear next time you open the editor — click it to get your work back.</div>
+    </div>
+  </div>
+
+  <!-- PART 3 -->
+  <div class="section">
+    <div class="section-title">Part 3 — Download Your Changes</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">7</div>
+        <div class="step-body">
+          <h3>Click "Download index.html"</h3>
+          <p>When you're done editing, click the red <strong>⬇ Download index.html</strong> button — either at the top right of the page or at the bottom of the left sidebar. You can also press <span class="key">Cmd</span> + <span class="key">S</span> on a Mac or <span class="key">Ctrl</span> + <span class="key">S</span> on Windows.</p>
+          <p style="margin-top:8px">A file called <strong>index.html</strong> will download to your computer (usually in your Downloads folder).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 4 -->
+  <div class="section">
+    <div class="section-title">Part 4 — Publish to the Live Site</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">8</div>
+        <div class="step-body">
+          <h3>Go to GitHub</h3>
+          <p>Open a new browser tab and go to <a href="https://github.com/joythrufitness/jtf" target="_blank">github.com/joythrufitness/jtf</a>. Sign in if prompted.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">9</div>
+        <div class="step-body">
+          <h3>Upload the File</h3>
+          <p>On the repository page, click <strong>Add file</strong> → <strong>Upload files</strong>.</p>
+          <ul>
+            <li>Drag your downloaded <strong>index.html</strong> file into the upload box, or click <strong>choose your files</strong> to find it</li>
+            <li>GitHub will show it in the list</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">10</div>
+        <div class="step-body">
+          <h3>Commit the Changes</h3>
+          <p>Scroll down to the <strong>Commit changes</strong> section. Leave the message as-is or type a short note like "Update trainer info". Then click the green <strong>Commit changes</strong> button.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">11</div>
+        <div class="step-body">
+          <h3>Wait ~60 Seconds</h3>
+          <p>The live website at <a href="https://www.joythrufitness.com" target="_blank">joythrufitness.com</a> will update automatically. Wait about a minute, then refresh the page to see your changes.</p>
+          <div class="note">💡 If you don't see your changes, try a hard refresh: <span class="key">Cmd</span> + <span class="key">Shift</span> + <span class="key">R</span> on Mac, or <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">R</span> on Windows.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-icon">🖼</div>
+      <div class="tip-body"><strong>Uploading a new image?</strong> Do a second upload — same steps as above, but this time go into the <strong>images/</strong> folder first, then upload your image file there. The website looks for images in that folder by name.</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    JTF Website Editor — Internal Use Only &nbsp;·&nbsp; Do not share
+  </div>
+
+</div>
+</body>
+</html>
