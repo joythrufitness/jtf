@@ -678,7 +678,7 @@ const DEFAULTS = {
   contact:{
     label:'Contact Us',heading:'How can we make your training a lifestyle?',
     phone:'386-481-8225',email:'info@joythrufitness.com',
-    formspreeId:'YOUR_FORM_ID',
+    web3formsKey:'YOUR_WEB3FORMS_KEY',
     packages:['Personal Training — 1x/week','Personal Training — 2x/week','Personal Training — 3x/week','Personal Training — 4x/week','3 Months Mega Deal','Team Training','JOY Thru Triathlon','Group Classes','TIME 4 U Online Program','Swim / Cycling / Running','Other / Question']
   }
 };
@@ -1547,7 +1547,7 @@ footer{background:var(--black);color:rgba(255,255,255,.6);padding:44px 0 26px}
   const ct=S.contact;
   $('footPhone').textContent=ct.phone;
   $('ctInfo').innerHTML=\`<p class="label">\${ct.label}<\/p><h2 class="heading">\${ct.heading}<\/h2><p class="body-text">Ready to start your journey? Reach out and we'll help you find the right plan.<\/p><div class="c-detail"><span class="c-icon">📞<\/span><a href="tel:\${ct.phone.replace(/-/g,'')}">\${ct.phone}<\/a><\/div><div class="c-detail"><span class="c-icon">✉️<\/span><a href="mailto:\${ct.email}">\${ct.email}<\/a><\/div>\`;
-  $('ctForm').innerHTML=\`<form id="theForm" action="https://formspree.io/f/\${ct.formspreeId}" method="POST"><div class="fr"><div class="fg"><label>First Name<\/label><input type="text" name="firstName" required/><\/div><div class="fg"><label>Last Name<\/label><input type="text" name="lastName" required/><\/div><\/div><div class="fg"><label>Email Address<\/label><input type="email" name="email" required/><\/div><div class="fg"><label>Package Interest<\/label><select name="package"><option value="">Select a package…<\/option>\${ct.packages.map(o=>\`<option>\${o}<\/option>\`).join('')}<\/select><\/div><div class="fg"><label>Message<\/label><textarea name="message" placeholder="Tell us about your goals…"><\/textarea><\/div><button type="submit" class="btn btn-green" style="width:100%">Send Message<\/button><div class="form-ok" id="formOk">Thank you! Your message has been received. We'll be in touch soon.<\/div><\/form>\`;
+  $('ctForm').innerHTML=\`<form id="theForm" action="https://api.web3forms.com/submit" method="POST"><input type="hidden" name="access_key" value="\${ct.web3formsKey}"/><input type="hidden" name="subject" value="New Contact — Joy Thru Fitness"/><input type="hidden" name="from_name" value="JTF Website"/><input type="hidden" name="botcheck" style="display:none"/><div class="fr"><div class="fg"><label>First Name<\/label><input type="text" name="firstName" required/><\/div><div class="fg"><label>Last Name<\/label><input type="text" name="lastName" required/><\/div><\/div><div class="fg"><label>Email Address<\/label><input type="email" name="email" required/><\/div><div class="fg"><label>Package Interest<\/label><select name="package"><option value="">Select a package…<\/option>\${ct.packages.map(o=>\`<option>\${o}<\/option>\`).join('')}<\/select><\/div><div class="fg"><label>Message<\/label><textarea name="message" placeholder="Tell us about your goals…"><\/textarea><\/div><button type="submit" class="btn btn-green" style="width:100%">Send Message<\/button><div class="form-ok" id="formOk">Thank you! Your message has been received. We'll be in touch soon.<\/div><\/form>\`;
   const burger=$('burger'),navLinks=$('navLinks');
   burger.addEventListener('click',()=>navLinks.classList.toggle('open'));
   navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open')));
@@ -1558,8 +1558,9 @@ footer{background:var(--black);color:rgba(255,255,255,.6);padding:44px 0 26px}
     const btn=e.target.querySelector('button[type=submit]');
     btn.textContent='Sending…';btn.disabled=true;
     try{
-      const r=await fetch(e.target.action,{method:'POST',body:new FormData(e.target),headers:{'Accept':'application/json'}});
-      if(r.ok){e.target.reset();$('formOk').style.display='block';btn.textContent='Sent!';}
+      const r=await fetch('https://api.web3forms.com/submit',{method:'POST',body:new FormData(e.target),headers:{'Accept':'application/json'}});
+      const json=await r.json();
+      if(json.success){e.target.reset();$('formOk').style.display='block';btn.textContent='Sent!';}
       else{btn.textContent='Error — try again';btn.disabled=false;}
     }catch{btn.textContent='Error — try again';btn.disabled=false;}
   });
