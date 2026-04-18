@@ -185,6 +185,46 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
   background:#e93e3a;color:#fff;border:none;border-radius:4px;cursor:pointer;transition:background .2s;
 }
 .remove-btn:hover{background:#c0302d;}
+.dup-btn{
+  float:right;margin-left:8px;
+  padding:6px 14px;
+  font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  background:transparent;color:var(--orange);border:1px solid var(--orange);border-radius:4px;cursor:pointer;transition:all .2s;
+}
+.dup-btn:hover{background:var(--orange);color:#fff;}
+.toggle-all-btn{
+  background:transparent;color:var(--light);
+  border:1px solid var(--border);border-radius:3px;
+  font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:9px 16px;cursor:pointer;transition:all .2s;margin-right:10px;white-space:nowrap;
+}
+.toggle-all-btn:hover{color:var(--text);border-color:var(--text)}
+.field-help{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:16px;height:16px;border-radius:50%;
+  background:var(--border);color:var(--light);
+  font-size:10px;font-weight:700;cursor:default;
+  margin-left:6px;position:relative;flex-shrink:0;vertical-align:middle;
+}
+.field-help::after{
+  content:attr(data-tooltip);
+  position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);
+  background:#222;color:#fff;font-family:var(--fb);font-size:12px;font-weight:400;
+  letter-spacing:0;text-transform:none;
+  padding:8px 12px;border-radius:4px;white-space:pre-wrap;max-width:260px;min-width:160px;
+  opacity:0;pointer-events:none;transition:opacity .15s;z-index:200;
+  box-shadow:0 2px 8px rgba(0,0,0,.3);
+}
+.field-help:hover::after{opacity:1;}
+.img-field-row{display:flex;gap:8px;align-items:center}
+.img-field-row input{flex:1}
+.browse-btn{
+  padding:10px 14px;background:var(--gray);border:1px solid var(--border);border-radius:3px;
+  font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0;
+}
+.browse-btn:hover{background:var(--border)}
+.img-preview{max-width:240px;max-height:140px;object-fit:cover;border-radius:6px;margin-top:8px;display:none;}
 </style>
 </head>
 <body>
@@ -236,7 +276,10 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
       <h1>Site Content Editor</h1>
       <p>Edit your website content below, then click Download to get your updated file.</p>
     </div>
-    <button class="dl-btn" onclick="downloadSite()">⬇ Download index.html</button>
+    <div style="display:flex;align-items:center">
+      <button class="toggle-all-btn" id="toggleAllBtn" onclick="toggleAllSections()">Collapse All</button>
+      <button class="dl-btn" onclick="downloadSite()">⬇ Download index.html</button>
+    </div>
   </div>
 
   <!-- HERO -->
@@ -252,9 +295,12 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
         <input type="text" id="hero_headline"/>
       </div>
       <div class="field">
-        <label>Hero Image Path</label>
-        <div class="hint">Relative path to image file, e.g. images/hero-image.jpg</div>
-        <input type="text" id="hero_image"/>
+        <label>Hero Image Path <span class="field-help" data-tooltip="Relative path to the image, e.g. images/hero-image.jpg. File must exist in your images/ folder.">?</span></label>
+        <div class="img-field-row">
+          <input type="text" id="hero_image" oninput="updateImgPreview('hero_image','hero_preview')"/>
+          <button type="button" class="browse-btn" onclick="pickImageFile('hero_image','hero_preview')">Browse…</button>
+        </div>
+        <img id="hero_preview" class="img-preview" alt="Hero preview" onerror="this.style.display='none'"/>
       </div>
     </div>
   </div>
@@ -299,8 +345,12 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
         <textarea id="pt_items" class="tall"></textarea>
       </div>
       <div class="field">
-        <label>Image Path</label>
-        <input type="text" id="pt_image"/>
+        <label>Image Path <span class="field-help" data-tooltip="Relative path, e.g. images/personal-training.jpg">?</span></label>
+        <div class="img-field-row">
+          <input type="text" id="pt_image" oninput="updateImgPreview('pt_image','pt_preview')"/>
+          <button type="button" class="browse-btn" onclick="pickImageFile('pt_image','pt_preview')">Browse…</button>
+        </div>
+        <img id="pt_preview" class="img-preview" alt="Personal training preview" onerror="this.style.display='none'"/>
       </div>
     </div>
   </div>
@@ -334,8 +384,12 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
         <input type="email" id="t4u_email"/>
       </div>
       <div class="field">
-        <label>Image Path</label>
-        <input type="text" id="t4u_image"/>
+        <label>Image Path <span class="field-help" data-tooltip="Relative path, e.g. images/time-4-u.jpg">?</span></label>
+        <div class="img-field-row">
+          <input type="text" id="t4u_image" oninput="updateImgPreview('t4u_image','t4u_preview')"/>
+          <button type="button" class="browse-btn" onclick="pickImageFile('t4u_image','t4u_preview')">Browse…</button>
+        </div>
+        <img id="t4u_preview" class="img-preview" alt="Time 4 U preview" onerror="this.style.display='none'"/>
       </div>
     </div>
   </div>
@@ -359,11 +413,15 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
         </div>
       </div>
       <div class="field">
-        <label>Image Path</label>
-        <input type="text" id="gc_image"/>
+        <label>Image Path <span class="field-help" data-tooltip="Relative path, e.g. images/group-clases.jpg">?</span></label>
+        <div class="img-field-row">
+          <input type="text" id="gc_image" oninput="updateImgPreview('gc_image','gc_preview')"/>
+          <button type="button" class="browse-btn" onclick="pickImageFile('gc_image','gc_preview')">Browse…</button>
+        </div>
+        <img id="gc_preview" class="img-preview" alt="Group classes preview" onerror="this.style.display='none'"/>
       </div>
       <div class="field">
-        <label>Schedule URL</label>
+        <label>Schedule URL <span class="field-help" data-tooltip="Full URL to your class schedule page, e.g. https://mindbodyonline.com/...">?</span></label>
         <input type="text" id="gc_scheduleUrl"/>
       </div>
       <hr class="divider"/>
@@ -477,8 +535,12 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
         <textarea id="ab_p2"></textarea>
       </div>
       <div class="field">
-        <label>Image Path</label>
-        <input type="text" id="ab_image"/>
+        <label>Image Path <span class="field-help" data-tooltip="Relative path, e.g. images/about-us.jpg">?</span></label>
+        <div class="img-field-row">
+          <input type="text" id="ab_image" oninput="updateImgPreview('ab_image','ab_preview')"/>
+          <button type="button" class="browse-btn" onclick="pickImageFile('ab_image','ab_preview')">Browse…</button>
+        </div>
+        <img id="ab_preview" class="img-preview" alt="About preview" onerror="this.style.display='none'"/>
       </div>
     </div>
   </div>
@@ -732,13 +794,20 @@ function renderTrainer(i, p={}){
   block.id=`tr_block_${i}`;
   block.innerHTML=`
     <button class="remove-btn" onclick="removeTrainer(${i})">✕ Remove</button>
+    <button class="dup-btn" onclick="duplicateTrainer(${i})">⎘ Duplicate</button>
     <h4>Trainer ${i+1}</h4>
     <div class="row2">
       <div class="field"><label>Name</label><input type="text" id="tr_name_${i}" value="${esc(p.name||'')}"/></div>
       <div class="field"><label>Role / Title</label><input type="text" id="tr_role_${i}" value="${esc(p.role||'')}"/></div>
     </div>
-    <div class="field"><label>Photo Path</label><input type="text" id="tr_photo_${i}" value="${esc(p.photo||'')}" oninput="updateTrainerPreview(${i})"/></div>
-    <div class="field"><img id="tr_preview_${i}" src="${esc(p.photo||'')}" alt="Trainer photo preview" style="max-width:180px;max-height:180px;border-radius:8px;object-fit:cover;margin-top:6px;display:${p.photo?'block':'none'};" onerror="this.style.display='none'"/></div>
+    <div class="field">
+      <label>Photo Path <span class="field-help" data-tooltip="Relative path, e.g. images/heather-headshot.png. File must be in your images/ folder.">?</span></label>
+      <div class="img-field-row">
+        <input type="text" id="tr_photo_${i}" value="${esc(p.photo||'')}" oninput="updateTrainerPreview(${i})"/>
+        <button type="button" class="browse-btn" onclick="pickImageFile('tr_photo_${i}','tr_preview_${i}')">Browse…</button>
+      </div>
+      <img id="tr_preview_${i}" src="${esc(p.photo||'')}" alt="Trainer photo preview" style="max-width:180px;max-height:180px;border-radius:8px;object-fit:cover;margin-top:6px;display:${p.photo?'block':'none'};" onerror="this.style.display='none'"/>
+    </div>
     <div class="field"><label>Bio</label><textarea id="tr_bio_${i}">${esc(p.bio||'')}</textarea></div>
     <div class="row2">
       <div class="field"><label>Favorite Sport</label><input type="text" id="tr_sport_${i}" value="${esc(p.sport||'')}"/></div>
@@ -758,13 +827,54 @@ function updateTrainerPreview(i){
 }
 
 function addTrainer(){
-  renderTrainer(trainerCount, {});
-  trainerCount++;
+  const count = document.querySelectorAll('#trainers_wrap .rep-block').length;
+  renderTrainer(count, {});
+  trainerCount = count + 1;
 }
 
 function removeTrainer(i){
   const block = document.getElementById(`tr_block_${i}`);
   if(block) block.remove();
+  reindexTrainers();
+}
+
+function reindexTrainers(){
+  const blocks = document.querySelectorAll('#trainers_wrap .rep-block');
+  blocks.forEach((block, n) => {
+    const old = block.id.replace('tr_block_','');
+    block.id = `tr_block_${n}`;
+    block.querySelector('h4').textContent = `Trainer ${n+1}`;
+    block.querySelector('.remove-btn').setAttribute('onclick',`removeTrainer(${n})`);
+    block.querySelector('.dup-btn').setAttribute('onclick',`duplicateTrainer(${n})`);
+    [['tr_name','tr_name'],['tr_role','tr_role'],['tr_photo','tr_photo'],
+     ['tr_preview','tr_preview'],['tr_bio','tr_bio'],['tr_sport','tr_sport'],
+     ['tr_interests','tr_interests'],['tr_philosophy','tr_philosophy'],
+     ['tr_funfacts','tr_funfacts'],['tr_certs','tr_certs']].forEach(([pre])=>{
+      const el = block.querySelector(`#${pre}_${old}`);
+      if(el) el.id = `${pre}_${n}`;
+    });
+    const photo = block.querySelector(`#tr_photo_${n}`);
+    if(photo){
+      photo.setAttribute('oninput',`updateTrainerPreview(${n})`);
+      const browseBtn = photo.closest('.img-field-row')?.nextElementSibling?.tagName === 'IMG'
+        ? null : photo.parentElement.parentElement.querySelector('.browse-btn');
+      if(browseBtn) browseBtn.setAttribute('onclick',`pickImageFile('tr_photo_${n}','tr_preview_${n}')`);
+    }
+  });
+  trainerCount = blocks.length;
+}
+
+function duplicateTrainer(i){
+  const count = document.querySelectorAll('#trainers_wrap .rep-block').length;
+  const data = {
+    name:g(`tr_name_${i}`), role:g(`tr_role_${i}`), photo:g(`tr_photo_${i}`),
+    bio:g(`tr_bio_${i}`), sport:g(`tr_sport_${i}`), interests:g(`tr_interests_${i}`),
+    philosophy:g(`tr_philosophy_${i}`), funfacts:g(`tr_funfacts_${i}`),
+    certs:lines(`tr_certs_${i}`)
+  };
+  renderTrainer(count, data);
+  trainerCount = count + 1;
+  document.getElementById(`tr_block_${count}`).scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
 let testimonialCount = 0;
@@ -782,6 +892,7 @@ function renderTestimonial(i, t={}){
   block.id=`tes_block_${i}`;
   block.innerHTML=`
     <button class="remove-btn" onclick="removeTestimonial(${i})">✕ Remove</button>
+    <button class="dup-btn" onclick="duplicateTestimonial(${i})">⎘ Duplicate</button>
     <h4>Testimonial ${i+1}</h4>
     <div class="field"><label>Quote</label><textarea id="tes_q_${i}" class="short">${esc(t.q||'')}</textarea></div>
     <div class="field"><label>Name</label><input type="text" id="tes_a_${i}" value="${esc(t.a||'')}"/></div>`;
@@ -789,13 +900,38 @@ function renderTestimonial(i, t={}){
 }
 
 function addTestimonial(){
-  renderTestimonial(testimonialCount, {});
-  testimonialCount++;
+  const count = document.querySelectorAll('#tes_wrap .rep-block').length;
+  renderTestimonial(count, {});
+  testimonialCount = count + 1;
 }
 
 function removeTestimonial(i){
   const block=document.getElementById(`tes_block_${i}`);
   if(block) block.remove();
+  reindexTestimonials();
+}
+
+function reindexTestimonials(){
+  const blocks = document.querySelectorAll('#tes_wrap .rep-block');
+  blocks.forEach((block, n) => {
+    const old = block.id.replace('tes_block_','');
+    block.id = `tes_block_${n}`;
+    block.querySelector('h4').textContent = `Testimonial ${n+1}`;
+    block.querySelector('.remove-btn').setAttribute('onclick',`removeTestimonial(${n})`);
+    block.querySelector('.dup-btn').setAttribute('onclick',`duplicateTestimonial(${n})`);
+    [['tes_q'],['tes_a']].forEach(([pre])=>{
+      const el = block.querySelector(`#${pre}_${old}`);
+      if(el) el.id = `${pre}_${n}`;
+    });
+  });
+  testimonialCount = blocks.length;
+}
+
+function duplicateTestimonial(i){
+  const count = document.querySelectorAll('#tes_wrap .rep-block').length;
+  renderTestimonial(count, {q:g(`tes_q_${i}`), a:g(`tes_a_${i}`)});
+  testimonialCount = count + 1;
+  document.getElementById(`tes_block_${count}`).scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
 function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
@@ -839,7 +975,11 @@ function populate(D){
   val('tr_heading', D.trainers.heading);
   buildTrainers(D.trainers.people);
   buildTestimonials(D.testimonials.items);
-  val('ct_heading', D.contact.heading);
+  updateImgPreview('hero_image','hero_preview');
+  updateImgPreview('pt_image','pt_preview');
+  updateImgPreview('t4u_image','t4u_preview');
+  updateImgPreview('gc_image','gc_preview');
+  updateImgPreview('ab_image','ab_preview');
 }
 
 // ── READ FORM BACK INTO S ────────────────────────────────────────────────
@@ -908,13 +1048,30 @@ function readS(){
     const i=block.id.replace('tes_block_','');
     return {q:g(`tes_q_${i}`), a:g(`tes_a_${i}`)};
   });
-  D.contact.heading = g('ct_heading');
-
   return D;
 }
 
 // ── DOWNLOAD ─────────────────────────────────────────────────────────────
+function validateBeforeDownload(){
+  const warnings = [];
+  if(!g('hero_headline')) warnings.push('Hero: Headline is empty');
+  if(!g('hero_image'))    warnings.push('Hero: Image path is empty');
+  document.querySelectorAll('#trainers_wrap .rep-block').forEach(block=>{
+    const i = block.id.replace('tr_block_','');
+    const n = parseInt(i)+1;
+    if(!g(`tr_name_${i}`))  warnings.push(`Trainer ${n}: Name is empty`);
+    if(!g(`tr_photo_${i}`)) warnings.push(`Trainer ${n}: Photo path is empty`);
+  });
+  return warnings;
+}
+
 function downloadSite(){
+  const warnings = validateBeforeDownload();
+  if(warnings.length){
+    const proceed = confirm('Warning — the following fields need attention:\n\n' +
+      warnings.map(w=>`• ${w}`).join('\n') + '\n\nDownload anyway?');
+    if(!proceed) return;
+  }
   const S = readS();
   const sBlock = 'const S = ' + JSON.stringify(S, null, 2) + ';';
   const html = INDEX_TEMPLATE.replace('/*__S_PLACEHOLDER__*/', sBlock);
@@ -924,6 +1081,8 @@ function downloadSite(){
   a.download = 'index.html';
   a.click();
   URL.revokeObjectURL(a.href);
+  localStorage.removeItem('jtf_admin_autosave');
+  hasUnsavedChanges = false;
   const t=document.getElementById('toast');
   t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2800);
@@ -937,11 +1096,87 @@ function toggle(header){
   icon.style.transform = body.classList.contains('open') ? '' : 'rotate(-90deg)';
 }
 
+function toggleAllSections(){
+  const btn = document.getElementById('toggleAllBtn');
+  const bodies = document.querySelectorAll('.es-body');
+  const icons  = document.querySelectorAll('.es-toggle');
+  const anyOpen = Array.from(bodies).some(b=>b.classList.contains('open'));
+  bodies.forEach(b=>b.classList.toggle('open',!anyOpen));
+  icons.forEach(ic=>ic.style.transform = anyOpen ? 'rotate(-90deg)' : '');
+  btn.textContent = anyOpen ? 'Expand All' : 'Collapse All';
+}
+
 function subTab(btn, panelId){
   btn.closest('.es-body').querySelectorAll('.sub-tab').forEach(b=>b.classList.remove('active'));
   btn.closest('.es-body').querySelectorAll('.sub-panel').forEach(p=>p.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById(panelId).classList.add('active');
+}
+
+function updateImgPreview(inputId, previewId){
+  const src = document.getElementById(inputId)?.value.trim();
+  const img = document.getElementById(previewId);
+  if(!img) return;
+  if(src){ img.src=src; img.style.display='block'; }
+  else { img.style.display='none'; }
+}
+
+function pickImageFile(targetInputId, previewId){
+  const picker = document.createElement('input');
+  picker.type = 'file';
+  picker.accept = 'image/*';
+  picker.onchange = ()=>{
+    if(!picker.files.length) return;
+    const file = picker.files[0];
+    const input = document.getElementById(targetInputId);
+    if(input) input.value = `images/${file.name}`;
+    const img = document.getElementById(previewId);
+    if(img){ img.src = URL.createObjectURL(file); img.style.display='block'; }
+    hasUnsavedChanges = true;
+  };
+  picker.click();
+}
+
+// ── AUTO-SAVE ─────────────────────────────────────────────────────────────
+const LS_KEY = 'jtf_admin_autosave';
+let hasUnsavedChanges = false;
+let autoSaveDebounce;
+
+function autoSave(){
+  try {
+    localStorage.setItem(LS_KEY, JSON.stringify(readS()));
+    showAutoSaveStatus('Auto-saved');
+  } catch(e){}
+}
+
+function showAutoSaveStatus(msg){
+  let el = document.getElementById('autosave-status');
+  if(!el){
+    el = document.createElement('div');
+    el.id = 'autosave-status';
+    el.style.cssText = 'position:fixed;bottom:28px;left:28px;font-family:var(--fh);font-size:11px;color:rgba(255,255,255,.7);background:rgba(0,0,0,.75);padding:8px 14px;border-radius:3px;z-index:998;transition:opacity .3s;pointer-events:none;';
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  el.style.opacity = '1';
+  clearTimeout(el._t);
+  el._t = setTimeout(()=>el.style.opacity='0', 2500);
+}
+
+function restoreAutoSave(){
+  try {
+    const parsed = JSON.parse(localStorage.getItem(LS_KEY));
+    populate(parsed);
+    document.getElementById('restore-banner')?.remove();
+    const t=document.getElementById('toast');
+    t.textContent='✓ Session restored!';
+    t.classList.add('show');
+    setTimeout(()=>{ t.classList.remove('show'); t.textContent='✓ index.html downloaded!'; },2800);
+  } catch(e){ localStorage.removeItem(LS_KEY); }
+}
+
+function dismissRestore(){
+  document.getElementById('restore-banner')?.remove();
 }
 
 // Sidebar active link on scroll
@@ -952,6 +1187,40 @@ window.addEventListener('scroll',()=>{
   sections.forEach(s=>{ if(window.scrollY >= s.offsetTop-80) current='#'+s.id; });
   navLinks.forEach(a=>{ a.classList.toggle('active', a.getAttribute('href')===current); });
 },{passive:true});
+
+// ── INIT ──────────────────────────────────────────────────────────────────
+populate(DEFAULTS);
+
+// Auto-save on input (debounced 2s) + every 30s
+document.getElementById('main').addEventListener('input', ()=>{
+  hasUnsavedChanges = true;
+  clearTimeout(autoSaveDebounce);
+  autoSaveDebounce = setTimeout(autoSave, 2000);
+});
+setInterval(autoSave, 30000);
+
+// Unsaved changes warning on tab close
+window.addEventListener('beforeunload', e=>{
+  if(hasUnsavedChanges){ e.preventDefault(); e.returnValue=''; }
+});
+
+// Ctrl+S / Cmd+S shortcut
+document.addEventListener('keydown', e=>{
+  if((e.ctrlKey||e.metaKey) && e.key==='s'){ e.preventDefault(); downloadSite(); }
+});
+
+// Restore banner if auto-save exists
+(()=>{
+  const saved = localStorage.getItem(LS_KEY);
+  if(!saved) return;
+  const banner = document.createElement('div');
+  banner.id = 'restore-banner';
+  banner.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#111;color:#fff;font-family:var(--fh);font-size:12px;padding:12px 24px;display:flex;align-items:center;gap:12px;z-index:10000;border-bottom:2px solid var(--orange)';
+  banner.innerHTML = `<span style="flex:1">You have unsaved work from a previous session.</span>
+    <button onclick="restoreAutoSave()" style="padding:7px 16px;background:var(--orange);color:#fff;border:none;border-radius:3px;font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">Restore</button>
+    <button onclick="dismissRestore()" style="padding:7px 16px;background:transparent;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.2);border-radius:3px;font-family:var(--fh);font-size:10px;cursor:pointer;">Dismiss</button>`;
+  document.body.appendChild(banner);
+})();
 
 // ── INDEX.HTML TEMPLATE ───────────────────────────────────────────────────
 // Full index.html with S object replaced by placeholder
