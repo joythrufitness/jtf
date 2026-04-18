@@ -732,25 +732,50 @@ function buildPricingSBR(sbr){
 
 function buildTrainers(people){
   const w=document.getElementById('trainers_wrap'); w.innerHTML='';
-  people.forEach((p,i)=>{
-    w.innerHTML+=`
-    <div class="rep-block">
-      <h4>Trainer ${i+1}</h4>
-      <div class="row2">
-        <div class="field"><label>Name</label><input type="text" id="tr_name_${i}" value="${esc(p.name)}"/></div>
-        <div class="field"><label>Role / Title</label><input type="text" id="tr_role_${i}" value="${esc(p.role)}"/></div>
-      </div>
-      <div class="field"><label>Photo Path</label><input type="text" id="tr_photo_${i}" value="${esc(p.photo)}"/></div>
-      <div class="field"><label>Bio</label><textarea id="tr_bio_${i}">${esc(p.bio)}</textarea></div>
-      <div class="row2">
-        <div class="field"><label>Favorite Sport</label><input type="text" id="tr_sport_${i}" value="${esc(p.sport)}"/></div>
-        <div class="field"><label>Interests</label><input type="text" id="tr_interests_${i}" value="${esc(p.interests)}"/></div>
-      </div>
-      <div class="field"><label>Training Philosophy</label><input type="text" id="tr_philosophy_${i}" value="${esc(p.philosophy)}"/></div>
-      <div class="field"><label>Fun Facts</label><input type="text" id="tr_funfacts_${i}" value="${esc(p.funfacts)}"/></div>
-      <div class="field"><label>Certifications (one per line)</label><textarea id="tr_certs_${i}">${p.certs.join('\n')}</textarea></div>
-    </div>`;
-  });
+  trainerCount = people.length;
+  people.forEach((p,i)=> renderTrainer(i, p));
+}
+
+function renderTrainer(i, p={}){
+  const w=document.getElementById('trainers_wrap');
+  const block=document.createElement('div');
+  block.className='rep-block';
+  block.id=`tr_block_${i}`;
+  block.innerHTML=`
+    <button class="remove-btn" onclick="removeTrainer(${i})">✕ Remove</button>
+    <h4>Trainer ${i+1}</h4>
+    <div class="row2">
+      <div class="field"><label>Name</label><input type="text" id="tr_name_${i}" value="${esc(p.name||'')}"/></div>
+      <div class="field"><label>Role / Title</label><input type="text" id="tr_role_${i}" value="${esc(p.role||'')}"/></div>
+    </div>
+    <div class="field"><label>Photo Path</label><input type="text" id="tr_photo_${i}" value="${esc(p.photo||'')}" oninput="updateTrainerPreview(${i})"/></div>
+    <div class="field"><img id="tr_preview_${i}" src="${esc(p.photo||'')}" alt="Trainer photo preview" style="max-width:180px;max-height:180px;border-radius:8px;object-fit:cover;margin-top:6px;display:${p.photo?'block':'none'};" onerror="this.style.display='none'"/></div>
+    <div class="field"><label>Bio</label><textarea id="tr_bio_${i}">${esc(p.bio||'')}</textarea></div>
+    <div class="row2">
+      <div class="field"><label>Favorite Sport</label><input type="text" id="tr_sport_${i}" value="${esc(p.sport||'')}"/></div>
+      <div class="field"><label>Interests</label><input type="text" id="tr_interests_${i}" value="${esc(p.interests||'')}"/></div>
+    </div>
+    <div class="field"><label>Training Philosophy</label><input type="text" id="tr_philosophy_${i}" value="${esc(p.philosophy||'')}"/></div>
+    <div class="field"><label>Fun Facts</label><input type="text" id="tr_funfacts_${i}" value="${esc(p.funfacts||'')}"/></div>
+    <div class="field"><label>Certifications (one per line)</label><textarea id="tr_certs_${i}">${(p.certs||[]).join('\n')}</textarea></div>`;
+  w.appendChild(block);
+}
+
+function updateTrainerPreview(i){
+  const src = document.getElementById(`tr_photo_${i}`).value.trim();
+  const img = document.getElementById(`tr_preview_${i}`);
+  if(src){ img.src=src; img.style.display='block'; }
+  else { img.style.display='none'; }
+}
+
+function addTrainer(){
+  renderTrainer(trainerCount, {});
+  trainerCount++;
+}
+
+function removeTrainer(i){
+  const block = document.getElementById(`tr_block_${i}`);
+  if(block) block.remove();
 }
 
 function buildTestimonials(items){
