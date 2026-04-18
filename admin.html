@@ -844,7 +844,6 @@ function reindexTrainers(){
     block.id = `tr_block_${n}`;
     block.querySelector('h4').textContent = `Trainer ${n+1}`;
     block.querySelector('.remove-btn').setAttribute('onclick',`removeTrainer(${n})`);
-    block.querySelector('.dup-btn').setAttribute('onclick',`duplicateTrainer(${n})`);
     [['tr_name','tr_name'],['tr_role','tr_role'],['tr_photo','tr_photo'],
      ['tr_preview','tr_preview'],['tr_bio','tr_bio'],['tr_sport','tr_sport'],
      ['tr_interests','tr_interests'],['tr_philosophy','tr_philosophy'],
@@ -916,7 +915,6 @@ function reindexTestimonials(){
     block.id = `tes_block_${n}`;
     block.querySelector('h4').textContent = `Testimonial ${n+1}`;
     block.querySelector('.remove-btn').setAttribute('onclick',`removeTestimonial(${n})`);
-    block.querySelector('.dup-btn').setAttribute('onclick',`duplicateTestimonial(${n})`);
     [['tes_q'],['tes_a']].forEach(([pre])=>{
       const el = block.querySelector(`#${pre}_${old}`);
       if(el) el.id = `${pre}_${n}`;
