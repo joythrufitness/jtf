@@ -15,17 +15,6 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--fb);color:var(--text);background:var(--gray);display:flex;min-height:100vh}
-/* PASSWORD WALL */
-#pw-wall{position:fixed;inset:0;background:var(--black);z-index:9999;display:flex;align-items:center;justify-content:center}
-#pw-box{background:#1a1a1a;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:48px 40px;width:100%;max-width:360px;text-align:center}
-#pw-box h2{font-family:var(--fh);font-size:16px;font-weight:800;color:#fff;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
-#pw-box p{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:28px}
-#pw-box input{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:3px;padding:12px 16px;font-family:var(--fb);font-size:15px;color:#fff;outline:none;text-align:center;letter-spacing:.05em;transition:border-color .2s}
-#pw-box input:focus{border-color:var(--orange)}
-#pw-box button{margin-top:14px;width:100%;background:var(--orange);color:#fff;border:none;font-family:var(--fh);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:13px;border-radius:3px;cursor:pointer;transition:background .2s}
-#pw-box button:hover{background:var(--orange-dk)}
-#pw-error{font-size:12px;color:#e05555;margin-top:12px;min-height:18px}
-#app{display:none}
 
 /* SIDEBAR */
 #sidebar{
@@ -179,38 +168,26 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
 
 /* divider */
 .divider{border:none;border-top:1px solid var(--border);margin:20px 0}
-.add-btn{
-  background:none;border:2px dashed var(--border);color:var(--light);
-  font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.1em;
-  text-transform:uppercase;padding:11px 20px;border-radius:3px;cursor:pointer;
-  width:100%;margin-top:4px;transition:all .2s;
-}
-.add-btn:hover{border-color:var(--orange);color:var(--orange)}
-.remove-btn{
-  position:absolute;top:14px;right:14px;
-  background:none;border:1px solid var(--border);color:var(--light);
-  font-size:11px;font-family:var(--fh);font-weight:700;letter-spacing:.08em;
-  text-transform:uppercase;padding:5px 10px;border-radius:3px;cursor:pointer;
-  transition:all .2s;
-}
-.remove-btn:hover{border-color:#e05555;color:#e05555;background:#fff5f5}
 </style>
 </head>
 <body>
 
 <!-- PASSWORD WALL -->
-<div id="pw-wall">
-  <div id="pw-box">
-    <h2>JTF Site Editor</h2>
-    <p>joythrufitness.com</p>
-    <input type="password" id="pw-input" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkPw()"/>
-    <button onclick="checkPw()">Unlock Editor</button>
-    <p id="pw-error"></p>
+<div id="pw-wall" style="position:fixed;inset:0;background:#111;display:flex;align-items:center;justify-content:center;z-index:9999">
+  <div style="text-align:center;color:#fff;font-family:'Montserrat',sans-serif">
+    <div style="font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#e93e3a;margin-bottom:24px">JTF Site Editor</div>
+    <input id="pw-input" type="password" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkPw()"
+      style="padding:12px 16px;font-size:15px;border:1px solid #444;background:#222;color:#fff;border-radius:4px;outline:none;width:240px;display:block;margin:0 auto 12px"/>
+    <button onclick="checkPw()"
+      style="padding:12px 24px;background:#e93e3a;color:#fff;border:none;border-radius:4px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;width:240px">
+      Unlock Editor
+    </button>
+    <p id="pw-error" style="color:#e93e3a;font-size:13px;margin-top:12px;height:18px"></p>
   </div>
 </div>
 
 <!-- APP (hidden until unlocked) -->
-<div id="app" style="display:none;width:100%;display:none">
+<div id="app" style="display:none">
 
 <!-- SIDEBAR -->
 <aside id="sidebar">
@@ -503,7 +480,6 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
         <input type="text" id="tr_heading"/>
       </div>
       <div id="trainers_wrap"></div>
-      <button class="add-btn" onclick="addTrainer()">+ Add Trainer</button>
     </div>
   </div>
 
@@ -516,7 +492,6 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
     </div>
     <div class="es-body">
       <div id="tes_wrap"></div>
-      <button class="add-btn" onclick="addTestimonial()">+ Add Testimonial</button>
     </div>
   </div>
 
@@ -755,76 +730,39 @@ function buildPricingSBR(sbr){
   });
 }
 
-let trainerCount = 0;
-let testimonialCount = 0;
-
 function buildTrainers(people){
   const w=document.getElementById('trainers_wrap'); w.innerHTML='';
-  trainerCount = people.length;
-  people.forEach((p,i)=> renderTrainer(i, p));
-}
-
-function renderTrainer(i, p={}){
-  const w=document.getElementById('trainers_wrap');
-  const block=document.createElement('div');
-  block.className='rep-block';
-  block.id=`tr_block_${i}`;
-  block.innerHTML=`
-    <button class="remove-btn" onclick="removeTrainer(${i})">✕ Remove</button>
-    <h4>Trainer ${i+1}</h4>
-    <div class="row2">
-      <div class="field"><label>Name</label><input type="text" id="tr_name_${i}" value="${esc(p.name||'')}"/></div>
-      <div class="field"><label>Role / Title</label><input type="text" id="tr_role_${i}" value="${esc(p.role||'')}"/></div>
-    </div>
-    <div class="field"><label>Photo Path</label><input type="text" id="tr_photo_${i}" value="${esc(p.photo||'')}"/></div>
-    <div class="field"><label>Bio</label><textarea id="tr_bio_${i}">${esc(p.bio||'')}</textarea></div>
-    <div class="row2">
-      <div class="field"><label>Favorite Sport</label><input type="text" id="tr_sport_${i}" value="${esc(p.sport||'')}"/></div>
-      <div class="field"><label>Interests</label><input type="text" id="tr_interests_${i}" value="${esc(p.interests||'')}"/></div>
-    </div>
-    <div class="field"><label>Training Philosophy</label><input type="text" id="tr_philosophy_${i}" value="${esc(p.philosophy||'')}"/></div>
-    <div class="field"><label>Fun Facts</label><input type="text" id="tr_funfacts_${i}" value="${esc(p.funfacts||'')}"/></div>
-    <div class="field"><label>Certifications (one per line)</label><textarea id="tr_certs_${i}">${(p.certs||[]).join('\n')}</textarea></div>`;
-  w.appendChild(block);
-}
-
-function addTrainer(){
-  renderTrainer(trainerCount, {});
-  trainerCount++;
-}
-
-function removeTrainer(i){
-  const block = document.getElementById(`tr_block_${i}`);
-  if(block) block.remove();
+  people.forEach((p,i)=>{
+    w.innerHTML+=`
+    <div class="rep-block">
+      <h4>Trainer ${i+1}</h4>
+      <div class="row2">
+        <div class="field"><label>Name</label><input type="text" id="tr_name_${i}" value="${esc(p.name)}"/></div>
+        <div class="field"><label>Role / Title</label><input type="text" id="tr_role_${i}" value="${esc(p.role)}"/></div>
+      </div>
+      <div class="field"><label>Photo Path</label><input type="text" id="tr_photo_${i}" value="${esc(p.photo)}"/></div>
+      <div class="field"><label>Bio</label><textarea id="tr_bio_${i}">${esc(p.bio)}</textarea></div>
+      <div class="row2">
+        <div class="field"><label>Favorite Sport</label><input type="text" id="tr_sport_${i}" value="${esc(p.sport)}"/></div>
+        <div class="field"><label>Interests</label><input type="text" id="tr_interests_${i}" value="${esc(p.interests)}"/></div>
+      </div>
+      <div class="field"><label>Training Philosophy</label><input type="text" id="tr_philosophy_${i}" value="${esc(p.philosophy)}"/></div>
+      <div class="field"><label>Fun Facts</label><input type="text" id="tr_funfacts_${i}" value="${esc(p.funfacts)}"/></div>
+      <div class="field"><label>Certifications (one per line)</label><textarea id="tr_certs_${i}">${p.certs.join('\n')}</textarea></div>
+    </div>`;
+  });
 }
 
 function buildTestimonials(items){
   const w=document.getElementById('tes_wrap'); w.innerHTML='';
-  testimonialCount = items.length;
-  items.forEach((t,i)=> renderTestimonial(i, t));
-}
-
-function renderTestimonial(i, t={}){
-  const w=document.getElementById('tes_wrap');
-  const block=document.createElement('div');
-  block.className='rep-block';
-  block.id=`tes_block_${i}`;
-  block.innerHTML=`
-    <button class="remove-btn" onclick="removeTestimonial(${i})">✕ Remove</button>
-    <h4>Testimonial ${i+1}</h4>
-    <div class="field"><label>Quote</label><textarea id="tes_q_${i}" class="short">${esc(t.q||'')}</textarea></div>
-    <div class="field"><label>Name</label><input type="text" id="tes_a_${i}" value="${esc(t.a||'')}"/></div>`;
-  w.appendChild(block);
-}
-
-function addTestimonial(){
-  renderTestimonial(testimonialCount, {});
-  testimonialCount++;
-}
-
-function removeTestimonial(i){
-  const block = document.getElementById(`tes_block_${i}`);
-  if(block) block.remove();
+  items.forEach((t,i)=>{
+    w.innerHTML+=`
+    <div class="rep-block">
+      <h4>Testimonial ${i+1}</h4>
+      <div class="field"><label>Quote</label><textarea id="tes_q_${i}" class="short">${esc(t.q)}</textarea></div>
+      <div class="field"><label>Name</label><input type="text" id="tes_a_${i}" value="${esc(t.a)}"/></div>
+    </div>`;
+  });
 }
 
 function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
@@ -929,19 +867,15 @@ function readS(){
   D.about.paragraphs = [g('ab_p0'),g('ab_p1'),g('ab_p2')];
   D.about.image = g('ab_image');
   D.trainers.heading = g('tr_heading');
-  D.trainers.people = Array.from(document.querySelectorAll('#trainers_wrap .rep-block')).map(block=>{
-    const i = block.id.replace('tr_block_','');
-    return {
-      name:g(`tr_name_${i}`), role:g(`tr_role_${i}`), photo:g(`tr_photo_${i}`),
-      bio:g(`tr_bio_${i}`), sport:g(`tr_sport_${i}`), interests:g(`tr_interests_${i}`),
-      philosophy:g(`tr_philosophy_${i}`), funfacts:g(`tr_funfacts_${i}`),
-      certs:lines(`tr_certs_${i}`)
-    };
-  });
-  D.testimonials.items = Array.from(document.querySelectorAll('#tes_wrap .rep-block')).map(block=>{
-    const i = block.id.replace('tes_block_','');
-    return { q:g(`tes_q_${i}`), a:g(`tes_a_${i}`) };
-  });
+  D.trainers.people = D.trainers.people.map((_,i)=>({
+    name:g(`tr_name_${i}`), role:g(`tr_role_${i}`), photo:g(`tr_photo_${i}`),
+    bio:g(`tr_bio_${i}`), sport:g(`tr_sport_${i}`), interests:g(`tr_interests_${i}`),
+    philosophy:g(`tr_philosophy_${i}`), funfacts:g(`tr_funfacts_${i}`),
+    certs:lines(`tr_certs_${i}`)
+  }));
+  D.testimonials.items = D.testimonials.items.map((_,i)=>({
+    q:g(`tes_q_${i}`), a:g(`tes_a_${i}`)
+  }));
   D.contact.phone = g('ct_phone');
   D.contact.email = g('ct_email');
   D.contact.formspreeId = g('ct_formspreeId');
@@ -1361,16 +1295,14 @@ populate(DEFAULTS);
 </div><!-- /#app -->
 
 <script>
-// ── PASSWORD WALL ─────────────────────────────────────────────────────────
-const HASH = '44c5bef5f844454a4040f478430a36c7adba2e2ddf0493c267f010e5e2dc3977';
-
+const HASH = '6d88013cedccab2d3270ebfde90937eb84fb78a29ae617667e9e0ec43c7ea060';
 async function checkPw(){
   const input = document.getElementById('pw-input').value;
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(input));
   const hash = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
   if(hash === HASH){
     document.getElementById('pw-wall').style.display = 'none';
-    document.getElementById('app').style.display = 'flex';
+    document.getElementById('app').style.display = 'block';
   } else {
     const err = document.getElementById('pw-error');
     err.textContent = 'Incorrect password. Try again.';
