@@ -223,7 +223,6 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
     <a href="#s-about">ℹ️ About</a>
     <a href="#s-trainers">🧑‍🏫 Trainers</a>
     <a href="#s-testimonials">⭐ Testimonials</a>
-    <a href="#s-contact">📞 Contact</a>
   </nav>
   <div class="sb-download">
     <button onclick="downloadSite()">⬇ Download index.html</button>
@@ -514,35 +513,6 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
     </div>
   </div>
 
-  <!-- CONTACT -->
-  <div class="edit-section" id="s-contact">
-    <div class="es-header" onclick="toggle(this)">
-      <div class="es-icon">📞</div>
-      <span class="es-title">Contact Info</span>
-      <span class="es-toggle">▾</span>
-    </div>
-    <div class="es-body">
-      <div class="row2">
-        <div class="field">
-          <label>Phone</label>
-          <input type="text" id="ct_phone"/>
-        </div>
-        <div class="field">
-          <label>Email</label>
-          <input type="email" id="ct_email"/>
-        </div>
-      </div>
-      <div class="field">
-        <label>Formspree Form ID</label>
-        <div class="hint">Get this from your Formspree account dashboard</div>
-        <input type="text" id="ct_formspreeId"/>
-      </div>
-      <div class="field">
-        <label>Section Heading</label>
-        <input type="text" id="ct_heading"/>
-      </div>
-    </div>
-  </div>
 
 </main>
 
@@ -869,9 +839,6 @@ function populate(D){
   val('tr_heading', D.trainers.heading);
   buildTrainers(D.trainers.people);
   buildTestimonials(D.testimonials.items);
-  val('ct_phone', D.contact.phone);
-  val('ct_email', D.contact.email);
-  val('ct_formspreeId', D.contact.formspreeId);
   val('ct_heading', D.contact.heading);
 }
 
@@ -941,9 +908,6 @@ function readS(){
     const i=block.id.replace('tes_block_','');
     return {q:g(`tes_q_${i}`), a:g(`tes_a_${i}`)};
   });
-  D.contact.phone = g('ct_phone');
-  D.contact.email = g('ct_email');
-  D.contact.formspreeId = g('ct_formspreeId');
   D.contact.heading = g('ct_heading');
 
   return D;
