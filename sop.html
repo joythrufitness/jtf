@@ -56,6 +56,11 @@ a{color:var(--orange)}
 
 /* FOOTER */
 .footer{text-align:center;font-size:12px;color:var(--light);padding-top:32px;border-top:1px solid var(--border)}
+
+/* DESKTOP NOTICE */
+.desktop-notice{display:none;background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:20px 24px;margin-bottom:32px;font-size:14px;color:#7a5c00;line-height:1.7;text-align:center}
+.desktop-notice strong{display:block;font-family:var(--fh);font-size:13px;font-weight:800;margin-bottom:6px;color:#5a3e00}
+@media(max-width:768px){.desktop-notice{display:block}}
 </style>
 </head>
 <body>
@@ -67,6 +72,10 @@ a{color:var(--orange)}
 </div>
 
 <div class="page">
+  <div class="desktop-notice">
+    <strong>Desktop Recommended</strong>
+    This guide is best used on a desktop or laptop. The admin panel requires a larger screen to work properly.
+  </div>
 
   <div class="intro">
     <p>This guide walks you through how to <strong>edit website content</strong>, <strong>download your changes</strong>, and <strong>publish them to the live site</strong>. No technical experience needed — just follow the steps below.</p>
