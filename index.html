@@ -746,8 +746,8 @@ const S = {
       const r=await fetch('https://api.web3forms.com/submit',{method:'POST',body:new FormData(e.target),headers:{'Accept':'application/json'}});
       const json=await r.json();
       if(json.success){window.location.href='/thankyou.html';}
-      else{btn.textContent='Error — try again';btn.disabled=false;}
-    }catch{btn.textContent='Error — try again';btn.disabled=false;}
+      else{btn.textContent='Error: '+json.message;btn.disabled=false;}
+    }catch(err){btn.textContent='Error: '+err.message;btn.disabled=false;}
   });
 })();
 </script>
