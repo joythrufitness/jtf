@@ -227,9 +227,20 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
 }
 .browse-btn:hover{background:var(--border)}
 .img-preview{max-width:240px;max-height:140px;object-fit:cover;border-radius:6px;margin-top:8px;display:none;}
+.mobile-notice{display:none;position:fixed;inset:0;background:#111;z-index:9999;padding:40px 28px;text-align:center;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+.mobile-notice h2{font-family:var(--fh);font-size:22px;font-weight:800;color:#fff}
+.mobile-notice p{font-size:15px;color:rgba(255,255,255,.6);line-height:1.7;max-width:320px}
+.mobile-notice span{font-size:48px}
+@media(max-width:768px){.mobile-notice{display:flex}}
 </style>
 </head>
 <body>
+
+<div class="mobile-notice">
+  <span>🖥️</span>
+  <h2>Desktop Only</h2>
+  <p>The JTF Site Editor is designed for desktop use. Please open this page on a laptop or computer.</p>
+</div>
 
 <div id="app">
 
