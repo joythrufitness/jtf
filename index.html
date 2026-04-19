@@ -717,7 +717,6 @@ const S = {
       <input type="hidden" name="access_key" value="${ct.web3formsKey}"/>
       <input type="hidden" name="subject" value="New Contact — Joy Thru Fitness"/>
       <input type="hidden" name="from_name" value="JTF Website"/>
-      <input type="hidden" name="redirect" value="https://www.joythrufitness.com/thankyou.html"/>
       <input type="hidden" name="botcheck" style="display:none"/>
       <div class="fr">
         <div class="fg"><label>First Name</label><input type="text" name="firstName" required/></div>
@@ -746,7 +745,7 @@ const S = {
     try{
       const r=await fetch('https://api.web3forms.com/submit',{method:'POST',body:new FormData(e.target),headers:{'Accept':'application/json'}});
       const json=await r.json();
-      if(json.success){e.target.reset();$('formOk').style.display='block';btn.textContent='Sent!';}
+      if(json.success){window.location.href='/thankyou.html';}
       else{btn.textContent='Error — try again';btn.disabled=false;}
     }catch{btn.textContent='Error — try again';btn.disabled=false;}
   });
