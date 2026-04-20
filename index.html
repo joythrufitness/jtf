@@ -129,7 +129,11 @@ a{color:inherit;text-decoration:none}
 .pc-price{font-family:var(--fh);font-size:40px;font-weight:800;color:var(--orange);line-height:1;margin-bottom:4px}
 .pc-period{font-size:12px;color:#fff;margin-bottom:16px}
 .pc-badge{display:inline-block;align-self:flex-start;background:var(--orange);color:#fff;font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:8px}
-.pc-save{font-size:11px;color:#6fcf6f;font-weight:600;margin-bottom:10px}
+.pc-save{font-size:11px;color:#fff;font-weight:600;margin-bottom:10px}
+.pc-save span{color:#4caf50}
+.pc-col-header{display:flex;justify-content:space-between;font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:4px}
+.pc-cta{display:block;width:100%;margin-top:16px;padding:10px;background:var(--orange);color:#fff;font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-align:center;border-radius:3px;border:none;cursor:pointer;transition:background .2s}
+.pc-cta:hover{background:var(--orange-dk)}
 .pc-row-mo{font-size:11px;color:#4caf50;text-align:right;padding-bottom:14px;margin-top:2px}
 .pc-pkg{font-size:12px;font-weight:700;color:#fff;text-align:center;margin-top:auto;padding-top:12px;border-top:1px solid #2a2a2a;letter-spacing:.04em}
 .pc-feats{list-style:none}
@@ -636,8 +640,10 @@ const S = {
   pr.individual.forEach(g=>{
     const hi=g.badge?' hi':'';
     const badge=g.badge?`<span class="pc-badge">${g.badge}</span><br>`:'';
-    const save=g.save?`<p class="pc-save">↓ ${g.save}</p>`:'';
-    p0+=`<div class="pc${hi}">${badge}<p class="pc-freq">${g.freq}</p><p class="pc-title">Monthly Package</p>${save}<div class="pc-rows-wrap">${rows(g.rows)}</div><p class="pc-pkg">${g.sessions} sessions/mo · billed monthly</p></div>`;
+    const save=g.save?`<p class="pc-save"><span>↓</span> ${g.save}</p>`:'';
+    const cta=g.badge?`<a href="#contact" class="pc-cta">Get Started</a>`:'';
+    const colHeader=`<div class="pc-col-header"><span>Duration</span><span>Per Session</span></div>`;
+    p0+=`<div class="pc${hi}">${badge}<p class="pc-freq">${g.freq}</p>${save}<div class="pc-rows-wrap">${colHeader}${rows(g.rows)}</div>${cta}<p class="pc-pkg">${g.sessions} sessions/mo · billed monthly</p></div>`;
   });
   p0+=`</div>`;
   panels.push(p0);
