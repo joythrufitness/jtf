@@ -659,10 +659,10 @@ const S = {
 
   // Panel 2 — Team
   const tm=pr.team;
-  let p2=`<p class="pr-note">${tm.note}</p><div class="pr-grid">`;
+  let p2=`<div class="pr-grid">`;
   tm.groups.forEach(g=>{
     const tmColHeader=`<div class="pc-col-header"><span>Duration</span><span>Monthly</span></div>`;
-    p2+=`<div class="pc"><p class="pc-freq">${g.freq}</p><div class="pc-rows-wrap">${tmColHeader}${rows(g.rows)}</div><p class="pc-pkg">${g.sessions} sessions/mo · billed monthly · split between 2</p></div>`;
+    p2+=`<div class="pc"><p class="pc-freq">${g.freq}</p><div class="pc-rows-wrap">${tmColHeader}${rows(g.rows)}</div><p class="pc-pkg">${g.sessions} sessions/mo · billed monthly · split between 2 people</p></div>`;
   });
   p2+=`</div>`;
   panels.push(p2);
