@@ -338,8 +338,8 @@ const S = {
       title:'Swim, Cycling & Running',
       note:'Video analysis included · Video Analysis Only: $40',
       groups:[
-        {freq:'1x per week', rows:[{l:'60 min',v:'$76'},{l:'45 min',v:'$59'},{l:'30 min',v:'$48'}]},
-        {freq:'2x per week', rows:[{l:'60 min',v:'$72'},{l:'45 min',v:'$43'},{l:'30 min',v:'$55'}]}
+        {freq:'1x per week', sessions:4, rows:[{l:'60 min',v:'$76',mo:'$304/mo'},{l:'45 min',v:'$59',mo:'$236/mo'},{l:'30 min',v:'$48',mo:'$192/mo'}]},
+        {freq:'2x per week', sessions:8, rows:[{l:'60 min',v:'$72',mo:'$576/mo'},{l:'45 min',v:'$43',mo:'$344/mo'},{l:'30 min',v:'$55',mo:'$440/mo'}]}
       ]
     }
   },
@@ -671,7 +671,7 @@ const S = {
   const tri=pr.triathlon;
   let p3=`<div class="pr-grid">`;
   tri.tiers.forEach(t=>{
-    p3+=`<div class="pc${t.hi?' hi':''}"><p class="pc-freq">${t.label}</p><p class="pc-price">${t.price}</p><p class="pc-period">${t.period}</p><ul class="pc-feats">${t.feats.map(f=>`<li>${f}</li>`).join('')}</ul></div>`;
+    p3+=`<div class="pc${t.hi?' hi':''}"><p class="pc-freq">${t.label}</p><p class="pc-price" style="color:#4caf50">${t.price}</p><p class="pc-period">${t.period}</p><ul class="pc-feats">${t.feats.map(f=>`<li>${f}</li>`).join('')}</ul></div>`;
   });
   p3+=`</div>`;
   panels.push(p3);
@@ -680,7 +680,8 @@ const S = {
   const sbr=pr.sbr;
   let p4=`<p class="pr-note">${sbr.note}</p><div class="pr-grid">`;
   sbr.groups.forEach(g=>{
-    p4+=`<div class="pc"><p class="pc-freq">${g.freq}</p><p class="pc-title">Individual</p>${rows(g.rows)}</div>`;
+    const sbrColHeader=`<div class="pc-col-header"><span>Duration</span><span>Per Session</span></div>`;
+    p4+=`<div class="pc"><p class="pc-freq">${g.freq}</p><div class="pc-rows-wrap">${sbrColHeader}${rows(g.rows)}</div><p class="pc-pkg">${g.sessions} sessions/mo · billed monthly</p></div>`;
   });
   p4+=`</div>`;
   panels.push(p4);
