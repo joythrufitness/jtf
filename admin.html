@@ -621,10 +621,10 @@ const DEFAULTS = {
   pricing:{
     consultNote:'Consult: 1 hour FREE · Over 1 hour: $30 per 30 minutes',
     individual:[
-      {freq:'1x per week',rows:[{l:'60 min',v:'$76'},{l:'45 min',v:'$59'},{l:'30 min',v:'$45'}]},
-      {freq:'2x per week',rows:[{l:'60 min',v:'$70'},{l:'45 min',v:'$54'},{l:'30 min',v:'$43'}]},
-      {freq:'3x per week',rows:[{l:'60 min',v:'$65'},{l:'45 min',v:'$48'},{l:'30 min',v:'$37'}]},
-      {freq:'4x per week',rows:[{l:'60 min',v:'$59'},{l:'45 min',v:'$46'},{l:'30 min',v:'$34'}]}
+      {freq:'1x per week',sessions:4,rows:[{l:'60 min',v:'$76',mo:'$304/mo'},{l:'45 min',v:'$59',mo:'$236/mo'},{l:'30 min',v:'$45',mo:'$180/mo'}]},
+      {freq:'2x per week',sessions:8,save:'Save $6/session vs. 1x',rows:[{l:'60 min',v:'$70',mo:'$560/mo'},{l:'45 min',v:'$54',mo:'$432/mo'},{l:'30 min',v:'$43',mo:'$344/mo'}]},
+      {freq:'3x per week',sessions:12,badge:'Best Value',save:'Save $11/session vs. 1x',rows:[{l:'60 min',v:'$65',mo:'$780/mo'},{l:'45 min',v:'$48',mo:'$576/mo'},{l:'30 min',v:'$37',mo:'$444/mo'}]},
+      {freq:'4x per week',sessions:16,save:'Save $17/session vs. 1x',rows:[{l:'60 min',v:'$59',mo:'$944/mo'},{l:'45 min',v:'$46',mo:'$736/mo'},{l:'30 min',v:'$34',mo:'$544/mo'}]}
     ],
     specials:{
       title:'Personal Training — 1 Hour Specials',
@@ -638,9 +638,9 @@ const DEFAULTS = {
     team:{
       title:'Team Training — Monthly',note:'Split between two people',
       groups:[
-        {freq:'1x per week',rows:[{l:'30 min',v:'$274'},{l:'45 min',v:'$329'},{l:'60 min',v:'$384'}]},
-        {freq:'2x per week',rows:[{l:'30 min',v:'$431'},{l:'45 min',v:'$647'},{l:'60 min',v:'$699'}]},
-        {freq:'3x per week',rows:[{l:'30 min',v:'$594'},{l:'45 min',v:'$783'},{l:'60 min',v:'$989'}]}
+        {freq:'1x per week',sessions:4,rows:[{l:'30 min',v:'$274'},{l:'45 min',v:'$329'},{l:'60 min',v:'$384'}]},
+        {freq:'2x per week',sessions:8,rows:[{l:'30 min',v:'$431'},{l:'45 min',v:'$647'},{l:'60 min',v:'$699'}]},
+        {freq:'3x per week',sessions:12,rows:[{l:'30 min',v:'$594'},{l:'45 min',v:'$783'},{l:'60 min',v:'$989'}]}
       ]
     },
     triathlon:{
@@ -654,8 +654,8 @@ const DEFAULTS = {
     sbr:{
       title:'Swim, Cycling & Running',note:'Video analysis included · Video Analysis Only: $40',
       groups:[
-        {freq:'1x per week',rows:[{l:'60 min',v:'$76'},{l:'45 min',v:'$59'},{l:'30 min',v:'$48'}]},
-        {freq:'2x per week',rows:[{l:'60 min',v:'$72'},{l:'45 min',v:'$43'},{l:'30 min',v:'$55'}]}
+        {freq:'1x per week',sessions:4,rows:[{l:'60 min',v:'$76',mo:'$304/mo'},{l:'45 min',v:'$59',mo:'$236/mo'},{l:'30 min',v:'$48',mo:'$192/mo'}]},
+        {freq:'2x per week',sessions:8,rows:[{l:'60 min',v:'$72',mo:'$576/mo'},{l:'45 min',v:'$43',mo:'$344/mo'},{l:'30 min',v:'$55',mo:'$440/mo'}]}
       ]
     }
   },
@@ -691,7 +691,7 @@ const DEFAULTS = {
     label:'Contact Us',heading:'How can we make your training a lifestyle?',
     phone:'386-481-8225',email:'info@joythrufitness.com',
     web3formsKey:'80ff6a5c-3ade-4447-b358-61386f2c9b6a',
-    packages:['Personal Training — 1x/week','Personal Training — 2x/week','Personal Training — 3x/week','Personal Training — 4x/week','3 Months Mega Deal','Team Training','JOY Thru Triathlon','Group Classes','TIME 4 U Online Program','Swim / Cycling / Running','Other / Question']
+    packages:['Personal Training — 1x/week','Personal Training — 2x/week','Personal Training — 3x/week (Best Value)','Personal Training — 4x/week','3 Months Mega Deal','Team Training','JOY Thru Triathlon','Group Classes','TIME 4 U Online Program','Swim / Cycling / Running','Other / Question']
   }
 };
 
@@ -1005,8 +1005,10 @@ function readS(){
   D.payment.zelle = g('pay_zelle');
   D.pricing.consultNote = g('pr_consultNote');
   D.pricing.individual = D.pricing.individual.map((grp,i)=>({
-    freq:grp.freq,
-    rows:grp.rows.map((r,j)=>({l:r.l, v:g(`pr_ind_${i}_${j}`)}))
+    freq:grp.freq, sessions:grp.sessions,
+    ...(grp.badge&&{badge:grp.badge}),
+    ...(grp.save&&{save:grp.save}),
+    rows:grp.rows.map((r,j)=>({l:r.l, v:g(`pr_ind_${i}_${j}`), ...(r.mo&&{mo:r.mo})}))
   }));
   D.pricing.specials.note = g('pr_sp_note');
   D.pricing.specials.deals = D.pricing.specials.deals.map((_,i)=>({
@@ -1014,7 +1016,7 @@ function readS(){
   }));
   D.pricing.team.note = g('pr_tm_note');
   D.pricing.team.groups = D.pricing.team.groups.map((grp,i)=>({
-    freq:grp.freq,
+    freq:grp.freq, sessions:grp.sessions,
     rows:grp.rows.map((r,j)=>({l:r.l, v:g(`pr_tm_${i}_${j}`)}))
   }));
   D.pricing.triathlon.tiers = D.pricing.triathlon.tiers.map((t,i)=>({
@@ -1024,8 +1026,8 @@ function readS(){
   }));
   D.pricing.sbr.note = g('pr_sbr_note');
   D.pricing.sbr.groups = D.pricing.sbr.groups.map((grp,i)=>({
-    freq:grp.freq,
-    rows:grp.rows.map((r,j)=>({l:r.l, v:g(`pr_sbr_${i}_${j}`)}))
+    freq:grp.freq, sessions:grp.sessions,
+    rows:grp.rows.map((r,j)=>({l:r.l, v:g(`pr_sbr_${i}_${j}`), ...(r.mo&&{mo:r.mo})}))
   }));
   D.about.heading = g('ab_heading');
   D.about.paragraphs = [g('ab_p0'),g('ab_p1'),g('ab_p2')];
