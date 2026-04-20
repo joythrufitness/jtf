@@ -127,10 +127,6 @@ a{color:inherit;text-decoration:none}
 .pc-row-v{font-family:var(--fh);font-weight:700;color:var(--text)}
 .pc-price{font-family:var(--fh);font-size:40px;font-weight:800;color:var(--orange);line-height:1;margin-bottom:4px}
 .pc-period{font-size:12px;color:var(--light);margin-bottom:16px}
-.pc-badge{display:inline-block;background:var(--orange);color:#fff;font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:8px}
-.pc-save{font-size:11px;color:#4a9a4a;font-weight:600;margin-bottom:10px}
-.pc-row-mo{font-size:11px;color:var(--light);text-align:right;padding-bottom:6px;margin-top:-4px}
-.pc-pkg{font-size:11px;color:var(--light);text-align:center;margin-top:12px;padding-top:10px;border-top:1px solid rgba(0,0,0,.08)}
 .pc-feats{list-style:none}
 .pc-feats li{font-size:13px;color:var(--mid);padding:6px 0 6px 18px;border-bottom:1px solid var(--border);line-height:1.4;position:relative}
 .pc-feats li:last-child{border-bottom:none}
@@ -295,10 +291,10 @@ const S = {
   pricing:{
     consultNote: 'Consult: 1 hour FREE · Over 1 hour: $30 per 30 minutes',
     individual:[
-      {freq:'1x per week', sessions:4, rows:[{l:'60 min',v:'$76',mo:'$308/mo'},{l:'45 min',v:'$59',mo:'$236/mo'},{l:'30 min',v:'$45',mo:'$180/mo'}]},
-      {freq:'2x per week', sessions:8, save:'Save $6/session vs. 1x', rows:[{l:'60 min',v:'$70',mo:'$560/mo'},{l:'45 min',v:'$54',mo:'$432/mo'},{l:'30 min',v:'$43',mo:'$344/mo'}]},
-      {freq:'3x per week', sessions:12, badge:'Best Value', save:'Save $11/session vs. 1x', rows:[{l:'60 min',v:'$65',mo:'$780/mo'},{l:'45 min',v:'$48',mo:'$576/mo'},{l:'30 min',v:'$37',mo:'$444/mo'}]},
-      {freq:'4x per week', sessions:16, save:'Save $17/session vs. 1x', rows:[{l:'60 min',v:'$59',mo:'$944/mo'},{l:'45 min',v:'$46',mo:'$736/mo'},{l:'30 min',v:'$34',mo:'$544/mo'}]}
+      {freq:'1x per week', rows:[{l:'60 min',v:'$76'},{l:'45 min',v:'$59'},{l:'30 min',v:'$45'}]},
+      {freq:'2x per week', rows:[{l:'60 min',v:'$70'},{l:'45 min',v:'$54'},{l:'30 min',v:'$43'}]},
+      {freq:'3x per week', rows:[{l:'60 min',v:'$65'},{l:'45 min',v:'$48'},{l:'30 min',v:'$37'}]},
+      {freq:'4x per week', rows:[{l:'60 min',v:'$59'},{l:'45 min',v:'$46'},{l:'30 min',v:'$34'}]}
     ],
     specials:{
       title:'Personal Training — 1 Hour Specials',
@@ -565,7 +561,7 @@ const S = {
 <script>
 (()=>{
   const $=id=>document.getElementById(id);
-  const rows=arr=>arr.map(r=>`<div class="pc-row"><span class="pc-row-l">${r.l}</span><span class="pc-row-v">${r.v}</span></div>${r.mo?`<div class="pc-row-mo">${r.mo}</div>`:''}`).join('');
+  const rows=arr=>arr.map(r=>`<div class="pc-row"><span class="pc-row-l">${r.l}</span><span class="pc-row-v">${r.v}</span></div>`).join('');
 
   // logos
   $('logo-nav').src  = S.images.logoNav;
@@ -633,10 +629,7 @@ const S = {
   // Panel 0 — Individual PT
   let p0=`<p class="pr-note">${pr.consultNote}</p><div class="pr-grid">`;
   pr.individual.forEach(g=>{
-    const hi=g.badge?' hi':'';
-    const badge=g.badge?`<span class="pc-badge">${g.badge}</span><br>`:'';
-    const save=g.save?`<p class="pc-save">↓ ${g.save}</p>`:'';
-    p0+=`<div class="pc${hi}">${badge}<p class="pc-freq">${g.freq}</p><p class="pc-title">Monthly Package</p>${save}${rows(g.rows)}<p class="pc-pkg">${g.sessions} sessions/mo · billed monthly</p></div>`;
+    p0+=`<div class="pc"><p class="pc-freq">${g.freq}</p><p class="pc-title">Individual</p>${rows(g.rows)}</div>`;
   });
   p0+=`</div>`;
   panels.push(p0);
