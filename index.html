@@ -318,9 +318,9 @@ const S = {
       title:'Team Training — Monthly',
       note:'Split between two people',
       groups:[
-        {freq:'1x per week', rows:[{l:'30 min',v:'$274'},{l:'45 min',v:'$329'},{l:'60 min',v:'$384'}]},
-        {freq:'2x per week', rows:[{l:'30 min',v:'$431'},{l:'45 min',v:'$647'},{l:'60 min',v:'$699'}]},
-        {freq:'3x per week', rows:[{l:'30 min',v:'$594'},{l:'45 min',v:'$783'},{l:'60 min',v:'$989'}]}
+        {freq:'1x per week', sessions:4, rows:[{l:'30 min',v:'$274'},{l:'45 min',v:'$329'},{l:'60 min',v:'$384'}]},
+        {freq:'2x per week', sessions:8, rows:[{l:'30 min',v:'$431'},{l:'45 min',v:'$647'},{l:'60 min',v:'$699'}]},
+        {freq:'3x per week', sessions:12, rows:[{l:'30 min',v:'$594'},{l:'45 min',v:'$783'},{l:'60 min',v:'$989'}]}
       ]
     },
     triathlon:{
@@ -661,7 +661,8 @@ const S = {
   const tm=pr.team;
   let p2=`<p class="pr-note">${tm.note}</p><div class="pr-grid">`;
   tm.groups.forEach(g=>{
-    p2+=`<div class="pc"><p class="pc-freq">${g.freq}</p><p class="pc-title">Team</p>${rows(g.rows)}</div>`;
+    const tmColHeader=`<div class="pc-col-header"><span>Duration</span><span>Monthly</span></div>`;
+    p2+=`<div class="pc"><p class="pc-freq">${g.freq}</p><div class="pc-rows-wrap">${tmColHeader}${rows(g.rows)}</div><p class="pc-pkg">${g.sessions} sessions/mo · billed monthly · split between 2</p></div>`;
   });
   p2+=`</div>`;
   panels.push(p2);
