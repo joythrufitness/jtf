@@ -419,7 +419,7 @@ const S = {
     web3formsKey: '80ff6a5c-3ade-4447-b358-61386f2c9b6a',
     packages:[
       'Personal Training — 1x/week','Personal Training — 2x/week',
-      'Personal Training — 3x/week','Personal Training — 4x/week',
+      'Personal Training — 3x/week (Best Value)','Personal Training — 4x/week',
       '3 Months Mega Deal','Team Training','JOY Thru Triathlon',
       'Group Classes','TIME 4 U Online Program','Swim / Cycling / Running','Other / Question'
     ]
@@ -641,7 +641,7 @@ const S = {
     const hi=g.badge?' hi':'';
     const badge=g.badge?`<span class="pc-badge">${g.badge}</span><br>`:'';
     const save=g.save?`<p class="pc-save"><span>↓</span> ${g.save}</p>`:'';
-    const cta=g.badge?`<button class="pc-cta" data-package="Personal Training — 3x/week">Get Started</button>`:'';
+    const cta=g.badge?`<button class="pc-cta" data-package="Personal Training — 3x/week (Best Value)">Get Started</button>`:'';
     const colHeader=`<div class="pc-col-header"><span>Duration</span><span>Per Session</span></div>`;
     p0+=`<div class="pc${hi}">${badge}<p class="pc-freq">${g.freq}</p>${save}<div class="pc-rows-wrap">${colHeader}${rows(g.rows)}</div>${cta}<p class="pc-pkg">${g.sessions} sessions/mo · billed monthly</p></div>`;
   });
