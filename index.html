@@ -641,7 +641,7 @@ const S = {
     const hi=g.badge?' hi':'';
     const badge=g.badge?`<span class="pc-badge">${g.badge}</span><br>`:'';
     const save=g.save?`<p class="pc-save"><span>↓</span> ${g.save}</p>`:'';
-    const cta=g.badge?`<a href="#contact" class="pc-cta">Get Started</a>`:'';
+    const cta=g.badge?`<button class="pc-cta" data-package="Personal Training — 3x/week">Get Started</button>`:'';
     const colHeader=`<div class="pc-col-header"><span>Duration</span><span>Per Session</span></div>`;
     p0+=`<div class="pc${hi}">${badge}<p class="pc-freq">${g.freq}</p>${save}<div class="pc-rows-wrap">${colHeader}${rows(g.rows)}</div>${cta}<p class="pc-pkg">${g.sessions} sessions/mo · billed monthly</p></div>`;
   });
@@ -697,6 +697,20 @@ const S = {
     document.querySelectorAll('.pr-panel').forEach(p=>p.classList.remove('active'));
     btn.classList.add('active');
     document.querySelector(`.pr-panel[data-panel="${idx}"]`).classList.add('active');
+  });
+
+  // pricing CTA — auto-populate package on contact form
+  document.addEventListener('click',e=>{
+    const btn=e.target.closest('[data-package]');
+    if(!btn) return;
+    const pkg=btn.dataset.package;
+    const contact=$('contact');
+    const sel=document.querySelector('select[name="package"]');
+    if(sel){
+      const opt=[...sel.options].find(o=>o.value===pkg||o.text===pkg);
+      if(opt) sel.value=opt.value;
+    }
+    if(contact) contact.scrollIntoView({behavior:'smooth',block:'start'});
   });
 
   // about
