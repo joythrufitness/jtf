@@ -174,6 +174,7 @@ a{color:inherit;text-decoration:none}
 .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--orange)}
 .fg textarea{resize:vertical;min-height:100px}
 .form-ok{display:none;background:var(--orange-lt);color:var(--orange-dk);border:1px solid var(--orange);padding:12px 16px;border-radius:3px;font-size:14px;margin-top:12px}
+.hp-field{position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;tab-index:-1}
 /* footer */
 footer{background:var(--black);color:rgba(255,255,255,.6);padding:44px 0 26px}
 .foot-inner{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:28px;margin-bottom:36px}
@@ -766,6 +767,7 @@ const S = {
       <input type="hidden" name="subject" value="New Contact — Joy Thru Fitness"/>
       <input type="hidden" name="from_name" value="JTF Website"/>
       <input type="hidden" name="botcheck" style="display:none"/>
+      <div class="hp-field" aria-hidden="true"><label>Leave this field empty</label><input type="text" name="website" tabindex="-1" autocomplete="off"/></div>
       <div class="fr">
         <div class="fg"><label>First Name</label><input type="text" name="firstName" required/></div>
         <div class="fg"><label>Last Name</label><input type="text" name="lastName" required/></div>
@@ -790,6 +792,7 @@ const S = {
     e.preventDefault();
     const btn=e.target.querySelector('button[type=submit]');
     btn.textContent='Sending…'; btn.disabled=true;
+    if(e.target.querySelector('[name=website]')?.value){btn.textContent='Send Message';btn.disabled=false;return;}
     try{
       const r=await fetch('https://api.web3forms.com/submit',{method:'POST',body:new FormData(e.target),headers:{'Accept':'application/json'}});
       const json=await r.json();
