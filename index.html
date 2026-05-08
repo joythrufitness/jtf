@@ -284,6 +284,7 @@ const S = {
     priceBadge:  '$18 until May 5th · $20 after',
     scheduleUrl: 'https://www.vagaro.com/joythrufitness/classes',
     image:       'images/group-clases.jpg',
+    specialMsg:  '',
     list:[
       {name:'Full Bodyweight Workout', desc:'The most effective way to boost your metabolism, burn body fat, and gain strength with a variety of movements that work the major muscle groups. This class is for all fitness levels.'},
       {name:'Core and More',           desc:'This circuit style class will move you in different directions to improve balance, core stability, posture, fall prevention, and cardiovascular fitness. For all fitness levels.'},
@@ -615,6 +616,7 @@ const S = {
     <p class="label">${gc.label}</p>
     <h2 class="heading">${gc.heading}</h2>
     <span class="price-badge">${gc.priceBadge}</span>
+    ${gc.specialMsg?`<p class="body-text">${gc.specialMsg}</p>`:''}
     ${gc.list.map(c=>`<div class="class-item"><h4>${c.name}</h4><p>${c.desc}</p></div>`).join('')}
     <br/><a href="${gc.scheduleUrl}" class="btn btn-green" target="_blank" rel="noopener">See Schedules</a>`;
 
