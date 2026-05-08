@@ -1061,28 +1061,46 @@ function validateBeforeDownload(){
   return warnings;
 }
 
-function downloadSite(){
+async function downloadSite(){
   const warnings = validateBeforeDownload();
   if(warnings.length){
     const proceed = confirm('Warning — the following fields need attention:\n\n' +
       warnings.map(w=>`• ${w}`).join('\n') + '\n\nDownload anyway?');
     if(!proceed) return;
   }
-  if(!confirm('This will replace index.html. Continue?')) return;
   const S = readS();
   const sBlock = 'const S = ' + JSON.stringify(S, null, 2) + ';';
   const html = INDEX_TEMPLATE.replace('/*__S_PLACEHOLDER__*/', sBlock);
-  const blob = new Blob([html], {type:'text/html'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'index.html';
-  a.click();
-  URL.revokeObjectURL(a.href);
+  if(window.showSaveFilePicker){
+    try{
+      const fh = await window.showSaveFilePicker({
+        suggestedName: 'index.html',
+        types:[{description:'HTML file',accept:{'text/html':['.html']}}]
+      });
+      const w = await fh.createWritable();
+      await w.write(html);
+      await w.close();
+    }catch(e){
+      if(e.name==='AbortError') return;
+      // fallback for unexpected errors
+      _blobDownload(html);
+    }
+  } else {
+    _blobDownload(html);
+  }
   localStorage.removeItem('jtf_admin_autosave');
   hasUnsavedChanges = false;
   const t=document.getElementById('toast');
   t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2800);
+}
+function _blobDownload(html){
+  const blob = new Blob([html],{type:'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'index.html';
+  a.click();
+  URL.revokeObjectURL(a.href);
 }
 
 // ── UI HELPERS ────────────────────────────────────────────────────────────
