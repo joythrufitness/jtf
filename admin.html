@@ -1125,7 +1125,8 @@ async function downloadSite(){
   } else {
     _blobDownload(html);
   }
-  localStorage.removeItem('jtf_admin_autosave');
+  localStorage.setItem(LS_SAVED, JSON.stringify(S));
+  localStorage.removeItem(LS_KEY);
   hasUnsavedChanges = false;
   const t=document.getElementById('toast');
   t.classList.add('show');
@@ -1190,7 +1191,8 @@ function pickImageFile(targetInputId, previewId){
 }
 
 // ── AUTO-SAVE ─────────────────────────────────────────────────────────────
-const LS_KEY = 'jtf_admin_autosave';
+const LS_KEY   = 'jtf_admin_autosave';
+const LS_SAVED = 'jtf_admin_last_download';
 let hasUnsavedChanges = false;
 let autoSaveDebounce;
 
@@ -1242,7 +1244,8 @@ window.addEventListener('scroll',()=>{
 },{passive:true});
 
 // ── INIT ──────────────────────────────────────────────────────────────────
-populate(DEFAULTS);
+const _lastSaved = localStorage.getItem(LS_SAVED);
+populate(_lastSaved ? JSON.parse(_lastSaved) : DEFAULTS);
 
 // Auto-save on input (debounced 2s) + every 30s
 document.getElementById('main').addEventListener('input', ()=>{
