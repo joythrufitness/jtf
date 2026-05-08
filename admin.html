@@ -841,7 +841,7 @@ function renderTrainer(i, p={}){
     <div class="field"><label>Bio</label><textarea id="tr_bio_${i}">${esc(p.bio||'')}</textarea></div>
     <div class="row2">
       <div class="field"><label>Favorite Sport</label><input type="text" id="tr_sport_${i}" value="${esc(p.sport||'')}"/></div>
-      <div class="field"><label>Interests</label><input type="text" id="tr_interests_${i}" value="${esc(p.interests||'')}"/></div>
+      <div class="field"><label>Interests</label><textarea id="tr_interests_${i}" class="short">${esc(p.interests||'')}</textarea></div>
     </div>
     <div class="field"><label>Training Philosophy</label><input type="text" id="tr_philosophy_${i}" value="${esc(p.philosophy||'')}"/></div>
     <div class="field"><label>Fun Facts</label><input type="text" id="tr_funfacts_${i}" value="${esc(p.funfacts||'')}"/></div>
@@ -1569,7 +1569,7 @@ footer{background:var(--black);color:rgba(255,255,255,.6);padding:44px 0 26px}
   $('t4uText').innerHTML=\`<p class="label">\${t.label}<\/p><h2 class="heading">\${t.heading}<\/h2><p class="body-text">\${t.intro}<\/p><p class="body-text"><strong>\${t.listLabel}<\/strong><\/p><ul class="t4u-list">\${t.items.map(i=>\`<li>\${i}<\/li>\`).join('')}<\/ul><p class="t4u-note">\${t.note}<\/p><p class="body-text" style="margin-top:14px"><strong>\${t.cta}<\/strong> Email <a href="mailto:\${t.email}" style="color:var(--orange)">\${t.email}<\/a><\/p>\`;
   const gc=S.classes;
   $('classImg').src=gc.image;
-  $('classText').innerHTML=\`<p class="label">\${gc.label}<\/p><h2 class="heading">\${gc.heading}<\/h2><span class="price-badge">\${gc.priceBadge}<\/span>\${gc.specialMsg?\`<p class="body-text">\${gc.specialMsg}<\/p>\`:''}\${gc.list.map(c=>\`<div class="class-item"><h4>\${c.name}<\/h4><p>\${c.desc}<\/p><\/div>\`).join('')}<br/><a href="\${gc.scheduleUrl}" class="btn btn-green" target="_blank" rel="noopener">See Schedules<\/a>\`;
+  $('classText').innerHTML=\`<p class="label">\${gc.label}<\/p><h2 class="heading">\${gc.heading}<\/h2><span class="price-badge">\${gc.priceBadge}<\/span>\${gc.specialMsg?\`<p class="body-text" style="font-weight:700;color:var(--orange)">\${gc.specialMsg}<\/p>\`:''}\${gc.list.map(c=>\`<div class="class-item"><h4>\${c.name}<\/h4><p>\${c.desc}<\/p><\/div>\`).join('')}<br/><a href="\${gc.scheduleUrl}" class="btn btn-green" target="_blank" rel="noopener">See Schedules<\/a>\`;
   $('payRow').innerHTML=\`<div class="pay-item"><img src="\${S.images.venmo}" alt="Venmo"/><span>\${S.payment.venmo}<\/span><\/div><div class="pay-item"><img src="\${S.images.zelle}" alt="Zelle"/><span>\${S.payment.zelle}<\/span><\/div>\`;
   const pr=S.pricing;
   const tabs=[{label:'Individual'},{label:'Specials'},{label:'Team'},{label:'Triathlon'},{label:'Swim / Bike / Run'}];
