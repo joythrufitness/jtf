@@ -584,122 +584,25 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
 <div id="toast">✓ index.html downloaded!</div>
 
 <script>
-// ── DEFAULT DATA (matches your S object) ──────────────────────────────────
-const DEFAULTS = {
-  images:{
-    logoNav:'images/JTF-logo.svg',
-    logoFoot:'images/JTF-logo.svg',
-    venmo:'https://cdn.prod.website-files.com/62e94994afb1b23f9afb3dc7/632a69f5018137f4752406ad_Venmo-Logo.png',
-    zelle:'https://cdn.prod.website-files.com/62e94994afb1b23f9afb3dc7/632a748bd018c2ba32f56e14_Zelle-logo.png'
-  },
-  hero:{headline:'Your Journey to Better Health and Fitness',image:'images/hero-image.jpg'},
-  mission:{label:'Mission',text:'JOY Thru Fitness customizes plans to empower our clients to take control of their lifestyles'},
-  pt:{
-    label:'Personal Training',heading:'Should I hire a personal trainer?',
-    intro:['Hiring a personal trainer is essential. The benefits are remarkable, as they go a long way toward guaranteeing that you reach your health and fitness goals. Some people are initially turned off by hiring a personal trainer when they consider the cost or fear a trainer pushing them too hard.','We support, motivate, and guide you through this transformative journey.'],
-    listLabel:'Our training includes:',
-    items:['Paying close attention to individual training programs and nutrition habits, such as customized programs','Arranging fitness assessments to measure strength and imbalances','Addressing fitness level and desired goals','Accountability','Form correction','Weekly flexibility and strength plans','Nutrition advice and goal setting','Unconditional professionalism to help you progress in developing a healthy lifestyle'],
-    btn:'Sign Up Today',btnHref:'#pricing',image:'images/personal-training.jpg'
-  },
-  t4u:{
-    label:'Time 4 U',heading:'Because lasting change starts when you finally make time for YOU.',
-    intro:"Life is full — but your health doesn't have to take a back seat. The TIME 4 U Online Program is designed for busy men and women who want structure, accountability, and expert coaching — all from the comfort of their own space. No more guessing. No more starting over every Monday.",
-    listLabel:"You'll receive:",
-    items:['Customized Workouts — Tailored to your goals, fitness level, and schedule','Weekly Check-Ins — Keep your progress on track with personalized feedback','Nutrition Coaching — Learn how to fuel your body without restriction or fad diets','24/6 Access to Your Coach — Support when you need it most','Private WhatsApp Community — Daily encouragement, accountability, and motivation','Monthly Team Zoom Calls — Celebrate wins and focus on topic coaching','Time Management Strategies — Fit fitness into real life, not the other way around','Mindset Coaching — Build lasting habits and break free from the all-or-nothing cycle','Monthly Challenges — To keep you motivated, consistent, and having fun'],
-    note:"This isn't a quick fix. It's a proven system to help you show up consistently, rebuild your confidence, and take back your health — one habit at a time.",
-    cta:'Ready to get started?',email:'info@joythrufitness.com',image:'images/time-4-u.jpg'
-  },
-  classes:{
-    label:'Group Classes',heading:'Exceed Your Expectations',
-    priceBadge:'$20',
-    scheduleUrl:'https://www.vagaro.com/joythrufitness/classes',
-    image:'images/group-clases.jpg',
-    specialMsg:'All of the classes except for the Boot Camps are at Arbor Greene.',
-    list:[
-      {name:'Full Bodyweight Workout',desc:'The most effective way to boost your metabolism, burn body fat, and gain strength is with a variety of movements that work the major muscle groups. This class is for all fitness levels.'},
-      {name:'Core and More',desc:'This circuit style class will move you in different directions to improve balance, core stability, posture, fall prevention, and cardiovascular fitness. For all fitness levels.'},
-      {name:'Mat Pilates',desc:'Strongly core-centric — Pilates is about lengthening, strengthening, and stability. Benefits include increased joint mobility, flexibility, and balance, as well as improved posture. Grip socks and a mat are recommended.'},
-      {name:'Total Body Pump',desc:'A dynamic, metabolic circuit combining aerobic activity with strength training, burning fat, and increasing muscle strength and endurance. More challenging but appropriate for all levels with modifications.'},
-      {name:'Aqua Aerobics',desc:'A total body class focusing on cardio and strength. Benefits include improved balance, core stability, less joint impact, and decreased stress. Fun, social, and ideal for everyone. Aqua shoes required.'}
-    ]
-  },
-  payment:{venmo:'@Heather-Downs76',zelle:'(386) 481-8225'},
-  pricing:{
-    consultNote:'Consult: 1 hour FREE · Over 1 hour: $30 per 30 minutes',
-    individual:[
-      {freq:'1x per week',sessions:4,rows:[{l:'60 min',v:'$76',mo:'$304/mo'},{l:'45 min',v:'$59',mo:'$236/mo'},{l:'30 min',v:'$45',mo:'$180/mo'}]},
-      {freq:'2x per week',sessions:8,save:'Save $6/session vs. 1x',rows:[{l:'60 min',v:'$70',mo:'$560/mo'},{l:'45 min',v:'$54',mo:'$432/mo'},{l:'30 min',v:'$43',mo:'$344/mo'}]},
-      {freq:'3x per week',sessions:12,badge:'Best Value',save:'Save $11/session vs. 1x',rows:[{l:'60 min',v:'$65',mo:'$780/mo'},{l:'45 min',v:'$48',mo:'$576/mo'},{l:'30 min',v:'$37',mo:'$444/mo'}]},
-      {freq:'4x per week',sessions:16,save:'Save $17/session vs. 1x',rows:[{l:'60 min',v:'$59',mo:'$944/mo'},{l:'45 min',v:'$46',mo:'$736/mo'},{l:'30 min',v:'$34',mo:'$544/mo'}]}
-    ],
-    specials:{
-      title:'Personal Training — 1 Hour Specials',
-      note:'1 Hour Only · Prepaid · Limited Time',
-      deals:[
-        {freq:'1x per week · 12 sessions',price:'$779'},
-        {freq:'2x per week · 24 sessions',price:'$1,465'},
-        {freq:'3x per week · 36 sessions',price:'$2,099'}
-      ]
-    },
-    team:{
-      title:'Team Training — Monthly',note:'Split between two people',
-      groups:[
-        {freq:'1x per week',sessions:4,rows:[{l:'30 min',v:'$274'},{l:'45 min',v:'$329'},{l:'60 min',v:'$384'}]},
-        {freq:'2x per week',sessions:8,rows:[{l:'30 min',v:'$431'},{l:'45 min',v:'$647'},{l:'60 min',v:'$699'}]},
-        {freq:'3x per week',sessions:12,rows:[{l:'30 min',v:'$594'},{l:'45 min',v:'$783'},{l:'60 min',v:'$989'}]}
-      ]
-    },
-    triathlon:{
-      title:'JOY Thru Triathlon',
-      tiers:[
-        {label:'Basic',price:'$175',period:'per month',hi:false,feats:['Communication with Coach','Daily TrainingPeaks communication','Bi-weekly plans written','Zoom call once a month for race/event prep']},
-        {label:'Gold',price:'$225',period:'per month',hi:true,feats:['Daily communication with the coach','Weekly planning, including schedule changes','Customized weekly plan + functional strength training','TrainingPeaks data analysis daily','Monthly Zoom 45 min — goals & planning','Nutrition consulting & periodization','Race event/prep']},
-        {label:'Platinum',price:'$285',period:'per month',hi:false,feats:['Unlimited communication with Coach','Unlimited planning, including schedule changes','Customized weekly plan + functional strength training','1 in-person session/month — biomechanics analysis','Fitness & Skill Assessments included','TrainingPeaks data analysis daily','Monthly Zoom 45 min','Nutrition consulting & periodization','Race event/prep']}
-      ]
-    },
-    sbr:{
-      title:'Swim, Cycling & Running',note:'Video analysis included · Video Analysis Only: $40',
-      groups:[
-        {freq:'1x per week',sessions:4,rows:[{l:'60 min',v:'$76',mo:'$304/mo'},{l:'45 min',v:'$59',mo:'$236/mo'},{l:'30 min',v:'$48',mo:'$192/mo'}]},
-        {freq:'2x per week',sessions:8,rows:[{l:'60 min',v:'$72',mo:'$576/mo'},{l:'45 min',v:'$43',mo:'$344/mo'},{l:'30 min',v:'$55',mo:'$440/mo'}]}
-      ]
+// ── BASE DATA ─────────────────────────────────────────────────────────────
+let _baseData = null;
+
+async function fetchProductionData(){
+  try{
+    const res = await fetch(location.origin + '/index.html');
+    if(!res.ok) return null;
+    const html = await res.text();
+    const start = html.indexOf('const S = ');
+    if(start === -1) return null;
+    const objStart = html.indexOf('{', start);
+    let depth=0, i=objStart;
+    for(;i<html.length;i++){
+      if(html[i]==='{') depth++;
+      else if(html[i]==='}'){depth--; if(depth===0) break;}
     }
-  },
-  about:{
-    label:'About',heading:'Our passion is to give others their lives back',
-    paragraphs:['Heather had a dream of having her own Training business. Her vision is to help clients succeed in their training by providing excellent customer service, passion, and expertise. Our business, JOY Thru Fitness, started six years ago.','We are Traveling Trainers passionate about helping clients of all ages and ethnicities live healthier lifestyles. Our intent behind traveling to you is that convenience is half the battle!','JOY Thru Fitness enjoys training youth to older adults. Our clients enjoy training with us because of our ethics, transparency, knowledge, and passion for helping others.'],
-    btn:'Meet the Team',btnHref:'#trainers',image:'images/about-us.jpg'
-  },
-  trainers:{
-    label:'Trainers',heading:'Knowledge and experience that transforms you into a better self',
-    people:[
-      {name:'Heather Downs',role:'CEO & Personal Trainer',photo:'images/heather-headshot.png',bio:"Heather's transformation leads to her career as a Personal Trainer and Triathlon Coach. She has been a Personal Trainer for 11 years and a Triathlon Coach for seven years. Her dedication and passion for helping you achieve your goals shine through in her training.",sport:'Triathlon',interests:'Heather appreciates diversity. She enjoys exploring and traveling to new places.',philosophy:"You don't get what you wish for; you get what you work for.",funfacts:'She loves animals, nature, and photography.',certs:['ACE Personal Trainer','ACE Sports Conditioning Specialist','NESTA Certified Sports Injury Specialist','NESTA Certified Lifestyle Weight Management Specialist','USA Triathlon Level 1 Coach']},
-      {name:'Leigh Carter',role:'Yoga Instructor / Trainer',photo:'images/leigh-headshot.jpg',bio:'Leigh has been a Personal Trainer and Coach for 11 years. She holds certifications in Yoga and Indoor Cycling. Although born in the US, Leigh grew up in Central and South America and the West Indies, giving her a cross-cultural perspective on health and fitness.',sport:'Basketball',interests:'Collecting old-time radio broadcasts and painting.',philosophy:'Fitness is for everyone. Goals and programs should be realistic, attainable, and fun.',funfacts:'Dedicated 12 years of volunteer work to animal rescue.',certs:['Fitour Yoga Instructor','Fitour Advanced Yoga Instructor','AFAA Personal Trainer Certification','NASM Certified Nutrition Coach']},
-      {name:'Addison Arneson',role:'Personal Trainer',photo:'images/addison-headshot.jpg',bio:'Addison was inspired to become a personal trainer after 12 years of gymnastics, three years of coaching, and teaching swim lessons. Currently pursuing a B.S. in Exercise Science and Kinesiology at USF.',sport:'Gymnastics',interests:'Spending time in nature, reading, and exploring new places.',philosophy:"It's not about perfection; it's about improvement.",funfacts:'Moved from Minnesota · Once dreamed of being a marine biologist · The beach is her happy place.',certs:['NASM Certified Personal Trainer','American Red Cross Lifeguarding with CPR/AED']}
-    ]
-  },
-  testimonials:{
-    label:'Testimonials',heading:'What some of our clients are saying!',
-    items:[
-      {q:"Before working with JTF, I was at a gym with a Trainer for a year and did not see the results I wanted. I've been working with JTF since December and have already lost 12 pounds and 3½ inches! Heather is great and really takes the time to understand you and your goals.",a:'Joan R.'},
-      {q:"Heather knows how to encourage, when to push, and when I need a break. If you're looking for a highly qualified, caring, and professional personal trainer, I would highly recommend Heather.",a:'Arlene Z.'},
-      {q:'I am grateful to have found Maria as my Personal Trainer. She is dedicated, energetic, and an inspiring Trainer. She quickly learned my needs and goals. She pays attention to every single move to correct posture and be sure injuries do not occur.',a:'Mariela Labrador'},
-      {q:"It's never the same routine with Heather — plus, there is always some challenge, which is very exciting. I am glad to have joined her triathlon group — after 8 weeks, my swimming skills have definitely improved.",a:'Simon Bensmail'},
-      {q:"Reggie is super knowledgeable and professional. He creates specific, well-thought-out, customized workouts that keep me engaged and focused. Reggie motivates me, and his training made me feel and look so much better.",a:'Valerie S.'},
-      {q:'Great Trainers and very professional! They are so encouraging and provide alternative moves for knee or back concerns. I would definitely recommend JTF for Personal Training and Group Fitness Classes! Week 6, and I am moving and feeling stronger.',a:'Nerlande Joseph'},
-      {q:'Eric is a phenomenal Trainer! He is very professional, extremely approachable, and full of positive energy. Workouts are challenging but very customized to your goals and fitness level.',a:'Kimberly Cheney'},
-      {q:"Reggie put me on a running and weight-lifting program for football that helped me become all-conference my senior year of high school, and nearly cut a second off my 40 time. His sessions are directly tailored to your needs.",a:'Charlie C.'},
-      {q:"I've been working out on my own for a year and have plateaued. So I decided to hire a Personal Trainer. Reggie has taught me a TON of things — diet, proper form, etc. So far, I have gained 6.5 lbs in the last 2 months.",a:'Derek S.'},
-      {q:"I've been training with Reggie for about a month. I can already see definition in my arms. He's great at pinpointing your weak areas and working on them. I'm training to get toned for my wedding next year.",a:'Puja P.'}
-    ]
-  },
-  contact:{
-    label:'Contact Us',heading:'How can we make your training a lifestyle?',
-    phone:'386-481-8225',email:'info@joythrufitness.com',
-    web3formsKey:'80ff6a5c-3ade-4447-b358-61386f2c9b6a',
-    packages:['Personal Training — 1x/week','Personal Training — 2x/week','Personal Training — 3x/week (Best Value)','Personal Training — 4x/week','3 Months Mega Deal','Team Training','JOY Thru Triathlon','Group Classes','TIME 4 U Online Program','Swim / Cycling / Running','Other / Question']
-  }
-};
+    return JSON.parse(html.slice(objStart, i+1));
+  }catch(e){ return null; }
+}
 
 // ── POPULATE FORMS ────────────────────────────────────────────────────────
 function val(id, v){ const el=document.getElementById(id); if(el) el.value=v||''; }
@@ -1015,7 +918,7 @@ function g(id){ const el=document.getElementById(id); return el ? el.value.trim(
 function lines(id){ return g(id).split('\n').map(s=>s.trim()).filter(Boolean); }
 
 function readS(){
-  const D = JSON.parse(JSON.stringify(DEFAULTS)); // deep clone structure
+  const D = JSON.parse(JSON.stringify(_baseData)); // deep clone structure
 
   D.hero.headline = g('hero_headline');
   D.hero.image = g('hero_image');
@@ -1242,9 +1145,7 @@ window.addEventListener('scroll',()=>{
   navLinks.forEach(a=>{ a.classList.toggle('active', a.getAttribute('href')===current); });
 },{passive:true});
 
-// ── INIT ──────────────────────────────────────────────────────────────────
-const _lastSaved = localStorage.getItem(LS_SAVED);
-populate(_lastSaved ? JSON.parse(_lastSaved) : DEFAULTS);
+// ── INIT (async — runs after INDEX_TEMPLATE is defined below) ─────────────
 
 // Auto-save on input (debounced 2s) + every 30s
 document.getElementById('main').addEventListener('input', ()=>{
@@ -1643,7 +1544,13 @@ footer{background:var(--black);color:rgba(255,255,255,.6);padding:44px 0 26px}
 </html>`;
 
 // ── INIT ─────────────────────────────────────────────────────────────────
-populate(DEFAULTS);
+(async()=>{
+  let data = null;
+  const saved = localStorage.getItem(LS_SAVED);
+  if(saved){ try{ data = JSON.parse(saved); }catch(e){} }
+  if(!data){ data = await fetchProductionData(); }
+  if(data){ _baseData = data; populate(data); }
+})();
 </script>
 
 </div><!-- /#app -->
