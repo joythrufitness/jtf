@@ -1270,10 +1270,18 @@ a{color:inherit;text-decoration:none}
 .pc.hi{border-color:var(--orange);border-width:2px}
 .pc-freq{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--orange);margin-bottom:5px}
 .pc-title{font-family:var(--fh);font-size:15px;font-weight:800;margin-bottom:16px;color:#fff}
+.pc-badge{display:inline-block;align-self:flex-start;background:var(--orange);color:#fff;font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:8px}
+.pc-save{font-size:11px;color:#6fcf6f;font-weight:600;margin-bottom:10px}
+.pc-rows-wrap{flex:1}
+.pc-col-header{display:flex;justify-content:space-between;font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:4px}
 .pc-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #2a2a2a;font-size:14px}
 .pc-row:last-child{border-bottom:none}
 .pc-row-l{color:#fff}
 .pc-row-v{font-family:var(--fh);font-weight:700;color:#fff}
+.pc-row-mo{font-size:11px;color:#4caf50;text-align:right;padding-bottom:14px;margin-top:2px}
+.pc-cta{display:block;width:100%;margin-top:16px;padding:10px;background:var(--orange);color:#fff;font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-align:center;border-radius:3px;border:none;cursor:pointer;transition:background .2s}
+.pc-cta:hover{background:var(--orange-dk)}
+.pc-pkg{font-size:12px;font-weight:700;color:#fff;text-align:center;margin-top:auto;padding-top:12px;border-top:1px solid #2a2a2a;letter-spacing:.04em}
 .pc-price{font-family:var(--fh);font-size:40px;font-weight:800;color:var(--orange);line-height:1;margin-bottom:4px}
 .pc-period{font-size:12px;color:#fff;margin-bottom:16px}
 .pc-feats{list-style:none}
@@ -1461,7 +1469,7 @@ footer{background:var(--black);color:rgba(255,255,255,.6);padding:44px 0 26px}
 <script>
 (()=>{
   const $=id=>document.getElementById(id);
-  const rows=arr=>arr.map(r=>\`<div class="pc-row"><span class="pc-row-l">\${r.l}<\/span><span class="pc-row-v">\${r.v}<\/span><\/div>\`).join('');
+  const rows=arr=>arr.map(r=>\`<div class="pc-row"><span class="pc-row-l">\${r.l}<\/span><span class="pc-row-v">\${r.v}<\/span><\/div>\${r.mo?\`<div class="pc-row-mo">\${r.mo}<\/div>\`:''}\`).join('');
   $('logo-nav').src=S.images.logoNav;
   $('logo-foot').src=S.images.logoFoot;
   $('heroBg').style.backgroundImage=\`url('\${S.hero.image}')\`;
@@ -1483,15 +1491,25 @@ footer{background:var(--black);color:rgba(255,255,255,.6);padding:44px 0 26px}
   $('prTabs').innerHTML=tabs.map((t,i)=>\`<button class="pr-tab\${i===0?' active':''}" data-tab="\${i}">\${t.label}<\/button>\`).join('');
   const panels=[];
   let p0=\`<p class="pr-note">\${pr.consultNote}<\/p><div class="pr-grid">\`;
-  pr.individual.forEach(g=>{p0+=\`<div class="pc"><p class="pc-freq">\${g.freq}<\/p><p class="pc-title">Individual<\/p>\${rows(g.rows)}<\/div>\`;});
+  pr.individual.forEach(g=>{
+    const hi=g.badge?' hi':'';
+    const badge=g.badge?\`<span class="pc-badge">\${g.badge}<\/span><br>\`:'';
+    const save=g.save?\`<p class="pc-save"><span>↓<\/span> \${g.save}<\/p>\`:'';
+    const cta=g.badge?\`<button class="pc-cta" data-package="Personal Training — 3x\/week (Best Value)">Get Started<\/button>\`:'';
+    const colHeader=\`<div class="pc-col-header"><span>Duration<\/span><span>Per Session<\/span><\/div>\`;
+    p0+=\`<div class="pc\${hi}">\${badge}<p class="pc-freq">\${g.freq}<\/p>\${save}<div class="pc-rows-wrap">\${colHeader}\${rows(g.rows)}<\/div>\${cta}<p class="pc-pkg">\${g.sessions} sessions\/mo · billed monthly<\/p><\/div>\`;
+  });
   p0+=\`<\/div>\`;panels.push(p0);
   const sp=pr.specials;
   let p1=\`<p class="pr-note">\${sp.note}<\/p><div class="pr-grid">\`;
-  sp.deals.forEach(d=>{p1+=\`<div class="pc hi"><p class="pc-freq">\${d.freq}<\/p><p class="pc-title">3 Months Mega Deal<\/p><p class="pc-price">\${d.price}<\/p><\/div>\`;});
+  sp.deals.forEach(d=>{p1+=\`<div class="pc hi"><p class="pc-freq">\${d.freq}<\/p><p class="pc-title">3 Months Mega Deal<\/p><p class="pc-price" style="color:#4caf50">\${d.price}<\/p><\/div>\`;});
   p1+=\`<\/div>\`;panels.push(p1);
   const tm=pr.team;
   let p2=\`<p class="pr-note">\${tm.note}<\/p><div class="pr-grid">\`;
-  tm.groups.forEach(g=>{p2+=\`<div class="pc"><p class="pc-freq">\${g.freq}<\/p><p class="pc-title">Team<\/p>\${rows(g.rows)}<\/div>\`;});
+  tm.groups.forEach(g=>{
+    const tmColHeader=\`<div class="pc-col-header"><span>Duration<\/span><span>Monthly<\/span><\/div>\`;
+    p2+=\`<div class="pc"><p class="pc-freq">\${g.freq}<\/p><div class="pc-rows-wrap">\${tmColHeader}\${rows(g.rows)}<\/div><p class="pc-pkg">\${g.sessions} sessions\/mo · billed monthly · split between 2 people<\/p><\/div>\`;
+  });
   p2+=\`<\/div>\`;panels.push(p2);
   const tri=pr.triathlon;
   let p3=\`<div class="pr-grid">\`;
@@ -1499,7 +1517,10 @@ footer{background:var(--black);color:rgba(255,255,255,.6);padding:44px 0 26px}
   p3+=\`<\/div>\`;panels.push(p3);
   const sbr=pr.sbr;
   let p4=\`<p class="pr-note">\${sbr.note}<\/p><div class="pr-grid">\`;
-  sbr.groups.forEach(g=>{p4+=\`<div class="pc"><p class="pc-freq">\${g.freq}<\/p><p class="pc-title">Individual<\/p>\${rows(g.rows)}<\/div>\`;});
+  sbr.groups.forEach(g=>{
+    const sbrColHeader=\`<div class="pc-col-header"><span>Duration<\/span><span>Per Session<\/span><\/div>\`;
+    p4+=\`<div class="pc"><p class="pc-freq">\${g.freq}<\/p><div class="pc-rows-wrap">\${sbrColHeader}\${rows(g.rows)}<\/div><p class="pc-pkg">\${g.sessions} sessions\/mo · billed monthly<\/p><\/div>\`;
+  });
   p4+=\`<\/div>\`;panels.push(p4);
   $('pricingInner').innerHTML=panels.map((p,i)=>\`<div class="pr-panel\${i===0?' active':''}" data-panel="\${i}">\${p}<\/div>\`).join('');
   $('prTabs').addEventListener('click',e=>{
