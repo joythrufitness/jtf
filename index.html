@@ -843,6 +843,18 @@ const S = {
     btn.classList.add('active');
     document.querySelector(`.pr-panel[data-panel="${idx}"]`).classList.add('active');
   });
+  document.addEventListener('click',e=>{
+    const btn=e.target.closest('[data-package]');
+    if(!btn) return;
+    const pkg=btn.dataset.package;
+    const contact=$('contact');
+    const sel=document.querySelector('select[name="package"]');
+    if(sel){
+      const opt=[...sel.options].find(o=>o.value===pkg||o.text===pkg);
+      if(opt) sel.value=opt.value;
+    }
+    if(contact) contact.scrollIntoView({behavior:'smooth',block:'start'});
+  });
   const ab=S.about;
   $('aboutImg').src=ab.image;
   $('aboutText').innerHTML=`<p class="label">${ab.label}</p><h2 class="heading">${ab.heading}</h2>${ab.paragraphs.map(p=>`<p class="body-text">${p}</p>`).join('')}<a href="${ab.btnHref}" class="btn btn-green" style="margin-top:6px">${ab.btn}</a>`;
