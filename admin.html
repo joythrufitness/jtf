@@ -422,8 +422,13 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
         <label>Schedule URL <span class="field-help" data-tooltip="Full URL to your class schedule page, e.g. https://mindbodyonline.com/...">?</span></label>
         <input type="text" id="gc_scheduleUrl"/>
       </div>
+      <div class="field">
+        <label>Special Message <span class="field-help" data-tooltip="Optional message shown above the class list. Leave blank to hide.">?</span></label>
+        <input type="text" id="gc_specialMsg"/>
+      </div>
       <hr class="divider"/>
       <div id="gc_classes_wrap"></div>
+      <button class="add-btn" onclick="addGcClass()">+ Add Class</button>
     </div>
   </div>
 
@@ -609,6 +614,7 @@ const DEFAULTS = {
     priceBadge:'$18 until May 5th · $20 after',
     scheduleUrl:'https://www.vagaro.com/joythrufitness/classes',
     image:'images/group-clases.jpg',
+    specialMsg:'',
     list:[
       {name:'Full Bodyweight Workout',desc:'The most effective way to boost your metabolism, burn body fat, and gain strength with a variety of movements that work the major muscle groups. This class is for all fitness levels.'},
       {name:'Core and More',desc:'This circuit style class will move you in different directions to improve balance, core stability, posture, fall prevention, and cardiovascular fitness. For all fitness levels.'},
@@ -700,13 +706,40 @@ function val(id, v){ const el=document.getElementById(id); if(el) el.value=v||''
 
 function buildGcClasses(list){
   const w=document.getElementById('gc_classes_wrap'); w.innerHTML='';
-  list.forEach((c,i)=>{
-    w.innerHTML+=`
-    <div class="rep-block">
-      <h4>Class ${i+1}</h4>
-      <div class="field"><label>Class Name</label><input type="text" id="gc_name_${i}" value="${esc(c.name)}"/></div>
-      <div class="field"><label>Description</label><textarea id="gc_desc_${i}" class="short">${esc(c.desc)}</textarea></div>
-    </div>`;
+  list.forEach((c,i)=> renderGcClass(i,c));
+}
+function renderGcClass(i, c={}){
+  const w=document.getElementById('gc_classes_wrap');
+  const block=document.createElement('div');
+  block.className='rep-block';
+  block.id=`gc_block_${i}`;
+  block.innerHTML=`
+    <button class="remove-btn" onclick="removeGcClass(${i})">✕ Remove</button>
+    <h4>Class ${i+1}</h4>
+    <div class="field"><label>Class Name</label><input type="text" id="gc_name_${i}" value="${esc(c.name||'')}"/></div>
+    <div class="field"><label>Description</label><textarea id="gc_desc_${i}" class="short">${esc(c.desc||'')}</textarea></div>`;
+  w.appendChild(block);
+}
+function addGcClass(){
+  const count=document.querySelectorAll('#gc_classes_wrap .rep-block').length;
+  renderGcClass(count,{});
+}
+function removeGcClass(i){
+  const block=document.getElementById(`gc_block_${i}`);
+  if(block) block.remove();
+  reindexGcClasses();
+}
+function reindexGcClasses(){
+  const blocks=document.querySelectorAll('#gc_classes_wrap .rep-block');
+  blocks.forEach((block,n)=>{
+    const old=block.id.replace('gc_block_','');
+    block.id=`gc_block_${n}`;
+    block.querySelector('h4').textContent=`Class ${n+1}`;
+    block.querySelector('.remove-btn').setAttribute('onclick',`removeGcClass(${n})`);
+    [['gc_name'],['gc_desc']].forEach(([pre])=>{
+      const el=block.querySelector(`#${pre}_${old}`);
+      if(el) el.id=`${pre}_${n}`;
+    });
   });
 }
 
@@ -949,6 +982,7 @@ function populate(D){
   val('gc_badge', D.classes.priceBadge);
   val('gc_image', D.classes.image);
   val('gc_scheduleUrl', D.classes.scheduleUrl);
+  val('gc_specialMsg', D.classes.specialMsg||'');
   buildGcClasses(D.classes.list);
   val('pay_venmo', D.payment.venmo);
   val('pay_zelle', D.payment.zelle);
@@ -1000,7 +1034,8 @@ function readS(){
   D.classes.priceBadge = g('gc_badge');
   D.classes.image = g('gc_image');
   D.classes.scheduleUrl = g('gc_scheduleUrl');
-  D.classes.list = D.classes.list.map((_,i)=>({name:g(`gc_name_${i}`),desc:g(`gc_desc_${i}`)}));
+  D.classes.specialMsg = g('gc_specialMsg');
+  D.classes.list = [...document.querySelectorAll('#gc_classes_wrap .rep-block')].map((_,i)=>({name:g(`gc_name_${i}`),desc:g(`gc_desc_${i}`)}));
   D.payment.venmo = g('pay_venmo');
   D.payment.zelle = g('pay_zelle');
   D.pricing.consultNote = g('pr_consultNote');
@@ -1535,7 +1570,7 @@ footer{background:var(--black);color:rgba(255,255,255,.6);padding:44px 0 26px}
   $('t4uText').innerHTML=\`<p class="label">\${t.label}<\/p><h2 class="heading">\${t.heading}<\/h2><p class="body-text">\${t.intro}<\/p><p class="body-text"><strong>\${t.listLabel}<\/strong><\/p><ul class="t4u-list">\${t.items.map(i=>\`<li>\${i}<\/li>\`).join('')}<\/ul><p class="t4u-note">\${t.note}<\/p><p class="body-text" style="margin-top:14px"><strong>\${t.cta}<\/strong> Email <a href="mailto:\${t.email}" style="color:var(--orange)">\${t.email}<\/a><\/p>\`;
   const gc=S.classes;
   $('classImg').src=gc.image;
-  $('classText').innerHTML=\`<p class="label">\${gc.label}<\/p><h2 class="heading">\${gc.heading}<\/h2><span class="price-badge">\${gc.priceBadge}<\/span>\${gc.list.map(c=>\`<div class="class-item"><h4>\${c.name}<\/h4><p>\${c.desc}<\/p><\/div>\`).join('')}<br/><a href="\${gc.scheduleUrl}" class="btn btn-green" target="_blank" rel="noopener">See Schedules<\/a>\`;
+  $('classText').innerHTML=\`<p class="label">\${gc.label}<\/p><h2 class="heading">\${gc.heading}<\/h2><span class="price-badge">\${gc.priceBadge}<\/span>\${gc.specialMsg?\`<p class="body-text">\${gc.specialMsg}<\/p>\`:''}\${gc.list.map(c=>\`<div class="class-item"><h4>\${c.name}<\/h4><p>\${c.desc}<\/p><\/div>\`).join('')}<br/><a href="\${gc.scheduleUrl}" class="btn btn-green" target="_blank" rel="noopener">See Schedules<\/a>\`;
   $('payRow').innerHTML=\`<div class="pay-item"><img src="\${S.images.venmo}" alt="Venmo"/><span>\${S.payment.venmo}<\/span><\/div><div class="pay-item"><img src="\${S.images.zelle}" alt="Zelle"/><span>\${S.payment.zelle}<\/span><\/div>\`;
   const pr=S.pricing;
   const tabs=[{label:'Individual'},{label:'Specials'},{label:'Team'},{label:'Triathlon'},{label:'Swim / Bike / Run'}];

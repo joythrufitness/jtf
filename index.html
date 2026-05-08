@@ -219,13 +219,15 @@ const S = {
     "email": "info@joythrufitness.com",
     "image": "images/time-4-u.jpg"
   },
-  "classes": {
-    "label": "Group Classes",
-    "heading": "Exceed Your Expectations",
-    "priceBadge": "$20",
-    "scheduleUrl": "https://www.vagaro.com/joythrufitness/classes",
-    "image": "images/group-clases.jpg",
-    "list": [
+
+  classes:{
+    label:       'Group Classes',
+    heading:     'Exceed Your Expectations',
+    priceBadge:  '$20',
+    scheduleUrl: 'https://www.vagaro.com/joythrufitness/classes',
+    image:       'images/group-clases.jpg',
+    specialMsg:  '',
+    list:[
       {
         "name": "Full Bodyweight Workout",
         "desc": "The most effective way to boost your metabolism, burn body fat, and gain strength with a variety of movements that work the major muscle groups. This class is for all fitness levels."
@@ -783,7 +785,7 @@ const S = {
   $('t4uText').innerHTML=`<p class="label">${t.label}</p><h2 class="heading">${t.heading}</h2><p class="body-text">${t.intro}</p><p class="body-text"><strong>${t.listLabel}</strong></p><ul class="t4u-list">${t.items.map(i=>`<li>${i}</li>`).join('')}</ul><p class="t4u-note">${t.note}</p><p class="body-text" style="margin-top:14px"><strong>${t.cta}</strong> Email <a href="mailto:${t.email}" style="color:var(--orange)">${t.email}</a></p>`;
   const gc=S.classes;
   $('classImg').src=gc.image;
-  $('classText').innerHTML=`<p class="label">${gc.label}</p><h2 class="heading">${gc.heading}</h2><span class="price-badge">${gc.priceBadge}</span>${gc.list.map(c=>`<div class="class-item"><h4>${c.name}</h4><p>${c.desc}</p></div>`).join('')}<br/><a href="${gc.scheduleUrl}" class="btn btn-green" target="_blank" rel="noopener">See Schedules</a>`;
+  $('classText').innerHTML=`<p class="label">${gc.label}</p><h2 class="heading">${gc.heading}</h2><span class="price-badge">${gc.priceBadge}</span>${gc.specialMsg?`<p class="body-text">${gc.specialMsg}</p>`:''}${gc.list.map(c=>`<div class="class-item"><h4>${c.name}</h4><p>${c.desc}</p></div>`).join('')}<br/><a href="${gc.scheduleUrl}" class="btn btn-green" target="_blank" rel="noopener">See Schedules</a>`;
   $('payRow').innerHTML=`<div class="pay-item"><img src="${S.images.venmo}" alt="Venmo"/><span>${S.payment.venmo}</span></div><div class="pay-item"><img src="${S.images.zelle}" alt="Zelle"/><span>${S.payment.zelle}</span></div>`;
   const pr=S.pricing;
   const tabs=[{label:'Individual'},{label:'Specials'},{label:'Team'},{label:'Triathlon'},{label:'Swim / Bike / Run'}];
