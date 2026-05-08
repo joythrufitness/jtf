@@ -1097,6 +1097,7 @@ function validateBeforeDownload(){
 }
 
 async function downloadSite(){
+  clearTimeout(autoSaveDebounce);
   const warnings = validateBeforeDownload();
   if(warnings.length){
     const proceed = confirm('Warning — the following fields need attention:\n\n' +
@@ -1194,6 +1195,7 @@ let hasUnsavedChanges = false;
 let autoSaveDebounce;
 
 function autoSave(){
+  if(!hasUnsavedChanges) return;
   try {
     localStorage.setItem(LS_KEY, JSON.stringify(readS()));
     showAutoSaveStatus('Auto-saved');
