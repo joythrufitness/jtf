@@ -276,7 +276,7 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
     </div>
     <div style="display:flex;align-items:center">
       <button class="toggle-all-btn" id="toggleAllBtn" onclick="toggleAllSections()">Collapse All</button>
-      <button class="dl-btn" onclick="downloadSite()">⬇ Download index.html</button>
+      <button id="dlBtn" class="dl-btn" onclick="downloadSite()">⬇ Download index.html</button>
     </div>
   </div>
 
@@ -1256,7 +1256,7 @@ window.addEventListener('beforeunload', e=>{
 
 // Ctrl+S / Cmd+S shortcut
 document.addEventListener('keydown', e=>{
-  if((e.ctrlKey||e.metaKey) && e.key==='s'){ e.preventDefault(); downloadSite(); }
+  if((e.ctrlKey||e.metaKey) && e.key==='s'){ e.preventDefault(); document.getElementById('dlBtn').click(); }
 });
 
 // Restore banner if auto-save exists
