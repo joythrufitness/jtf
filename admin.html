@@ -1530,14 +1530,17 @@ footer{background:var(--black);color:rgba(255,255,255,.6);padding:44px 0 26px}
     btn.classList.add('active');
     document.querySelector(\`.pr-panel[data-panel="\${idx}"]\`).classList.add('active');
   });
-  \$('pricingInner').addEventListener('click',e=>{
-    const btn=e.target.closest('.pc-cta');if(!btn)return;
+  document.addEventListener('click',e=>{
+    const btn=e.target.closest('[data-package]');
+    if(!btn) return;
     const pkg=btn.dataset.package;
-    document.querySelector('#contact').scrollIntoView({behavior:'smooth'});
-    setTimeout(()=>{
-      const sel=document.querySelector('#theForm select[name="package"]');
-      if(sel&&pkg){sel.value=pkg;}
-    },600);
+    const contact=\$('contact');
+    const sel=document.querySelector('select[name="package"]');
+    if(sel){
+      const opt=[...sel.options].find(o=>o.value===pkg||o.text===pkg);
+      if(opt) sel.value=opt.value;
+    }
+    if(contact) contact.scrollIntoView({behavior:'smooth',block:'start'});
   });
   const ab=S.about;
   $('aboutImg').src=ab.image;
