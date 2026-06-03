@@ -586,8 +586,6 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
       <span class="es-toggle">▾</span>
     </div>
     <div class="es-body">
-      <div class="field"><label>Section Label</label><input type="text" id="res_label"/></div>
-      <div class="field"><label>Section Heading</label><input type="text" id="res_heading"/></div>
       <div id="res_wrap"></div>
       <button class="add-btn" onclick="addResource()">+ Add Document</button>
     </div>
@@ -978,8 +976,6 @@ function populate(D){
   val('tr_heading', D.trainers.heading);
   buildTrainers(D.trainers.people);
   buildTestimonials(D.testimonials.items);
-  val('res_label',(D.resources||{}).label||'Downloads');
-  val('res_heading',(D.resources||{}).heading||'Free Resources');
   buildResources((D.resources||{}).items||[]);
   updateImgPreview('hero_image','hero_preview');
   updateImgPreview('pt_image','pt_preview');
@@ -1058,8 +1054,6 @@ function readS(){
     return {q:g(`tes_q_${i}`), a:g(`tes_a_${i}`)};
   });
   D.resources = D.resources || {};
-  D.resources.label = g('res_label');
-  D.resources.heading = g('res_heading');
   D.resources.items = Array.from(document.querySelectorAll('#res_wrap .rep-block')).map(block=>{
     const i=block.id.replace('res_block_','');
     return {title:g(`res_title_${i}`),desc:g(`res_desc_${i}`),file:g(`res_file_${i}`)};
