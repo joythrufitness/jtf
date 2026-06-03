@@ -586,11 +586,13 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
       <span class="es-toggle">▾</span>
     </div>
     <div class="es-body">
-      <div class="field" style="background:#f9f9f9;border:1px solid var(--border);border-radius:4px;padding:14px 16px;margin-bottom:18px">
-        <label style="display:block;margin-bottom:8px">GitHub Token <span style="font-weight:400;color:var(--mid)">(one-time setup — saved in this browser)</span></label>
-        <div style="display:flex;gap:8px">
-          <input type="password" id="gh_token_input" placeholder="ghp_…" style="flex:1;padding:8px 10px;border:1px solid var(--border);border-radius:3px;font-size:14px"/>
-          <button onclick="saveGhToken()" class="add-btn" style="margin:0;padding:8px 16px">Save</button>
+      <div style="background:#f9f9f9;border:1px solid var(--border);border-radius:4px;padding:14px 16px;margin-bottom:18px">
+        <div id="gh_token_set">
+          <label style="display:block;margin-bottom:8px;font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase">GitHub Token <span style="font-weight:400;color:var(--mid)">(one-time setup — saved in this browser)</span></label>
+          <div style="display:flex;gap:8px">
+            <input type="password" id="gh_token_input" placeholder="ghp_…" style="flex:1;padding:8px 10px;border:1px solid var(--border);border-radius:3px;font-size:14px"/>
+            <button onclick="saveGhToken()" class="add-btn" style="margin:0;padding:8px 16px">Save</button>
+          </div>
         </div>
         <p id="gh_token_status" style="font-size:12px;margin-top:6px"></p>
       </div>
@@ -956,10 +958,18 @@ function saveGhToken(){
 }
 
 function showGhTokenStatus(){
-  const el=document.getElementById('gh_token_status'); if(!el) return;
+  const statusEl=document.getElementById('gh_token_status'); if(!statusEl) return;
+  const inputRow=document.getElementById('gh_token_set');
   const has=!!localStorage.getItem('jtf_gh_token');
-  el.textContent=has?'✓ Token saved':'Not set — enter a GitHub token to enable auto-upload.';
-  el.style.color=has?'green':'var(--orange)';
+  if(has){
+    inputRow.style.display='none';
+    statusEl.innerHTML='✓ Token saved &nbsp;·&nbsp; <a href="#" onclick="event.preventDefault();document.getElementById(\'gh_token_set\').style.display=\'\';this.parentElement.textContent=\'\'" style="color:var(--orange)">Change</a>';
+    statusEl.style.color='green';
+  } else {
+    inputRow.style.display='';
+    statusEl.textContent='Not set — enter a GitHub token to enable auto-upload.';
+    statusEl.style.color='var(--orange)';
+  }
 }
 
 function addResource(){
