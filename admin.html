@@ -261,6 +261,7 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
     <a href="#s-about">ℹ️ About</a>
     <a href="#s-trainers">🧑‍🏫 Trainers</a>
     <a href="#s-testimonials">⭐ Testimonials</a>
+    <a href="#s-resources">📄 Resources</a>
   </nav>
   <div class="sb-download">
     <button onclick="downloadSite()">⬇ Download index.html</button>
@@ -578,6 +579,20 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
     </div>
   </div>
 
+  <div class="edit-section" id="s-resources">
+    <div class="es-header" onclick="toggle(this)">
+      <div class="es-icon">📄</div>
+      <span class="es-title">Resources &amp; Downloads</span>
+      <span class="es-toggle">▾</span>
+    </div>
+    <div class="es-body">
+      <div class="field"><label>Section Label</label><input type="text" id="res_label"/></div>
+      <div class="field"><label>Section Heading</label><input type="text" id="res_heading"/></div>
+      <div id="res_wrap"></div>
+      <button class="add-btn" onclick="addResource()">+ Add Document</button>
+    </div>
+  </div>
+
 
 </main>
 
@@ -864,6 +879,63 @@ function duplicateTestimonial(i){
   document.getElementById(`tes_block_${count}`).scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
+function buildResources(items){
+  const w=document.getElementById('res_wrap'); w.innerHTML='';
+  items.forEach((r,i)=>renderResource(i,r));
+}
+
+function renderResource(i, r={}){
+  const w=document.getElementById('res_wrap');
+  const block=document.createElement('div');
+  block.className='rep-block';
+  block.id=`res_block_${i}`;
+  block.innerHTML=`
+    <button class="remove-btn" onclick="removeResource(${i})">✕ Remove</button>
+    <h4>Document ${i+1}</h4>
+    <div class="field"><label>Pick File <span style="font-weight:400;color:var(--mid)">(auto-fills title &amp; path)</span></label><input type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" onchange="onResourceFile(this,${i})"/></div>
+    <div class="field"><label>Title</label><input type="text" id="res_title_${i}" value="${esc(r.title||'')}"/></div>
+    <div class="field"><label>Description</label><textarea id="res_desc_${i}" class="short">${esc(r.desc||'')}</textarea></div>
+    <div class="field"><label>File Path <span style="font-weight:400;color:var(--mid)">e.g. docs/filename.pdf</span></label><input type="text" id="res_file_${i}" value="${esc(r.file||'')}"/></div>
+    <p style="font-size:12px;color:var(--orange);margin-top:2px">⚠ Place the actual file in the <code>docs/</code> folder before deploying.</p>`;
+  w.appendChild(block);
+}
+
+function onResourceFile(input, i){
+  const file=input.files[0]; if(!file) return;
+  const titleEl=document.getElementById(`res_title_${i}`);
+  const fileEl=document.getElementById(`res_file_${i}`);
+  const name=file.name.replace(/\.[^.]+$/,'').replace(/[-_]+/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+  if(!titleEl.value) titleEl.value=name;
+  fileEl.value=`docs/${file.name}`;
+}
+
+function addResource(){
+  const count=document.querySelectorAll('#res_wrap .rep-block').length;
+  renderResource(count,{});
+}
+
+function removeResource(i){
+  const block=document.getElementById(`res_block_${i}`);
+  if(block) block.remove();
+  reindexResources();
+}
+
+function reindexResources(){
+  const blocks=document.querySelectorAll('#res_wrap .rep-block');
+  blocks.forEach((block,n)=>{
+    const old=block.id.replace('res_block_','');
+    block.id=`res_block_${n}`;
+    block.querySelector('h4').textContent=`Document ${n+1}`;
+    block.querySelector('.remove-btn').setAttribute('onclick',`removeResource(${n})`);
+    [['res_title'],['res_desc'],['res_file']].forEach(([pre])=>{
+      const el=block.querySelector(`#${pre}_${old}`);
+      if(el) el.id=`${pre}_${n}`;
+    });
+    const fi=block.querySelector('input[type=file]');
+    if(fi) fi.setAttribute('onchange',`onResourceFile(this,${n})`);
+  });
+}
+
 function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 function populate(D){
@@ -906,6 +978,9 @@ function populate(D){
   val('tr_heading', D.trainers.heading);
   buildTrainers(D.trainers.people);
   buildTestimonials(D.testimonials.items);
+  val('res_label',(D.resources||{}).label||'Downloads');
+  val('res_heading',(D.resources||{}).heading||'Free Resources');
+  buildResources((D.resources||{}).items||[]);
   updateImgPreview('hero_image','hero_preview');
   updateImgPreview('pt_image','pt_preview');
   updateImgPreview('t4u_image','t4u_preview');
@@ -981,6 +1056,13 @@ function readS(){
   D.testimonials.items = Array.from(document.querySelectorAll('#tes_wrap .rep-block')).map(block=>{
     const i=block.id.replace('tes_block_','');
     return {q:g(`tes_q_${i}`), a:g(`tes_a_${i}`)};
+  });
+  D.resources = D.resources || {};
+  D.resources.label = g('res_label');
+  D.resources.heading = g('res_heading');
+  D.resources.items = Array.from(document.querySelectorAll('#res_wrap .rep-block')).map(block=>{
+    const i=block.id.replace('res_block_','');
+    return {title:g(`res_title_${i}`),desc:g(`res_desc_${i}`),file:g(`res_file_${i}`)};
   });
   return D;
 }
@@ -1469,18 +1551,9 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
 </section>
 <section id="resources" class="section bg-white">
   <div class="container">
-    <p class="label">Downloads</p>
-    <h2 class="heading">Free Resources</h2>
-    <div class="res-grid">
-      <div class="res-card">
-        <div class="res-badge">PDF</div>
-        <div class="res-info">
-          <p class="res-title">Swim Clinic — June 2026</p>
-          <p class="res-desc">All the details on our upcoming swim clinic. Download the flyer for dates, times, and how to register.</p>
-        </div>
-        <a href="docs/swim-clinic-june-2026.pdf" class="btn btn-orange" download>Download Flyer</a>
-      </div>
-    </div>
+    <p class="label" id="resLabel"></p>
+    <h2 class="heading" id="resHeading"></h2>
+    <div class="res-grid" id="resGrid"></div>
   </div>
 </section>
 <footer>
@@ -1607,6 +1680,7 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
   $('tesLabel').textContent=S.testimonials.label;
   $('tesHeading').textContent=S.testimonials.heading;
   $('tesGrid').innerHTML=S.testimonials.items.map(t=>\`<div class="test-card"><p class="test-q">\${t.q}<\/p><p class="test-a">— \${t.a}<\/p><\/div>\`).join('');
+  const res=S.resources;if(res&&res.items&&res.items.length){$('resLabel').textContent=res.label;$('resHeading').textContent=res.heading;$('resGrid').innerHTML=res.items.map(r=>\`<div class="res-card"><div class="res-badge">PDF<\/div><div class="res-info"><p class="res-title">\${r.title}<\/p><p class="res-desc">\${r.desc}<\/p><\/div><a href="\${r.file}" class="btn btn-orange" download>Download<\/a><\/div>\`).join('');}
   const ct=S.contact;
   $('footPhone').innerHTML=\`<a href="tel:\${ct.phone.replace(/-/g,'')}">\${ct.phone}<\/a>\`;
   $('footEmail').innerHTML=\`<a href="mailto:\${ct.email}">\${ct.email}<\/a>\`;

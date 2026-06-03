@@ -668,6 +668,17 @@ const S = {
       "Swim / Cycling / Running",
       "Other / Question"
     ]
+  },
+  "resources": {
+    "label": "Downloads",
+    "heading": "Free Resources",
+    "items": [
+      {
+        "title": "Swim Clinic — June 2026",
+        "desc": "All the details on our upcoming swim clinic. Download the flyer for dates, times, and how to register.",
+        "file": "docs/swim-clinic-june-2026.pdf"
+      }
+    ]
   }
 };
 </script>
@@ -769,18 +780,9 @@ const S = {
 </section>
 <section id="resources" class="section bg-white">
   <div class="container">
-    <p class="label">Downloads</p>
-    <h2 class="heading">Free Resources</h2>
-    <div class="res-grid">
-      <div class="res-card">
-        <div class="res-badge">PDF</div>
-        <div class="res-info">
-          <p class="res-title">Swim Clinic — June 2026</p>
-          <p class="res-desc">All the details on our upcoming swim clinic. Download the flyer for dates, times, and how to register.</p>
-        </div>
-        <a href="docs/swim-clinic-june-2026.pdf" class="btn btn-orange" download>Download Flyer</a>
-      </div>
-    </div>
+    <p class="label" id="resLabel"></p>
+    <h2 class="heading" id="resHeading"></h2>
+    <div class="res-grid" id="resGrid"></div>
   </div>
 </section>
 <footer>
@@ -907,6 +909,7 @@ const S = {
   $('tesLabel').textContent=S.testimonials.label;
   $('tesHeading').textContent=S.testimonials.heading;
   $('tesGrid').innerHTML=S.testimonials.items.map(t=>`<div class="test-card"><p class="test-q">${t.q}</p><p class="test-a">— ${t.a}</p></div>`).join('');
+  const res=S.resources;if(res&&res.items&&res.items.length){$('resLabel').textContent=res.label;$('resHeading').textContent=res.heading;$('resGrid').innerHTML=res.items.map(r=>`<div class="res-card"><div class="res-badge">PDF</div><div class="res-info"><p class="res-title">${r.title}</p><p class="res-desc">${r.desc}</p></div><a href="${r.file}" class="btn btn-orange" download>Download</a></div>`).join('');}
   const ct=S.contact;
   $('footPhone').innerHTML=`<a href="tel:${ct.phone.replace(/-/g,'')}">${ct.phone}</a>`;
   $('footEmail').innerHTML=`<a href="mailto:${ct.email}">${ct.email}</a>`;
