@@ -1497,7 +1497,7 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
 .foot-bottom{border-top:1px solid rgba(255,255,255,.08);padding:20px 0;text-align:center;font-size:12px}
 .res-grid{display:flex;flex-direction:column;gap:16px;margin-top:44px}
 .res-card{display:flex;align-items:center;gap:28px;background:var(--white);border:1px solid var(--border);border-radius:4px;padding:26px 30px}
-.res-badge{width:52px;height:52px;border-radius:4px;background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;flex-shrink:0}
+.res-badge{width:64px;height:83px;border-radius:4px;background:var(--orange);flex-shrink:0;overflow:hidden}
 .res-info{flex:1}
 .res-title{font-family:var(--fh);font-size:17px;font-weight:800;color:var(--text);margin-bottom:5px}
 .res-desc{font-size:14px;color:var(--mid);line-height:1.6}
@@ -1756,7 +1756,7 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
   $('tesLabel').textContent=S.testimonials.label;
   $('tesHeading').textContent=S.testimonials.heading;
   $('tesGrid').innerHTML=S.testimonials.items.map(t=>\`<div class="test-card"><p class="test-q">\${t.q}<\/p><p class="test-a">— \${t.a}<\/p><\/div>\`).join('');
-  const res=S.resources;if(res&&res.items&&res.items.length){$('resLabel').textContent=res.label;$('resHeading').textContent=res.heading;$('resGrid').innerHTML=res.items.map(r=>\`<div class="res-card"><div class="res-badge">PDF<\/div><div class="res-info"><p class="res-title">\${r.title}<\/p><p class="res-desc">\${r.desc}<\/p><\/div><a href="\${r.file}" class="btn btn-orange" download>Download<\/a><\/div>\`).join('');}
+  const res=S.resources;if(res&&res.items&&res.items.length){$('resLabel').textContent=res.label;$('resHeading').textContent=res.heading;$('resGrid').innerHTML=res.items.map(r=>\`<div class="res-card"><canvas class="res-badge" width="64" height="83" data-pdf="\${r.file}"><\/canvas><div class="res-info"><p class="res-title">\${r.title}<\/p><p class="res-desc">\${r.desc}<\/p><\/div><a href="\${r.file}" class="btn btn-orange" download>Download<\/a><\/div>\`).join('');renderPdfPreviews();}
   const ct=S.contact;
   $('footPhone').innerHTML=\`<a href="tel:\${ct.phone.replace(/-/g,'')}">\${ct.phone}<\/a>\`;
   $('footEmail').innerHTML=\`<a href="mailto:\${ct.email}">\${ct.email}<\/a>\`;
@@ -1779,6 +1779,36 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
       else{btn.textContent='Error: '+json.message;btn.disabled=false;}
     }catch(err){btn.textContent='Error: '+err.message;btn.disabled=false;}
   });
+  function renderPdfPreviews(){
+    const canvases=document.querySelectorAll('canvas.res-badge[data-pdf]');
+    if(!canvases.length)return;
+    if(window.pdfjsLib){_doPdfRender(canvases);return;}
+    const s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+    s.onload=()=>_doPdfRender(canvases);
+    document.head.appendChild(s);
+  }
+  function _doPdfRender(canvases){
+    pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    canvases.forEach(canvas=>{
+      pdfjsLib.getDocument(canvas.dataset.pdf).promise
+        .then(pdf=>pdf.getPage(1))
+        .then(page=>{
+          const vp=page.getViewport({scale:1});
+          const scale=64/vp.width;
+          const viewport=page.getViewport({scale});
+          canvas.height=Math.round(viewport.height);
+          page.render({canvasContext:canvas.getContext('2d'),viewport});
+        })
+        .catch(()=>{
+          const ctx=canvas.getContext('2d'),w=64,h=83;
+          ctx.fillStyle='#e93e3a';ctx.fillRect(0,0,w,h);
+          ctx.fillStyle='#fff';ctx.font='bold 11px sans-serif';
+          ctx.textAlign='center';ctx.textBaseline='middle';
+          ctx.fillText('PDF',w\/2,h\/2);
+        });
+    });
+  }
 })();
 <\/script>
 </body>
