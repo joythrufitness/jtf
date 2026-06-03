@@ -586,6 +586,14 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
       <span class="es-toggle">▾</span>
     </div>
     <div class="es-body">
+      <div class="field" style="background:#f9f9f9;border:1px solid var(--border);border-radius:4px;padding:14px 16px;margin-bottom:18px">
+        <label style="display:block;margin-bottom:8px">GitHub Token <span style="font-weight:400;color:var(--mid)">(one-time setup — saved in this browser)</span></label>
+        <div style="display:flex;gap:8px">
+          <input type="password" id="gh_token_input" placeholder="ghp_…" style="flex:1;padding:8px 10px;border:1px solid var(--border);border-radius:3px;font-size:14px"/>
+          <button onclick="saveGhToken()" class="add-btn" style="margin:0;padding:8px 16px">Save</button>
+        </div>
+        <p id="gh_token_status" style="font-size:12px;margin-top:6px"></p>
+      </div>
       <div id="res_wrap"></div>
       <button class="add-btn" onclick="addResource()">+ Add Document</button>
     </div>
@@ -890,21 +898,68 @@ function renderResource(i, r={}){
   block.innerHTML=`
     <button class="remove-btn" onclick="removeResource(${i})">✕ Remove</button>
     <h4>Document ${i+1}</h4>
-    <div class="field"><label>Pick File <span style="font-weight:400;color:var(--mid)">(auto-fills title &amp; path)</span></label><input type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" onchange="onResourceFile(this,${i})"/></div>
+    <div class="field"><label>File</label><input type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" onchange="onResourceFile(this,${i})"/><p id="res_status_${i}" style="font-size:12px;margin-top:6px"></p></div>
     <div class="field"><label>Title</label><input type="text" id="res_title_${i}" value="${esc(r.title||'')}"/></div>
     <div class="field"><label>Description</label><textarea id="res_desc_${i}" class="short">${esc(r.desc||'')}</textarea></div>
-    <div class="field"><label>File Path <span style="font-weight:400;color:var(--mid)">e.g. docs/filename.pdf</span></label><input type="text" id="res_file_${i}" value="${esc(r.file||'')}"/></div>
-    <p style="font-size:12px;color:var(--orange);margin-top:2px">⚠ Place the actual file in the <code>docs/</code> folder before deploying.</p>`;
+    <div class="field"><label>File Path</label><input type="text" id="res_file_${i}" value="${esc(r.file||'')}"/></div>`;
   w.appendChild(block);
 }
 
-function onResourceFile(input, i){
+async function onResourceFile(input, i){
   const file=input.files[0]; if(!file) return;
   const titleEl=document.getElementById(`res_title_${i}`);
   const fileEl=document.getElementById(`res_file_${i}`);
+  const statusEl=document.getElementById(`res_status_${i}`);
   const name=file.name.replace(/\.[^.]+$/,'').replace(/[-_]+/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
   if(!titleEl.value) titleEl.value=name;
   fileEl.value=`docs/${file.name}`;
+  const token=localStorage.getItem('jtf_gh_token');
+  if(!token){
+    statusEl.textContent='⚠ No GitHub token saved above — file path filled but not uploaded.';
+    statusEl.style.color='var(--orange)'; return;
+  }
+  statusEl.textContent='Uploading…'; statusEl.style.color='var(--mid)';
+  try{
+    const base64=await fileToBase64(file);
+    const apiUrl=`https://api.github.com/repos/joythrufitness/jtf/contents/docs/${file.name}`;
+    const headers={Authorization:`Bearer ${token}`,Accept:'application/vnd.github+json','Content-Type':'application/json'};
+    let sha; const check=await fetch(apiUrl,{headers});
+    if(check.ok) sha=(await check.json()).sha;
+    const body={message:`Upload ${file.name} via admin`,content:base64,branch:'main'};
+    if(sha) body.sha=sha;
+    const res=await fetch(apiUrl,{method:'PUT',headers,body:JSON.stringify(body)});
+    if(res.ok){
+      statusEl.textContent='✓ Uploaded — will go live on next deploy.';
+      statusEl.style.color='green';
+    } else {
+      const err=await res.json();
+      statusEl.textContent=`✗ Upload failed: ${err.message}`;
+      statusEl.style.color='#c0302d';
+    }
+  }catch(e){ statusEl.textContent=`✗ Error: ${e.message}`; statusEl.style.color='#c0302d'; }
+}
+
+function fileToBase64(file){
+  return new Promise((resolve,reject)=>{
+    const r=new FileReader();
+    r.onload=()=>resolve(r.result.split(',')[1]);
+    r.onerror=reject; r.readAsDataURL(file);
+  });
+}
+
+function saveGhToken(){
+  const t=document.getElementById('gh_token_input').value.trim();
+  if(!t) return;
+  localStorage.setItem('jtf_gh_token',t);
+  document.getElementById('gh_token_input').value='';
+  showGhTokenStatus();
+}
+
+function showGhTokenStatus(){
+  const el=document.getElementById('gh_token_status'); if(!el) return;
+  const has=!!localStorage.getItem('jtf_gh_token');
+  el.textContent=has?'✓ Token saved':'Not set — enter a GitHub token to enable auto-upload.';
+  el.style.color=has?'green':'var(--orange)';
 }
 
 function addResource(){
@@ -1709,6 +1764,7 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
   if(saved){ try{ data = JSON.parse(saved); }catch(e){} }
   if(!data){ data = await fetchProductionData(); }
   if(data){ _baseData = data; populate(data); }
+  showGhTokenStatus();
 })();
 </script>
 
