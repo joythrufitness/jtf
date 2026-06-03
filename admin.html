@@ -1118,7 +1118,9 @@ function readS(){
     const i=block.id.replace('tes_block_','');
     return {q:g(`tes_q_${i}`), a:g(`tes_a_${i}`)};
   });
-  D.resources = D.resources || {};
+  D.resources = D.resources || {label:'Downloads',heading:'Free Resources'};
+  D.resources.label = D.resources.label || 'Downloads';
+  D.resources.heading = D.resources.heading || 'Free Resources';
   D.resources.items = Array.from(document.querySelectorAll('#res_wrap .rep-block')).map(block=>{
     const i=block.id.replace('res_block_','');
     return {title:g(`res_title_${i}`),desc:g(`res_desc_${i}`),file:g(`res_file_${i}`)};
