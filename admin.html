@@ -1337,6 +1337,12 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
 .foot-contact-cta{display:inline-block;margin-top:22px;font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;border:1px solid rgba(255,255,255,.25);padding:11px 22px;border-radius:3px;transition:all .2s}
 .foot-contact-cta:hover{background:var(--orange);border-color:var(--orange)}
 .foot-bottom{border-top:1px solid rgba(255,255,255,.08);padding:20px 0;text-align:center;font-size:12px}
+.res-grid{display:flex;flex-direction:column;gap:16px;margin-top:44px}
+.res-card{display:flex;align-items:center;gap:28px;background:var(--white);border:1px solid var(--border);border-radius:4px;padding:26px 30px}
+.res-badge{width:52px;height:52px;border-radius:4px;background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;flex-shrink:0}
+.res-info{flex:1}
+.res-title{font-family:var(--fh);font-size:17px;font-weight:800;color:var(--text);margin-bottom:5px}
+.res-desc{font-size:14px;color:var(--mid);line-height:1.6}
 @media(max-width:960px){
   .nav-links{display:none;flex-direction:column;position:absolute;top:68px;left:0;right:0;background:#fff;border-bottom:1px solid var(--border);padding:14px 32px 22px;gap:16px}
   .nav-links.open{display:flex}
@@ -1376,6 +1382,7 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
     <li><a href="#trainers">Trainers</a></li>
     <li><a href="#testimonials">Testimonials</a></li>
     <li><a href="#contact">Contact Us</a></li>
+    <li><a href="#resources">Resources</a></li>
   </ul>
   <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
@@ -1460,6 +1467,22 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
     </div>
   </div>
 </section>
+<section id="resources" class="section bg-white">
+  <div class="container">
+    <p class="label">Downloads</p>
+    <h2 class="heading">Free Resources</h2>
+    <div class="res-grid">
+      <div class="res-card">
+        <div class="res-badge">PDF</div>
+        <div class="res-info">
+          <p class="res-title">Swim Clinic — June 2026</p>
+          <p class="res-desc">All the details on our upcoming swim clinic. Download the flyer for dates, times, and how to register.</p>
+        </div>
+        <a href="docs/swim-clinic-june-2026.pdf" class="btn btn-orange" download>Download Flyer</a>
+      </div>
+    </div>
+  </div>
+</section>
 <footer>
   <div class="container">
     <div class="foot-top">
@@ -1484,6 +1507,7 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
             <li><a href="#trainers">Trainers</a></li>
             <li><a href="#testimonials">Testimonials</a></li>
             <li><a href="#contact">Contact Us</a></li>
+            <li><a href="#resources">Resources</a></li>
           </ul>
         </div>
       </div>
