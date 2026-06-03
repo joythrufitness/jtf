@@ -262,6 +262,7 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
     <a href="#s-trainers">🧑‍🏫 Trainers</a>
     <a href="#s-testimonials">⭐ Testimonials</a>
     <a href="#s-resources">📄 Resources</a>
+    <a href="#s-settings">⚙️ Settings</a>
   </nav>
   <div class="sb-download">
     <button onclick="downloadSite()">⬇ Download index.html</button>
@@ -586,7 +587,19 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
       <span class="es-toggle">▾</span>
     </div>
     <div class="es-body">
-      <div style="background:#f9f9f9;border:1px solid var(--border);border-radius:4px;padding:14px 16px;margin-bottom:18px">
+      <div id="res_wrap"></div>
+      <button class="add-btn" onclick="addResource()">+ Add Document</button>
+    </div>
+  </div>
+
+  <div class="edit-section" id="s-settings">
+    <div class="es-header" onclick="toggle(this)">
+      <div class="es-icon">⚙️</div>
+      <span class="es-title">Settings</span>
+      <span class="es-toggle">▾</span>
+    </div>
+    <div class="es-body">
+      <div style="background:#f9f9f9;border:1px solid var(--border);border-radius:4px;padding:14px 16px">
         <div id="gh_token_set">
           <label style="display:block;margin-bottom:8px;font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase">GitHub Token <span style="font-weight:400;color:var(--mid)">(one-time setup — saved in this browser)</span></label>
           <div style="display:flex;gap:8px">
@@ -596,8 +609,6 @@ nav a.active{color:#fff;border-left-color:var(--orange);background:rgba(233,62,5
         </div>
         <p id="gh_token_status" style="font-size:12px;margin-top:6px"></p>
       </div>
-      <div id="res_wrap"></div>
-      <button class="add-btn" onclick="addResource()">+ Add Document</button>
     </div>
   </div>
 
