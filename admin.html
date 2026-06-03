@@ -651,6 +651,7 @@ function addGcClass(){
   renderGcClass(count,{});
 }
 function removeGcClass(i){
+  if(!confirm('Remove this class? This cannot be undone.')) return;
   const block=document.getElementById(`gc_block_${i}`);
   if(block) block.remove();
   reindexGcClasses();
@@ -789,6 +790,7 @@ function addTrainer(){
 }
 
 function removeTrainer(i){
+  if(!confirm('Remove this trainer? This cannot be undone.')) return;
   const block = document.getElementById(`tr_block_${i}`);
   if(block) block.remove();
   reindexTrainers();
@@ -860,6 +862,7 @@ function addTestimonial(){
 }
 
 function removeTestimonial(i){
+  if(!confirm('Remove this testimonial? This cannot be undone.')) return;
   const block=document.getElementById(`tes_block_${i}`);
   if(block) block.remove();
   reindexTestimonials();
@@ -978,6 +981,7 @@ function addResource(){
 }
 
 function removeResource(i){
+  if(!confirm('Remove this document? This cannot be undone.')) return;
   const block=document.getElementById(`res_block_${i}`);
   if(block) block.remove();
   reindexResources();
