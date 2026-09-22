@@ -1,0 +1,26 @@
+{
+  "label": "Group Classes",
+  "heading": "Exceed Your Expectations",
+  "priceBadge": "$20",
+  "scheduleUrl": "https://www.vagaro.com/joythrufitness/classes",
+  "image": "images/group-clases.jpg",
+  "specialMsg": "All of the classes except for the Boot Camps are at Arbor Greene.",
+  "list": [
+    {
+      "name": "Full Bodyweight Workout",
+      "desc": "The most effective way to boost your metabolism, burn body fat, and gain strength is with a variety of movements that work the major muscle groups. This class is for all fitness levels."
+    },
+    {
+      "name": "Core and More",
+      "desc": "This circuit style class will move you in different directions to improve balance, core stability, posture, fall prevention, and cardiovascular fitness. For all fitness levels."
+    },
+    {
+      "name": "Strength and Mobility",
+      "desc": "Strength & Mobility\n\nGet stronger. Move better. Feel better.\n\nThis low-impact, full-body class combines functional strength training with mobility, balance, flexibility, and controlled movement. Participants will work on building strength, improving joint mobility and stability, increasing range of motion, and moving with greater confidence in everyday life.\n\nClasses may include both standing and mat-based exercises, with modifications available for different fitness levels.\n\nAll fitness levels welcome."
+    },
+    {
+      "name": "Total Body Fit",
+      "desc": "This 60 minute class addresses the fundamentals of all well balanced exercise programs: cardio, muscle strength, flexibility, and body composition.  Each workout is diverse, fun, and engaging.  Never the exact same program twice."
+    }
+  ]
+}

@@ -330,13 +330,27 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
 <script>
 (async()=>{
   const $=id=>document.getElementById(id);
+  // Content lives in content/*.json (one file per site section, edited via
+  // the Pages CMS). Each key here maps a section of the page to its file.
+  const CONTENT_FILES={
+    hero:'hero.json', mission:'mission.json', pt:'personal-training.json',
+    t4u:'time-4-u.json', classes:'group-classes.json', payment:'payment.json',
+    pricing:'pricing.json', about:'about.json', trainers:'trainers.json',
+    testimonials:'testimonials.json', contact:'contact.json',
+    resources:'resources.json', images:'brand.json'
+  };
   let S;
   try{
-    const res=await fetch('content/site.json');
-    S=await res.json();
+    const keys=Object.keys(CONTENT_FILES);
+    const parts=await Promise.all(keys.map(k=>fetch(`content/${CONTENT_FILES[k]}`).then(r=>{
+      if(!r.ok) throw new Error(`${CONTENT_FILES[k]}: ${r.status}`);
+      return r.json();
+    })));
+    S={};
+    keys.forEach((k,i)=>S[k]=parts[i]);
   }catch(e){
     document.body.innerHTML='<p style="padding:60px;font-family:sans-serif;color:#900">Site content failed to load. Please try refreshing the page.</p>';
-    console.error('Failed to load content/site.json',e);
+    console.error('Failed to load site content',e);
     return;
   }
   const rows=arr=>arr.map(r=>`<div class="pc-row"><span class="pc-row-l">${r.l}</span><span class="pc-row-v">${r.v}</span></div>${r.mo?`<div class="pc-row-mo">${r.mo}</div>`:''}`).join('');

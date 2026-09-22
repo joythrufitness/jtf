@@ -1,0 +1,37 @@
+{
+  "label": "Trainers",
+  "heading": "Knowledge and experience that transforms you into a better self",
+  "people": [
+    {
+      "name": "Heather Downs",
+      "role": "CEO & Personal Trainer",
+      "photo": "images/heather-headshot.png",
+      "bio": "Heather's transformation leads to her career as a Personal Trainer and Triathlon Coach. She has been a Personal Trainer for 15 years and a Triathlon Coach for 12 years. Her dedication and passion for helping you achieve your goals shine through in her training.",
+      "sport": "Triathlon",
+      "interests": "Heather appreciates diversity. She enjoys exploring and traveling to new places.",
+      "philosophy": "You don't get what you wish for; you get what you work for.",
+      "funfacts": "She loves animals, nature, and photography.",
+      "certs": [
+        "ACE Personal Trainer",
+        "ACE Sports Conditioning Specialist",
+        "NESTA Certified Sports Injury Specialist",
+        "NESTA Certified Lifestyle Weight Management Specialist",
+        "USA Triathlon Level 1 Coach"
+      ]
+    },
+    {
+      "name": "Addison Arneson",
+      "role": "Personal Trainer",
+      "photo": "images/addison-headshot.jpg",
+      "bio": "Addison was inspired to become a personal trainer after 12 years of gymnastics, three years of coaching, and teaching swim lessons. Currently pursuing a B.S. in Exercise Science and Kinesiology at USF.",
+      "sport": "Gymnastics",
+      "interests": "Spending time in nature, reading, and exploring new places.",
+      "philosophy": "It's not about perfection; it's about improvement.",
+      "funfacts": "Moved from Minnesota · Once dreamed of being a marine biologist · The beach is her happy place.",
+      "certs": [
+        "NASM Certified Personal Trainer",
+        "American Red Cross Lifeguarding with CPR/AED"
+      ]
+    }
+  ]
+}

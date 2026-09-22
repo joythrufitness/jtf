@@ -1,0 +1,22 @@
+{
+  "label": "Personal Training",
+  "heading": "Should I hire a personal trainer?",
+  "intro": [
+    "Hiring a personal trainer is essential. The benefits are remarkable, as they go a long way toward guaranteeing that you reach your health and fitness goals. Some people are initially turned off by hiring a personal trainer when they consider the cost or fear a trainer pushing them too hard.",
+    "We support, motivate, and guide you through this transformative journey."
+  ],
+  "listLabel": "Our training includes:",
+  "items": [
+    "Paying close attention to individual training programs and nutrition habits, such as customized programs",
+    "Arranging fitness assessments to measure strength and imbalances",
+    "Addressing fitness level and desired goals",
+    "Accountability",
+    "Form correction",
+    "Weekly flexibility and strength plans",
+    "Nutrition advice and goal setting",
+    "Unconditional professionalism to help you progress in developing a healthy lifestyle"
+  ],
+  "btn": "Sign Up Today",
+  "btnHref": "#pricing",
+  "image": "images/personal-training.jpg"
+}
