@@ -1,0 +1,511 @@
+media:
+  - name: images
+    label: Images
+    input: images
+    output: /images
+    categories: [image]
+    rename: false
+  - name: docs
+    label: Documents
+    input: docs
+    output: /docs
+    categories: [document]
+    extensions: [pdf]
+    rename: false
+
+content:
+  - name: site
+    label: Website Content
+    type: file
+    path: content/site.json
+    format: json
+    fields:
+
+      - name: hero
+        label: Hero (top of page)
+        type: object
+        fields:
+          - name: headline
+            label: Headline
+            type: string
+          - name: image
+            label: Background image
+            type: image
+            options:
+              media: images
+
+      - name: mission
+        label: Mission banner
+        type: object
+        fields:
+          - name: label
+            label: Small label
+            type: string
+          - name: text
+            label: Mission statement
+            type: text
+
+      - name: pt
+        label: Personal Training section
+        type: object
+        fields:
+          - name: label
+            label: Small label
+            type: string
+          - name: heading
+            label: Heading
+            type: string
+          - name: intro
+            label: Intro paragraphs
+            type: text
+            list: true
+          - name: listLabel
+            label: List intro line
+            type: string
+          - name: items
+            label: Bullet points
+            type: string
+            list: true
+          - name: btn
+            label: Button text
+            type: string
+          - name: btnHref
+            label: Button link
+            type: string
+          - name: image
+            label: Photo
+            type: image
+            options:
+              media: images
+
+      - name: t4u
+        label: "Time 4 U section"
+        type: object
+        fields:
+          - name: label
+            label: Small label
+            type: string
+          - name: heading
+            label: Heading
+            type: string
+          - name: intro
+            label: Intro paragraph
+            type: text
+          - name: listLabel
+            label: List intro line
+            type: string
+          - name: items
+            label: Bullet points
+            type: string
+            list: true
+          - name: note
+            label: Note (italic line)
+            type: text
+          - name: cta
+            label: Call-to-action line
+            type: string
+          - name: email
+            label: Contact email shown here
+            type: string
+          - name: image
+            label: Photo
+            type: image
+            options:
+              media: images
+
+      - name: classes
+        label: Group Classes section
+        type: object
+        fields:
+          - name: label
+            label: Small label
+            type: string
+          - name: heading
+            label: Heading
+            type: string
+          - name: priceBadge
+            label: Price badge (e.g. $20)
+            type: string
+          - name: scheduleUrl
+            label: "\"See Schedules\" button link"
+            type: string
+          - name: image
+            label: Photo
+            type: image
+            options:
+              media: images
+          - name: specialMsg
+            label: Highlighted note (optional)
+            type: string
+            required: false
+          - name: list
+            label: Classes
+            type: object
+            list:
+              collapsible:
+                summary: "{fields.name}"
+            fields:
+              - name: name
+                label: Class name
+                type: string
+              - name: desc
+                label: Description
+                type: text
+
+      - name: payment
+        label: Payment info (Venmo / Zelle)
+        type: object
+        fields:
+          - name: venmo
+            label: Venmo handle
+            type: string
+          - name: zelle
+            label: Zelle number
+            type: string
+
+      - name: pricing
+        label: Pricing
+        type: object
+        fields:
+          - name: consultNote
+            label: Consult note (shown above Individual tab)
+            type: string
+
+          - name: individual
+            label: "Individual — pricing tiers"
+            type: object
+            list:
+              collapsible:
+                summary: "{fields.freq}"
+            fields:
+              - name: freq
+                label: Frequency (e.g. "3x per week")
+                type: string
+              - name: sessions
+                label: Sessions per month
+                type: number
+              - name: badge
+                label: "Badge (e.g. \"Best Value\") — leave blank for none"
+                type: string
+                required: false
+              - name: save
+                label: "Savings note — leave blank for none"
+                type: string
+                required: false
+              - name: rows
+                label: Duration / price rows
+                type: object
+                list: true
+                fields:
+                  - name: l
+                    label: Duration (e.g. "60 min")
+                    type: string
+                  - name: v
+                    label: Price per session
+                    type: string
+                  - name: mo
+                    label: Monthly total (optional)
+                    type: string
+                    required: false
+
+          - name: specials
+            label: Specials tab
+            type: object
+            fields:
+              - name: title
+                label: Title
+                type: string
+              - name: note
+                label: Note
+                type: string
+              - name: deals
+                label: Deals
+                type: object
+                list: true
+                fields:
+                  - name: freq
+                    label: Description (e.g. "1x per week · 12 sessions")
+                    type: string
+                  - name: price
+                    label: Price
+                    type: string
+
+          - name: team
+            label: Team tab
+            type: object
+            fields:
+              - name: title
+                label: Title
+                type: string
+              - name: note
+                label: Note
+                type: string
+              - name: groups
+                label: Pricing groups
+                type: object
+                list:
+                  collapsible:
+                    summary: "{fields.freq}"
+                fields:
+                  - name: freq
+                    label: Frequency
+                    type: string
+                  - name: sessions
+                    label: Sessions per month
+                    type: number
+                  - name: rows
+                    label: Duration / price rows
+                    type: object
+                    list: true
+                    fields:
+                      - name: l
+                        label: Duration
+                        type: string
+                      - name: v
+                        label: Monthly price
+                        type: string
+
+          - name: triathlon
+            label: Triathlon tab
+            type: object
+            fields:
+              - name: title
+                label: Title
+                type: string
+              - name: tiers
+                label: Tiers
+                type: object
+                list:
+                  collapsible:
+                    summary: "{fields.label}"
+                fields:
+                  - name: label
+                    label: Tier name (e.g. Gold)
+                    type: string
+                  - name: price
+                    label: Price
+                    type: string
+                  - name: period
+                    label: Period (e.g. "per month")
+                    type: string
+                  - name: hi
+                    label: Highlight this tier?
+                    type: boolean
+                  - name: feats
+                    label: Features
+                    type: string
+                    list: true
+
+          - name: sbr
+            label: "Swim / Bike / Run tab"
+            type: object
+            fields:
+              - name: title
+                label: Title
+                type: string
+              - name: note
+                label: Note (optional)
+                type: string
+                required: false
+              - name: groups
+                label: Pricing groups
+                type: object
+                list:
+                  collapsible:
+                    summary: "{fields.freq}"
+                fields:
+                  - name: freq
+                    label: Frequency
+                    type: string
+                  - name: sessions
+                    label: Sessions per month
+                    type: number
+                  - name: rows
+                    label: Duration / price rows
+                    type: object
+                    list: true
+                    fields:
+                      - name: l
+                        label: Duration
+                        type: string
+                      - name: v
+                        label: Price per session
+                        type: string
+                      - name: mo
+                        label: Monthly total (optional)
+                        type: string
+                        required: false
+
+      - name: about
+        label: About section
+        type: object
+        fields:
+          - name: label
+            label: Small label
+            type: string
+          - name: heading
+            label: Heading
+            type: string
+          - name: paragraphs
+            label: Paragraphs
+            type: text
+            list: true
+          - name: btn
+            label: Button text
+            type: string
+          - name: btnHref
+            label: Button link
+            type: string
+          - name: image
+            label: Photo
+            type: image
+            options:
+              media: images
+
+      - name: trainers
+        label: Trainers section
+        type: object
+        fields:
+          - name: label
+            label: Small label
+            type: string
+          - name: heading
+            label: Heading
+            type: string
+          - name: people
+            label: Trainers
+            type: object
+            list:
+              collapsible:
+                summary: "{fields.name}"
+            fields:
+              - name: name
+                label: Name
+                type: string
+              - name: role
+                label: Role / title
+                type: string
+              - name: photo
+                label: Headshot
+                type: image
+                options:
+                  media: images
+              - name: bio
+                label: Bio
+                type: text
+              - name: sport
+                label: Favorite sport
+                type: string
+              - name: interests
+                label: Interests
+                type: text
+              - name: philosophy
+                label: Training philosophy
+                type: text
+              - name: funfacts
+                label: Fun facts
+                type: text
+              - name: certs
+                label: Certifications
+                type: string
+                list: true
+
+      - name: testimonials
+        label: Testimonials section
+        type: object
+        fields:
+          - name: label
+            label: Small label
+            type: string
+          - name: heading
+            label: Heading
+            type: string
+          - name: items
+            label: Testimonials
+            type: object
+            list:
+              collapsible:
+                summary: "{fields.a}"
+            fields:
+              - name: q
+                label: Quote
+                type: text
+              - name: a
+                label: Attribution (client name)
+                type: string
+                required: false
+
+      - name: contact
+        label: Contact section
+        type: object
+        fields:
+          - name: label
+            label: Small label
+            type: string
+          - name: heading
+            label: Heading
+            type: string
+          - name: phone
+            label: Phone number
+            type: string
+          - name: email
+            label: Email address
+            type: string
+          - name: web3formsKey
+            label: "Web3Forms access key (do not change unless told to)"
+            type: string
+          - name: packages
+            label: "Package options (contact form dropdown)"
+            type: string
+            list: true
+
+      - name: resources
+        label: Resources & Downloads section
+        type: object
+        fields:
+          - name: label
+            label: Small label
+            type: string
+          - name: heading
+            label: Heading
+            type: string
+          - name: items
+            label: Documents
+            type: object
+            list:
+              collapsible:
+                summary: "{fields.title}"
+            fields:
+              - name: title
+                label: Title
+                type: string
+              - name: desc
+                label: Description (optional)
+                type: string
+                required: false
+              - name: file
+                label: PDF file
+                type: file
+                options:
+                  media: docs
+
+      - name: images
+        label: Brand assets (rarely changed)
+        type: object
+        fields:
+          - name: logoNav
+            label: Header logo
+            type: image
+            options:
+              media: images
+          - name: logoFoot
+            label: Footer logo (white version)
+            type: image
+            options:
+              media: images
+          - name: venmo
+            label: "Venmo logo URL (external — leave as is)"
+            type: string
+          - name: zelle
+            label: "Zelle logo URL (external — leave as is)"
+            type: string

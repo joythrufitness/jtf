@@ -3,5 +3,6 @@ Allow: /
 Disallow: /admin.html
 Disallow: /sop.html
 Disallow: /thankyou.html
+Disallow: /content/
 
 Sitemap: https://www.joythrufitness.com/sitemap.xml
