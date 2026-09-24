@@ -1,5 +1,11 @@
 {
   "label": "Downloads",
   "heading": "Free Resources",
-  "items": []
+  "items": [
+    {
+      "title": "October 2026 Swim Clinic",
+      "desc": "Swimmers or Triathletes come join us for this 2-day Swim Clinic!",
+      "file": "/docs/2026_Swim_Clinic_Flyer_Tampa-Oct[2529].pdf"
+    }
+  ]
 }
