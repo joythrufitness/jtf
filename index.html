@@ -216,6 +216,12 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
   #hero{justify-content:center}
   .hero-content{text-align:center;padding:0 24px}
   .hero-btns{justify-content:center}
+  /* On narrow screens the text sits over the runner — soften the photo and make buttons solid */
+  #hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.35) 0%,rgba(255,255,255,.72) 35%,rgba(255,255,255,.72) 70%,rgba(255,255,255,.35) 100%);pointer-events:none}
+  .hero-content h1{text-shadow:0 1px 12px rgba(255,255,255,.8)}
+  .hero-btns .btn-outline-dark{background:var(--text);color:#fff;border-color:var(--text)}
+  .hero-btns .btn-outline-dark:hover{background:#000;border-color:#000}
+  .hero-btns .btn{box-shadow:0 4px 14px rgba(0,0,0,.18)}
   .split{grid-template-columns:1fr}
   .split-img img{height:240px}
   .t-grid{grid-template-columns:1fr}
