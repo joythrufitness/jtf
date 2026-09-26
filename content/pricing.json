@@ -173,7 +173,7 @@
     "tiers": [
       {
         "label": "Custom Training Plan + Check-In",
-        "price": "$169 per month 4 months for , $159 per month for 6 months , $149 per month for 12 months ",
+        "price": "$169 per month 4 months, $159 per month for 6 months , $149 per month for 12 months ",
         "period": "per month",
         "hi": false,
         "feats": [
