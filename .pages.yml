@@ -426,6 +426,34 @@ content:
                     label: Monthly total (optional)
                     type: string
                     required: false
+          - name: extras
+            label: Triathlon-specific sessions (price list under the cards)
+            type: object
+            fields:
+              - name: title
+                label: "Heading — leave blank to hide the whole list"
+                type: string
+                required: false
+              - name: note
+                label: Note under the heading (optional)
+                type: text
+                required: false
+              - name: items
+                label: Sessions
+                type: object
+                list:
+                  collapsible:
+                    summary: "{fields.name} — {fields.price}"
+                fields:
+                  - name: name
+                    label: Session name (e.g. "Swim Stroke Analysis")
+                    type: string
+                  - name: dur
+                    label: Length (e.g. "60 min")
+                    type: string
+                  - name: price
+                    label: Price (e.g. "$95")
+                    type: string
 
   - name: about
     label: About

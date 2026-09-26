@@ -145,6 +145,14 @@ a{color:inherit;text-decoration:none}
 .tri-session-n{font-size:12px;color:var(--light)}
 .tri-addons .tri-inc{color:var(--light)}
 .tri-addons .klist{margin:6px 0 14px}
+.sbr-extras{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--orange);border-radius:4px;padding:28px 32px;margin-top:36px}
+.sbr-extras h4{font-family:var(--fh);font-size:17px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px}
+.sbr-extras-note{font-size:14px;color:var(--mid);line-height:1.6}
+.sbr-list{columns:2;column-gap:48px;margin-top:12px}
+.sbr-item{display:grid;grid-template-columns:1fr auto 64px;align-items:baseline;column-gap:14px;padding:12px 0;border-bottom:1px solid var(--border);break-inside:avoid}
+.sbr-item-n{font-size:14px;font-weight:600;color:var(--text)}
+.sbr-item-d{font-size:12px;color:var(--light);white-space:nowrap}
+.sbr-item-p{font-family:var(--fh);font-size:17px;font-weight:800;color:var(--orange);text-align:right}
 .tri-addons-note{font-size:13px;color:var(--mid);line-height:1.6;font-style:italic}
 .t-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;margin-top:52px}
 .t-card{background:var(--white);border:1px solid var(--border);border-radius:4px;overflow:hidden}
@@ -214,6 +222,8 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
   .test-grid{grid-template-columns:1fr 1fr}
   .pr-grid{grid-template-columns:1fr 1fr}
   .tri-addons{grid-template-columns:1fr;gap:20px;padding:24px}
+  .sbr-extras{padding:24px}
+  .sbr-list{columns:1}
   .contact-grid{grid-template-columns:1fr;gap:36px}
   .foot-top{grid-template-columns:1fr;gap:36px}
   .foot-cols{grid-template-columns:1fr 1fr}
@@ -475,12 +485,19 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
   }
   panels.push(p3);
   const sbr=pr.sbr;
-  let p4=`<p class="pr-note">${sbr.note}</p><div class="pr-grid">`;
+  let p4=`${sbr.note?`<p class="pr-note">${sbr.note}</p>`:''}<div class="pr-grid">`;
   sbr.groups.forEach(g=>{
     const sbrColHeader=`<div class="pc-col-header"><span>Duration</span><span>Per Session</span></div>`;
     p4+=`<div class="pc"><p class="pc-freq">${g.freq}</p><div class="pc-rows-wrap">${sbrColHeader}${rows(g.rows)}</div><p class="pc-pkg">${g.sessions} sessions/mo · billed monthly</p></div>`;
   });
-  p4+=`</div>`;panels.push(p4);
+  p4+=`</div>`;
+  const sx=sbr.extras;
+  if(sx&&sx.title&&sx.items&&sx.items.length){
+    p4+=`<div class="sbr-extras"><h4>${sx.title}</h4>${sx.note?`<p class="sbr-extras-note">${sx.note}</p>`:''}<div class="sbr-list">`
+      +sx.items.map(i=>`<div class="sbr-item"><span class="sbr-item-n">${i.name}</span><span class="sbr-item-d">${i.dur||''}</span><span class="sbr-item-p">${i.price}</span></div>`).join('')
+      +`</div></div>`;
+  }
+  panels.push(p4);
   $('pricingInner').innerHTML=panels.map((p,i)=>`<div class="pr-panel${i===0?' active':''}" data-panel="${i}">${p}</div>`).join('');
   $('prTabs').addEventListener('click',e=>{
     const btn=e.target.closest('.pr-tab');if(!btn)return;
