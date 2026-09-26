@@ -199,7 +199,7 @@
         "feats": [
           "Personalized coaching, structure, accountability, and feedback without high-touch daily performance management",
           "Customized swim, bike, and run programming in Trainingpeaks",
-          "Trainingpeaks programming",
+          "Trainingpeaks programming including customized functional strength programming",
           "Key workout review & feedback",
           "Training adjustments",
           "Coach communication",
@@ -216,31 +216,28 @@
         ]
       },
       {
-        "label": "Elite",
-        "price": "$379",
+        "label": "Performance Coaching",
+        "price": "$299 per month for 4 months, $289 per month for 6 months, $279 per month for 12 months",
         "period": "per month",
         "hi": false,
         "feats": [
-          "High-touch coaching. Detailed analysis. Maximum personalization.",
-          "For athletes who want their coach highly involved in managing their training and performance throughout the season.",
-          "EVERYTHING IN PERFORMANCE, PLUS:",
-          "Training reviewed & adjusted as needed throughout the week",
-          "Priority workout analysis & feedback",
-          "Advanced performance-data analysis",
-          "Training-load & performance-trend monitoring",
-          "Higher-touch recovery monitoring",
-          "Priority coach communication",
-          "More frequent race-specific adjustments",
-          "Advanced race execution strategy",
-          "Advanced fueling & hydration strategy",
-          "Regular video technique analysis",
-          "45-minute monthly Performance Zoom",
-          "Full-season planning",
-          "A/B/C race prioritization",
-          "Post-race performance analysis",
-          "Post-race recovery & return-to-training planning",
+          "For athlete's who want their coach actively involved in their training, performance, strength fueling, recovery and race preparation",
+          "Customized swim, bike & run programming",
+          "Weekly training review & programming",
+          "Trainingpeaks programming including customized functional strength programming",
+          "Mobility & recovery recommendations",
+          "Nutrition & fueling guidance",
+          "Training hydration strategies",
+          "Race-day fueling & hydration planning",
+          "Detailed race pacing & strategy",
+          "45 minute monthly Zoom coaching session",
+          "Training periodization (setting up your ATP)",
+          "Training adjustments based on performance, fatigue & recovery",
+          "Monthly video technique analysis",
+          "Post race review & recovery planning",
+          "Increased coaching communication & accountability",
           "Best For:",
-          "Competitive age-group athletes, 70.3/Ironman athletes, PR and podium-focused athletes, championship qualification goals, or athletes wanting the highest level of coaching support."
+          "Athletes preparing for Sprint, Olympic, 70.3 or Ironman events who want more accountability, analysis, and coach involvement - or athletes pursuing stronger performances and PRs"
         ]
       }
     ]
