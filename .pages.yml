@@ -307,6 +307,9 @@ content:
               - name: hi
                 label: Highlight this plan with an orange border?
                 type: boolean
+              - name: elite
+                label: Premium gold styling (for the top plan)?
+                type: boolean
               - name: price
                 label: "\"Starting at\" price — the big number (e.g. \"$279\")"
                 type: string

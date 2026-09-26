@@ -207,7 +207,8 @@
           "Basic race-week guidance",
           "Initial athlete consultation"
         ],
-        "bestFor": "Self-directed athletes who want professional programming but don't need frequent feedback, accountability, or ongoing coach involvement."
+        "bestFor": "Self-directed athletes who want professional programming but don't need frequent feedback, accountability, or ongoing coach involvement.",
+        "elite": false
       },
       {
         "label": "Foundation Coaching",
@@ -246,12 +247,13 @@
           "Adjustments for travel, illness, recovery & schedule changes",
           "Periodic video technique review"
         ],
-        "bestFor": "Athletes who want individualized coaching, accountability, and professional feedback while remaining relatively independent in their day-to-day training."
+        "bestFor": "Athletes who want individualized coaching, accountability, and professional feedback while remaining relatively independent in their day-to-day training.",
+        "elite": false
       },
       {
         "label": "Performance Coaching",
-        "badge": "Most Popular",
-        "hi": true,
+        "badge": "",
+        "hi": false,
         "price": "$279",
         "period": "per month",
         "terms": [
@@ -289,7 +291,8 @@
           "Post-race review & recovery planning",
           "Increased coach communication & accountability"
         ],
-        "bestFor": "Athletes preparing for Sprint, Olympic, 70.3 or Ironman events who want more accountability, analysis and coach involvement—or athletes pursuing stronger performances and PRs."
+        "bestFor": "Athletes preparing for Sprint, Olympic, 70.3 or Ironman events who want more accountability, analysis and coach involvement—or athletes pursuing stronger performances and PRs.",
+        "elite": false
       },
       {
         "label": "Elite Performance Coaching",
@@ -336,7 +339,8 @@
           "Fitness & performance assessments",
           "Higher-touch monitoring of fatigue, recovery & training response"
         ],
-        "bestFor": "Competitive age-group athletes, 70.3 and Ironman athletes, athletes pursuing PRs, podiums or championship qualification, and athletes who want their coach closely involved in managing their performance."
+        "bestFor": "Competitive age-group athletes, 70.3 and Ironman athletes, athletes pursuing PRs, podiums or championship qualification, and athletes who want their coach closely involved in managing their performance.",
+        "elite": true
       }
     ],
     "footnote": "The higher the coaching level, the greater the level of coach involvement, analysis, feedback, communication and individualized performance management.",
