@@ -45,11 +45,26 @@ a{color:inherit;text-decoration:none}
 #nav{position:fixed;top:0;left:0;width:100%;z-index:999;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 1px 6px rgba(0,0,0,.06);display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:68px;transition:height .25s}
 #nav.scrolled{height:54px}
 .nav-logo img{height:36px}
-.nav-links{display:flex;gap:20px;list-style:none}
-.nav-links a{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#333;transition:color .2s}
-.nav-links a:hover{color:var(--orange)}
-.nav-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
-.nav-burger span{display:block;width:24px;height:2px;background:#333}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none}
+.nav-links>li{position:relative}
+.nav-top{display:flex;align-items:center;gap:7px;padding:10px 14px;background:none;border:none;cursor:pointer;font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#333;transition:color .2s}
+.nav-top:hover,.has-sub.open>.nav-top,.nav-links>li.active>.nav-top{color:var(--orange)}
+.nav-chev{width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .2s}
+.has-sub.open .nav-chev{transform:translateY(1px) rotate(-135deg)}
+.nav-sub{position:absolute;top:100%;left:0;min-width:220px;list-style:none;background:#fff;border:1px solid var(--border);border-radius:6px;box-shadow:0 14px 34px rgba(0,0,0,.12);padding:8px;opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .18s,transform .18s,visibility .18s}
+.has-sub.open>.nav-sub{opacity:1;visibility:visible;transform:none}
+@media(hover:hover) and (min-width:761px){.has-sub:hover>.nav-sub{opacity:1;visibility:visible;transform:none}.has-sub:hover .nav-chev{transform:translateY(1px) rotate(-135deg)}.has-sub:hover>.nav-top{color:var(--orange)}}
+.nav-sub a{display:block;padding:10px 12px;border-radius:4px;font-size:14px;font-weight:600;color:var(--text);transition:background .15s,color .15s}
+.nav-sub a:hover,.nav-sub a.active{background:var(--orange-lt);color:var(--orange)}
+.nav-cta{display:inline-block;margin-left:10px;padding:11px 20px;border-radius:3px;background:var(--orange);color:#fff;font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;transition:background .2s}
+.nav-cta:hover{background:var(--orange-dk)}
+.nav-top,.nav-cta{white-space:nowrap}
+@media(max-width:1024px) and (min-width:761px){#nav{padding:0 20px}.nav-top{padding:10px 9px;letter-spacing:.1em}.nav-cta{margin-left:6px;padding:10px 14px;letter-spacing:.1em}}
+.nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:none;border:none;cursor:pointer;padding:8px}
+.nav-burger span{display:block;width:24px;height:2px;background:#333;transition:transform .25s,opacity .2s}
+.nav-burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.nav-burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 #hero{height:100vh;position:relative;display:flex;align-items:center;justify-content:flex-end;overflow:hidden}
 .hero-bg{position:absolute;inset:0;background-size:cover;background-position:left top;background-repeat:no-repeat;background-color:#ebebeb}
 .hero-content{position:relative;z-index:1;padding:0 60px 0 24px;max-width:540px;text-align:right}
@@ -210,9 +225,6 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
 .res-title{font-family:var(--fh);font-size:17px;font-weight:800;color:var(--text);margin-bottom:5px}
 .res-desc{font-size:14px;color:var(--mid);line-height:1.6}
 @media(max-width:960px){
-  .nav-links{display:none;flex-direction:column;position:absolute;top:68px;left:0;right:0;background:#fff;border-bottom:1px solid var(--border);padding:14px 32px 22px;gap:16px}
-  .nav-links.open{display:flex}
-  .nav-burger{display:flex}
   #hero{justify-content:center}
   .hero-content{text-align:center;padding:0 24px}
   .hero-btns{justify-content:center}
@@ -234,6 +246,21 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
   .foot-top{grid-template-columns:1fr;gap:36px}
   .foot-cols{grid-template-columns:1fr 1fr}
 }
+@media(max-width:760px){
+  .nav-burger{display:flex}
+  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 14px 30px rgba(0,0,0,.1);padding:6px 24px 24px;max-height:calc(100vh - 54px);overflow-y:auto}
+  .nav-links.open{display:flex}
+  .nav-links>li{border-bottom:1px solid var(--border)}
+  .nav-links>li.nav-cta-li{border-bottom:none}
+  .nav-top{width:100%}
+  a.nav-top{padding:14px 0;font-family:var(--fb);font-size:16px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--text)}
+  .has-sub>.nav-top{pointer-events:none;padding:16px 0 4px;color:var(--light);font-size:10px}
+  .nav-chev{display:none}
+  .nav-sub{position:static;min-width:0;opacity:1;visibility:visible;transform:none;box-shadow:none;border:none;border-radius:0;padding:0 0 10px}
+  .nav-sub a{padding:10px 0;font-size:16px;border-radius:0}
+  .nav-sub a:hover,.nav-sub a.active{background:none}
+  .nav-cta{display:block;margin:20px 0 0;padding:15px;text-align:center;font-size:12px}
+}
 @media(max-width:560px){
   .container{padding:0 20px}
   #nav{padding:0 20px}
@@ -248,17 +275,27 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
 <nav id="nav">
   <a href="#hero" class="nav-logo"><img id="logo-nav" alt="JOY Thru Fitness"/></a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#personal-training">Personal Training</a></li>
-    <li><a href="#online-programs">Online Programs</a></li>
-    <li><a href="#dua-tri">Group Classes</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#trainers">Trainers</a></li>
-    <li><a href="#testimonials">Testimonials</a></li>
-    <li><a href="#contact">Contact Us</a></li>
-    <li><a href="#resources">Resources</a></li>
+    <li class="has-sub" data-spy="personal-training online-programs dua-tri">
+      <button class="nav-top" type="button" aria-expanded="false" aria-controls="subPrograms">Programs<span class="nav-chev" aria-hidden="true"></span></button>
+      <ul class="nav-sub" id="subPrograms">
+        <li><a href="#personal-training">Personal Training</a></li>
+        <li><a href="#online-programs">Online Programs</a></li>
+        <li><a href="#dua-tri">Group Classes</a></li>
+      </ul>
+    </li>
+    <li data-spy="pricing"><a class="nav-top" href="#pricing">Pricing</a></li>
+    <li class="has-sub" data-spy="about trainers testimonials">
+      <button class="nav-top" type="button" aria-expanded="false" aria-controls="subAbout">About<span class="nav-chev" aria-hidden="true"></span></button>
+      <ul class="nav-sub" id="subAbout">
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#trainers">Trainers</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+      </ul>
+    </li>
+    <li data-spy="resources"><a class="nav-top" href="#resources">Resources</a></li>
+    <li class="nav-cta-li"><a class="nav-cta" href="#contact">Contact Us</a></li>
   </ul>
-  <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <button class="nav-burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
 </nav>
 <section id="hero">
   <div class="hero-bg" id="heroBg"></div>
@@ -552,8 +589,27 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
   $('ctInfo').innerHTML=`<p class="label">${ct.label}</p><h2 class="heading">${ct.heading}</h2><p class="body-text">Ready to start your journey? Reach out and we'll help you find the right plan.</p><div class="c-detail"><span class="c-icon">📞</span><a href="tel:${ct.phone.replace(/-/g,'')}">${ct.phone}</a></div><div class="c-detail"><span class="c-icon">✉️</span><a href="mailto:${ct.email}">${ct.email}</a></div>`;
   $('ctForm').innerHTML=`<form id="theForm" action="https://api.web3forms.com/submit" method="POST"><input type="hidden" name="access_key" value="${ct.web3formsKey}"/><input type="hidden" name="subject" value="New Contact — Joy Thru Fitness"/><input type="hidden" name="from_name" value="JTF Website"/><input type="hidden" name="botcheck" style="display:none"/><div class="hp-field" aria-hidden="true"><label>Leave this field empty</label><input type="text" name="website" tabindex="-1" autocomplete="off"/></div><div class="fr"><div class="fg"><label>First Name</label><input type="text" name="firstName" required/></div><div class="fg"><label>Last Name</label><input type="text" name="lastName" required/></div></div><div class="fg"><label>Email Address</label><input type="email" name="email" required/></div><div class="fg"><label>Package Interest</label><select name="package"><option value="">Select a package…</option>${ct.packages.map(o=>`<option>${o}</option>`).join('')}</select></div><div class="fg"><label>Message</label><textarea name="message" placeholder="Tell us about your goals…"></textarea></div><button type="submit" class="btn btn-green" style="width:100%">Send Message</button><div class="form-ok" id="formOk">Thank you! Your message has been received. We'll be in touch soon.</div></form>`;
   const burger=$('burger'),navLinks=$('navLinks');
-  burger.addEventListener('click',()=>navLinks.classList.toggle('open'));
-  navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open')));
+  const subs=[...navLinks.querySelectorAll('.has-sub')];
+  const closeSubs=except=>subs.forEach(li=>{if(li!==except){li.classList.remove('open');li.querySelector('.nav-top').setAttribute('aria-expanded','false');}});
+  const setMenu=open=>{navLinks.classList.toggle('open',open);burger.setAttribute('aria-expanded',open);burger.setAttribute('aria-label',open?'Close menu':'Open menu');};
+  burger.addEventListener('click',()=>setMenu(!navLinks.classList.contains('open')));
+  subs.forEach(li=>li.querySelector('.nav-top').addEventListener('click',e=>{
+    const open=li.classList.toggle('open');
+    e.currentTarget.setAttribute('aria-expanded',open);
+    closeSubs(li);
+  }));
+  navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{setMenu(false);closeSubs();a.blur();}));
+  document.addEventListener('click',e=>{if(!e.target.closest('#nav')){closeSubs();setMenu(false);}});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeSubs();setMenu(false);}});
+  // Highlight the menu item for the section currently on screen
+  const spyItems=[...navLinks.querySelectorAll('[data-spy]')];
+  const spy=new IntersectionObserver(entries=>entries.forEach(en=>{
+    if(!en.isIntersecting)return;
+    const id=en.target.id;
+    spyItems.forEach(li=>li.classList.toggle('active',li.dataset.spy.split(' ').includes(id)));
+    navLinks.querySelectorAll('.nav-sub a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));
+  }),{rootMargin:'-45% 0px -50% 0px'});
+  document.querySelectorAll('section[id]').forEach(sec=>spy.observe(sec));
   window.addEventListener('scroll',()=>$('nav').classList.toggle('scrolled',scrollY>60));
   document.addEventListener('submit',async e=>{
     if(e.target.id!=='theForm') return;
