@@ -282,29 +282,107 @@ content:
           - name: title
             label: Title
             type: string
+          - name: intro
+            label: Intro paragraph
+            type: text
+            required: false
+          - name: subintro
+            label: Second intro line (optional)
+            type: text
+            required: false
           - name: tiers
-            label: Tiers
+            label: Coaching plans (shown left to right)
             type: object
             list:
               collapsible:
-                summary: "{fields.label}"
+                summary: "{fields.label} — from {fields.price}"
             fields:
               - name: label
-                label: Tier name (e.g. Gold)
+                label: Plan name (e.g. "Performance Coaching")
                 type: string
+              - name: badge
+                label: "Badge (e.g. \"Most Popular\") — leave blank for none"
+                type: string
+                required: false
+              - name: hi
+                label: Highlight this plan with an orange border?
+                type: boolean
               - name: price
-                label: Price
+                label: "\"Starting at\" price — the big number (e.g. \"$279\")"
                 type: string
               - name: period
-                label: Period (e.g. "per month")
+                label: Text under the big price (e.g. "per month")
                 type: string
-              - name: hi
-                label: Highlight this tier?
-                type: boolean
+              - name: terms
+                label: "Commitment prices — the lowest one is automatically marked \"Best rate\""
+                type: object
+                list: true
+                fields:
+                  - name: l
+                    label: Commitment length (e.g. "12 Months")
+                    type: string
+                  - name: v
+                    label: Monthly price (e.g. "$279/mo")
+                    type: string
+              - name: desc
+                label: Short description (1–2 sentences)
+                type: text
+                required: false
               - name: feats
-                label: Features
+                label: "Included features — the first 6 show; the rest appear under \"See all\""
                 type: string
                 list: true
+              - name: bestFor
+                label: "\"Best for\" text (shown at the bottom of the card)"
+                type: text
+                required: false
+          - name: footnote
+            label: Note shown under the plans (optional)
+            type: text
+            required: false
+          - name: addons
+            label: In-person add-ons box (below the plans)
+            type: object
+            fields:
+              - name: eyebrow
+                label: Small label (e.g. "Want hands-on coaching?")
+                type: string
+                required: false
+              - name: title
+                label: "Heading — leave blank to hide the whole box"
+                type: string
+                required: false
+              - name: intro
+                label: Intro text
+                type: text
+                required: false
+              - name: sessions
+                label: Sessions & prices
+                type: object
+                list: true
+                fields:
+                  - name: l
+                    label: Session (e.g. "60-Minute Technique Session")
+                    type: string
+                  - name: v
+                    label: Price (e.g. "$105")
+                    type: string
+                  - name: note
+                    label: Small note (e.g. "for active coaching clients")
+                    type: string
+                    required: false
+              - name: focusLabel
+                label: List heading (e.g. "Sessions may focus on:")
+                type: string
+                required: false
+              - name: focus
+                label: Focus areas
+                type: string
+                list: true
+              - name: note
+                label: Closing note (optional)
+                type: text
+                required: false
 
       - name: sbr
         label: "Swim / Bike / Run tab"

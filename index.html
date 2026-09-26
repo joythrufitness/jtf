@@ -105,6 +105,37 @@ a{color:inherit;text-decoration:none}
 .pc-feats li{font-size:13px;color:#ccc;padding:6px 0 6px 18px;border-bottom:1px solid #2a2a2a;line-height:1.4;position:relative}
 .pc-feats li:last-child{border-bottom:none}
 .pc-feats li::before{content:'\2713';position:absolute;left:0;color:var(--orange);font-weight:700}
+.tri-intro{max-width:720px;margin-bottom:28px}
+.tri-title{font-family:var(--fh);font-size:17px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px}
+.tri-intro p{font-size:14px;color:var(--mid);line-height:1.7;margin-bottom:6px}
+.tri-grid{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));row-gap:28px}
+.tri-card{position:relative}
+.tri-card>.pc-freq{min-height:2.8em}
+.tri-card .pc-badge{position:absolute;top:-11px;left:20px;margin:0}
+.tri-from{font-size:11px;color:rgba(255,255,255,.55);margin:6px 0 4px}
+.tri-terms{margin-bottom:16px;padding-top:12px;border-top:1px solid #2a2a2a}
+.tri-best{display:inline-block;margin-left:6px;font-family:var(--fb);font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#6fcf6f;vertical-align:middle}
+.tri-desc{font-size:13px;color:rgba(255,255,255,.7);line-height:1.55;font-style:italic;padding:14px 0;border-top:1px solid #2a2a2a;border-bottom:1px solid #2a2a2a;margin-bottom:14px}
+.tri-inc{font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:4px}
+.tri-card .tri-extra{display:none}
+.tri-grid.open .tri-extra{display:block}
+.tri-more{align-self:flex-start;background:none;border:none;color:var(--orange);font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.06em;cursor:pointer;padding:8px 0 0}
+.tri-more:hover{color:#fff}
+.tri-bestfor{margin-top:auto;padding-top:14px;border-top:1px solid #2a2a2a;font-size:12px;color:#ccc;line-height:1.55}
+.tri-card .pc-feats{margin-bottom:14px}
+.tri-bestfor strong{display:block;font-family:var(--fh);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:4px}
+.tri-foot{font-size:13px;color:var(--light);font-style:italic;text-align:center;margin:24px auto 0;max-width:720px}
+.tri-addons{display:grid;grid-template-columns:1.2fr 1fr;gap:36px;background:var(--white);border:1px solid var(--border);border-left:4px solid var(--orange);border-radius:4px;padding:28px 32px;margin-top:36px}
+.tri-addons h4{font-family:var(--fh);font-size:17px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;margin-bottom:8px}
+.tri-addons-main>p:not(.pc-freq){font-size:14px;color:var(--mid);line-height:1.65;margin-bottom:16px}
+.tri-session{display:grid;grid-template-columns:1fr auto;column-gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.tri-session:last-child{border-bottom:none}
+.tri-session-l{font-size:14px;font-weight:600}
+.tri-session-v{font-family:var(--fh);font-size:18px;font-weight:800;color:var(--orange);grid-row:span 2;align-self:center}
+.tri-session-n{font-size:12px;color:var(--light)}
+.tri-addons .tri-inc{color:var(--light)}
+.tri-addons .klist{margin:6px 0 14px}
+.tri-addons-note{font-size:13px;color:var(--mid);line-height:1.6;font-style:italic}
 .t-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;margin-top:52px}
 .t-card{background:var(--white);border:1px solid var(--border);border-radius:4px;overflow:hidden}
 .t-photo{width:100%;height:300px;object-fit:cover;object-position:top}
@@ -172,6 +203,7 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
   .t-grid{grid-template-columns:1fr}
   .test-grid{grid-template-columns:1fr 1fr}
   .pr-grid{grid-template-columns:1fr 1fr}
+  .tri-addons{grid-template-columns:1fr;gap:20px;padding:24px}
   .contact-grid{grid-template-columns:1fr;gap:36px}
   .foot-top{grid-template-columns:1fr;gap:36px}
   .foot-cols{grid-template-columns:1fr 1fr}
@@ -180,6 +212,7 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
   .container{padding:0 20px}
   #nav{padding:0 20px}
   .test-grid,.pr-grid,.fr{grid-template-columns:1fr}
+  .tri-card>.pc-freq{min-height:0}
   .hero-btns{flex-direction:column;align-items:center}
   .res-card{flex-direction:column;align-items:center;gap:16px;padding:20px;text-align:center}
 }
@@ -396,9 +429,41 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
   });
   p2+=`</div>`;panels.push(p2);
   const tri=pr.triathlon;
-  let p3=`<div class="pr-grid">`;
-  tri.tiers.forEach(t=>{p3+=`<div class="pc${t.hi?' hi':''}"><p class="pc-freq">${t.label}</p><p class="pc-price">${t.price}</p><p class="pc-period">${t.period}</p><ul class="pc-feats">${t.feats.map(f=>`<li>${f}</li>`).join('')}</ul></div>`;});
-  p3+=`</div>`;panels.push(p3);
+  const TRI_SHOWN=6;
+  const num=v=>parseFloat(String(v).replace(/[^0-9.]/g,''))||Infinity;
+  let p3=`<div class="tri-intro"><h3 class="tri-title">${tri.title}</h3>${tri.intro?`<p>${tri.intro}</p>`:''}${tri.subintro?`<p>${tri.subintro}</p>`:''}</div><div class="pr-grid tri-grid">`;
+  tri.tiers.forEach(t=>{
+    const terms=t.terms||[];
+    const best=terms.length>1?Math.min(...terms.map(r=>num(r.v))):null;
+    const termRows=terms.map(r=>`<div class="pc-row"><span class="pc-row-l">${r.l}</span><span class="pc-row-v">${r.v}${num(r.v)===best?' <span class="tri-best">Best rate</span>':''}</span></div>`).join('');
+    const feats=t.feats||[];
+    const more=feats.length-TRI_SHOWN;
+    const feat=(f,i)=>`<li${i>=TRI_SHOWN?' class="tri-extra"':''}>${f}</li>`;
+    p3+=`<div class="pc tri-card${t.hi?' hi':''}">`
+      +(t.badge?`<span class="pc-badge">${t.badge}</span>`:'')
+      +`<p class="pc-freq">${t.label}</p>`
+      +`<p class="tri-from">Starting at</p><p class="pc-price">${t.price}</p><p class="pc-period">${t.period}</p>`
+      +(terms.length?`<div class="tri-terms"><div class="pc-col-header"><span>Commitment</span><span>Monthly</span></div>${termRows}</div>`:'')
+      +(t.desc?`<p class="tri-desc">${t.desc}</p>`:'')
+      +`<p class="tri-inc">Included</p><ul class="pc-feats">${feats.map(feat).join('')}</ul>`
+      +(more>0?`<button type="button" class="tri-more">+ See all ${feats.length} features</button>`:'')
+      +(t.bestFor?`<div class="tri-bestfor"><strong>Best for</strong>${t.bestFor}</div>`:'')
+      +`<button class="pc-cta" data-package="JOY Thru Triathlon">Get Started</button>`
+      +`</div>`;
+  });
+  p3+=`</div>`;
+  if(tri.footnote) p3+=`<p class="tri-foot">${tri.footnote}</p>`;
+  const ad=tri.addons;
+  if(ad&&ad.title){
+    p3+=`<div class="tri-addons"><div class="tri-addons-main">`
+      +(ad.eyebrow?`<p class="pc-freq">${ad.eyebrow}</p>`:'')
+      +`<h4>${ad.title}</h4>`+(ad.intro?`<p>${ad.intro}</p>`:'')
+      +`<div class="tri-sessions">${(ad.sessions||[]).map(s=>`<div class="tri-session"><span class="tri-session-l">${s.l}</span><span class="tri-session-v">${s.v}</span>${s.note?`<span class="tri-session-n">${s.note}</span>`:''}</div>`).join('')}</div></div>`
+      +`<div class="tri-addons-side">`+(ad.focusLabel?`<p class="tri-inc">${ad.focusLabel}</p>`:'')
+      +`<ul class="klist">${(ad.focus||[]).map(f=>`<li>${f}</li>`).join('')}</ul>`
+      +(ad.note?`<p class="tri-addons-note">${ad.note}</p>`:'')+`</div></div>`;
+  }
+  panels.push(p3);
   const sbr=pr.sbr;
   let p4=`<p class="pr-note">${sbr.note}</p><div class="pr-grid">`;
   sbr.groups.forEach(g=>{
@@ -414,6 +479,17 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
     document.querySelectorAll('.pr-panel').forEach(p=>p.classList.remove('active'));
     btn.classList.add('active');
     document.querySelector(`.pr-panel[data-panel="${idx}"]`).classList.add('active');
+  });
+  $('pricingInner').addEventListener('click',e=>{
+    const btn=e.target.closest('.tri-more');if(!btn)return;
+    // Expand/collapse all plans together so the cards stay the same height
+    const grid=btn.closest('.tri-grid');
+    const open=grid.classList.toggle('open');
+    grid.querySelectorAll('.tri-more').forEach(b=>{
+      b.textContent=open?'− Show less':`+ See all ${b.closest('.tri-card').querySelectorAll('.pc-feats li').length} features`;
+    });
+    const top=grid.getBoundingClientRect().top;
+    if(!open&&top<0) window.scrollTo({top:top+scrollY-100});
   });
   document.addEventListener('click',e=>{
     const btn=e.target.closest('[data-package]');

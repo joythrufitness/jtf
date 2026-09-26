@@ -169,40 +169,73 @@
     ]
   },
   "triathlon": {
-    "title": "JOY Thru Triathlon",
+    "title": "JOY Thru Fitness Virtual Triathlon Coaching",
+    "intro": "Personalized triathlon training built around your goals, your race calendar, your fitness level, and your life.",
+    "subintro": "Choose the level of support that fits how independently you want to train and how involved you want your coach to be.",
     "tiers": [
       {
         "label": "Custom Training Plan + Check-In",
-        "price": "$169 $159 $149 ",
-        "period": "4, 6 and 12 month contracts",
+        "badge": "",
         "hi": false,
+        "price": "$149",
+        "period": "per month",
+        "terms": [
+          {
+            "l": "4 Months",
+            "v": "$169/mo"
+          },
+          {
+            "l": "6 Months",
+            "v": "$159/mo"
+          },
+          {
+            "l": "12 Months",
+            "v": "$149/mo"
+          }
+        ],
+        "desc": "For the self-motivated athlete who wants a personalized training plan and professional direction without ongoing day-to-day coaching.",
         "feats": [
-          "Personalized coaching, structure, accountability and feedback without high-touch daily performance management includes:",
-          "Customized swim, bike & run programming in Trainingpeaks",
+          "Customized swim, bike & run training plan",
           "Training built around your race schedule and goals",
-          "Trainingpeaks programming",
-          "Personalized training zones ",
-          "Progressive training phases",
-          "Race specific training and progression",
+          "TrainingPeaks programming",
+          "Personalized training zones based on available data",
+          "Progressive training phases and recovery weeks",
+          "Race-specific training progression",
+          "Race-week taper",
           "One monthly training review/check-in",
           "Limited plan adjustments during the monthly review",
-          "Race taper, race week planning, prepartation and guidance",
-          "Initial athlete consultation",
-          "Best For: ",
-          "Self-directed athletes who want professional programming but don't need frequent feedback, accountability, or ongoing coach involvement"
-        ]
+          "Basic race-week guidance",
+          "Initial athlete consultation"
+        ],
+        "bestFor": "Self-directed athletes who want professional programming but don't need frequent feedback, accountability, or ongoing coach involvement."
       },
       {
-        "label": "Foundation",
-        "price": "$219 $209 $199 ",
-        "period": "4, 6 and 12 month contracts",
-        "hi": true,
+        "label": "Foundation Coaching",
+        "badge": "",
+        "hi": false,
+        "price": "$199",
+        "period": "per month",
+        "terms": [
+          {
+            "l": "4 Months",
+            "v": "$219/mo"
+          },
+          {
+            "l": "6 Months",
+            "v": "$209/mo"
+          },
+          {
+            "l": "12 Months",
+            "v": "$199/mo"
+          }
+        ],
+        "desc": "Personalized coaching, structure, accountability, and feedback without high-touch daily performance management.",
         "feats": [
-          "Personalized coaching, structure, accountability, and feedback without high-touch daily performance management",
-          "Customized swim, bike, and run programming in Trainingpeaks",
-          "Trainingpeaks programming including customized functional strength programming",
+          "Customized swim, bike & run programming",
+          "TrainingPeaks programming",
+          "Training reviewed and planned every 2 weeks",
           "Key workout review & feedback",
-          "Training adjustments",
+          "Training adjustments when appropriate",
           "Coach communication",
           "Monthly progress review",
           "Race-specific preparation",
@@ -211,37 +244,128 @@
           "Taper planning",
           "Post-race recovery guidance",
           "Adjustments for travel, illness, recovery & schedule changes",
-          "Periodic technique review",
-          "Best for:",
-          "Athletes who want individualized coaching, accountability, and professional feedback while remaining relatively independent in their day-to-day plannng"
-        ]
+          "Periodic video technique review"
+        ],
+        "bestFor": "Athletes who want individualized coaching, accountability, and professional feedback while remaining relatively independent in their day-to-day training."
       },
       {
         "label": "Performance Coaching",
-        "price": "$299 $289 $279 ",
-        "period": "4, 6 and 12 month contracts",
-        "hi": false,
+        "badge": "Most Popular",
+        "hi": true,
+        "price": "$279",
+        "period": "per month",
+        "terms": [
+          {
+            "l": "4 Months",
+            "v": "$299/mo"
+          },
+          {
+            "l": "6 Months",
+            "v": "$289/mo"
+          },
+          {
+            "l": "12 Months",
+            "v": "$279/mo"
+          }
+        ],
+        "desc": "For athletes who want their coach actively involved in their training, performance, strength, fueling, recovery, and race preparation.",
         "feats": [
-          "For athlete's who want their coach actively involved in their training, performance, strength fueling, recovery and race preparation",
           "Customized swim, bike & run programming",
           "Weekly training review & programming",
-          "Trainingpeaks programming including customized functional strength programming",
+          "TrainingPeaks",
+          "Regular workout analysis & coach feedback",
+          "Heart rate, pace, cadence & power analysis when applicable",
+          "Customized functional strength programming",
           "Mobility & recovery recommendations",
           "Nutrition & fueling guidance",
           "Training hydration strategies",
           "Race-day fueling & hydration planning",
           "Detailed race pacing & strategy",
-          "45 minute monthly Zoom coaching session",
-          "Training periodization (setting up your ATP)",
+          "45-minute monthly Zoom coaching session",
+          "Training periodization around your race calendar",
           "Training adjustments based on performance, fatigue & recovery",
           "Monthly video technique analysis",
-          "Post race review & recovery planning",
-          "Increased coaching communication & accountability",
-          "Best For:",
-          "Athletes preparing for Sprint, Olympic, 70.3 or Ironman events who want more accountability, analysis, and coach involvement - or athletes pursuing stronger performances and PRs"
-        ]
+          "Season race planning",
+          "Post-race review & recovery planning",
+          "Increased coach communication & accountability"
+        ],
+        "bestFor": "Athletes preparing for Sprint, Olympic, 70.3 or Ironman events who want more accountability, analysis and coach involvement—or athletes pursuing stronger performances and PRs."
+      },
+      {
+        "label": "Elite Performance Coaching",
+        "badge": "",
+        "hi": false,
+        "price": "$349",
+        "period": "per month",
+        "terms": [
+          {
+            "l": "4 Months",
+            "v": "$379/mo"
+          },
+          {
+            "l": "6 Months",
+            "v": "$369/mo"
+          },
+          {
+            "l": "12 Months",
+            "v": "$349/mo"
+          }
+        ],
+        "desc": "High-touch performance coaching for athletes who want greater coach involvement, more frequent analysis and individualized management throughout their season.",
+        "feats": [
+          "Fully customized swim, bike & run programming",
+          "Training reviewed and adjusted throughout the week as needed",
+          "Priority workout analysis & feedback",
+          "Advanced TrainingPeaks data analysis",
+          "Heart rate, pace, power, cadence & performance-trend analysis",
+          "Training-load monitoring",
+          "Customized functional strength programming",
+          "Mobility & recovery programming",
+          "Nutrition & performance-fueling guidance",
+          "Advanced race fueling & hydration strategy",
+          "Priority coach communication",
+          "Detailed race pacing & execution strategy",
+          "Regular video technique analysis — up to 2 per month",
+          "45-minute monthly Performance Zoom",
+          "Full-season planning",
+          "A/B/C race prioritization",
+          "Race-specific training adjustments",
+          "Taper management",
+          "Post-race performance analysis",
+          "Recovery & return-to-training planning",
+          "Fitness & performance assessments",
+          "Higher-touch monitoring of fatigue, recovery & training response"
+        ],
+        "bestFor": "Competitive age-group athletes, 70.3 and Ironman athletes, athletes pursuing PRs, podiums or championship qualification, and athletes who want their coach closely involved in managing their performance."
       }
-    ]
+    ],
+    "footnote": "The higher the coaching level, the greater the level of coach involvement, analysis, feedback, communication and individualized performance management.",
+    "addons": {
+      "eyebrow": "Want hands-on coaching?",
+      "intro": "In-person triathlon performance services are available separately and can be added to any coaching program.",
+      "title": "In-Person Triathlon Technique Add-Ons",
+      "sessions": [
+        {
+          "l": "45-Minute Technique Session",
+          "v": "$85",
+          "note": "for active coaching clients"
+        },
+        {
+          "l": "60-Minute Technique Session",
+          "v": "$105",
+          "note": "for active coaching clients"
+        }
+      ],
+      "focusLabel": "Sessions may focus on:",
+      "focus": [
+        "Swim technique",
+        "Bike skills & handling",
+        "Run technique",
+        "Transition skills",
+        "Race-specific skills"
+      ],
+      "note": "Open-water coaching, brick sessions, assessments, clinics and other specialty performance services are also available."
+    }
   },
   "sbr": {
     "title": "Swim, Cycling & Running",
