@@ -173,8 +173,8 @@
     "tiers": [
       {
         "label": "Custom Training Plan + Check-In",
-        "price": "$169 per month 4 months, $159 per month for 6 months , $149 per month for 12 months ",
-        "period": "per month",
+        "price": "$169 , $159 , $149 ",
+        "period": "4, 6 and 12 month contracts",
         "hi": false,
         "feats": [
           "Personalized coaching, structure, accountability and feedback without high-touch daily performance management includes:",
