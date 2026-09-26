@@ -172,8 +172,8 @@
     "title": "JOY Thru Triathlon",
     "tiers": [
       {
-        "label": "Foundation",
-        "price": "$219",
+        "label": "Custom Training Plan + Check-In",
+        "price": "4 months for $169, 6 months $159, 12 months $149",
         "period": "per month",
         "hi": false,
         "feats": [
@@ -255,7 +255,6 @@
   },
   "sbr": {
     "title": "Swim, Cycling & Running",
-    "note": "",
     "groups": [
       {
         "freq": "1x per week",
@@ -264,7 +263,7 @@
           {
             "l": "60 min",
             "v": "$76",
-            "mo": "$304/mo"
+            "mo": "$304"
           },
           {
             "l": "45 min",
@@ -272,9 +271,9 @@
             "mo": "$236/mo"
           },
           {
-            "l": "30 min",
+            "l": "30 minutes ",
             "v": "$48",
-            "mo": "$192/mo"
+            "mo": "$192"
           }
         ]
       },
