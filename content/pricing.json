@@ -194,8 +194,8 @@
       },
       {
         "label": "Foundation",
-        "price": "$219 per month for 4 months, $209 per month for 6 months, $199 per month for 12 months",
-        "period": "per month",
+        "price": "$219 $209 $199 ",
+        "period": "4, 6 and 12 month contracts",
         "hi": true,
         "feats": [
           "Personalized coaching, structure, accountability, and feedback without high-touch daily performance management",
