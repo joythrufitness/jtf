@@ -123,7 +123,8 @@ a{color:inherit;text-decoration:none}
 .tri-card .pc-badge{position:absolute;top:-11px;left:20px;margin:0}
 .tri-from{font-size:11px;color:rgba(255,255,255,.55);margin:6px 0 4px}
 .tri-terms{margin-bottom:16px;padding-top:12px;border-top:1px solid #2a2a2a}
-.tri-best{display:inline-block;margin-left:6px;font-family:var(--fb);font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#6fcf6f;vertical-align:middle}
+.tri-term{align-items:center}
+.tri-best{display:block;margin-top:2px;font-family:var(--fb);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6fcf6f;line-height:1.2}
 .tri-desc{font-size:13px;color:rgba(255,255,255,.7);line-height:1.55;font-style:italic;padding:14px 0;border-top:1px solid #2a2a2a;border-bottom:1px solid #2a2a2a;margin-bottom:14px}
 .tri-inc{font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:4px}
 .tri-card .tri-extra{display:none}
@@ -444,7 +445,7 @@ footer{background:var(--black);color:rgba(255,255,255,.6)}
   tri.tiers.forEach(t=>{
     const terms=t.terms||[];
     const best=terms.length>1?Math.min(...terms.map(r=>num(r.v))):null;
-    const termRows=terms.map(r=>`<div class="pc-row"><span class="pc-row-l">${r.l}</span><span class="pc-row-v">${r.v}${num(r.v)===best?' <span class="tri-best">Best rate</span>':''}</span></div>`).join('');
+    const termRows=terms.map(r=>`<div class="pc-row tri-term"><span class="pc-row-l">${r.l}${num(r.v)===best?'<span class="tri-best">Best rate</span>':''}</span><span class="pc-row-v">${r.v}</span></div>`).join('');
     const feats=t.feats||[];
     const more=feats.length-TRI_SHOWN;
     const feat=(f,i)=>`<li${i>=TRI_SHOWN?' class="tri-extra"':''}>${f}</li>`;
